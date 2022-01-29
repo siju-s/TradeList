@@ -12,8 +12,8 @@ func main() {
 		panic(err.Error())
 	}
 	app := App{
-		db: db,
-		r:  mux.NewRouter(),
+		db:  db,
+		mux: mux.NewRouter(),
 	}
 	app.start()
 }
