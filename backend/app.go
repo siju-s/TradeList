@@ -62,6 +62,46 @@ type User struct {
 	Contact  Contact `gorm:"embedded"`
 }
 
+//Struct for Products
+
+type Product struct {
+	ID       string `json:"id"`
+	Category string `json:"category"`
+	Name     string `json:"name"`
+	Price    string `json:"price"`
+}
+
+//Init products var as a slice Product struct
+var products []Product
+
+//Get all Products
+func getProducts(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(products)
+
+}
+
+//Get Single Product
+func getProduct(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//Create Product
+func createProduct(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//Update Product
+func updateProduct(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//Delete Product
+func deleteProduct(w http.ResponseWriter, r *http.Request) {
+
+}
+
 func (app *App) start() {
 
 	err := app.db.AutoMigrate(&Contact{}, &Category{}, &Subcategory{}, &User{}, &Seller{}, &Post{})
@@ -75,11 +115,24 @@ func (app *App) start() {
 		return
 	}
 
+	//Init Router
+	r := mux.NewRouter()
+
+	//Mock Data
+	products = append(products, Product{ID: "1", Category: "job", Name: "SDE", Price: "100000"})
+
+	//Route Handlers / Endpoints
+	r.HandleFunc("/api/product", getProducts).Methods("GET")
+	r.HandleFunc("/api/product/{id}", getProduct).Methods("GET")
+	r.HandleFunc("/api/product", createProduct).Methods("POST")
+	r.HandleFunc("/api/product/{id}", updateProduct).Methods("PUT")
+	r.HandleFunc("/api/product/{id}", deleteProduct).Methods("DELETE")
+
 	app.mux.HandleFunc("/post", app.savePost).Methods("POST")
 	app.mux.HandleFunc("/posts", app.getAllPosts).Methods("GET")
 	app.mux.HandleFunc("/", app.getAllPosts).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":8081", app.mux))
+	log.Fatal(http.ListenAndServe(":8081", r))
 }
 
 func (app *App) getAllPosts(w http.ResponseWriter, r *http.Request) {
