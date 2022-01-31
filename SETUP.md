@@ -31,6 +31,11 @@ npm start
 go run .
 ```
 3. Navigate to [http://localhost:8081](http://localhost:8081) to check
+4. Install [Air](https://github.com/cosmtrek/air) for live reload 
+```
+curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+```
+5. Run `air` on terminal to start the watcher
 
 ### TROUBLESHOOTING
 
