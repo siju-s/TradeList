@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -27,7 +28,7 @@ type Seller struct {
 }
 
 type Category struct {
-	CategoryId int `gorm:"primaryKey"`
+	CategoryId int `gorm:"primaryKey;autoIncrement"`
 	Name       string
 }
 
@@ -103,18 +104,23 @@ func deleteProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *App) start() {
-
 	err := app.db.AutoMigrate(&Contact{}, &Category{}, &Subcategory{}, &User{}, &Seller{}, &Post{})
 	if err != nil {
 		return
 	}
-
 	result := app.db.Exec("PRAGMA foreign_keys = ON", nil)
 	if result.Error != nil {
 		print(result.Error)
 		return
 	}
+	setupEndpoints(app)
+	if isCategoryNotExists(app.db) {
+		createDefaultValues(app.db)
+	}
+	log.Fatal(http.ListenAndServe(":8081", app.mux))
+}
 
+func setupEndpoints(app *App) {
 	//Init Router
 	r := mux.NewRouter()
 
@@ -130,22 +136,68 @@ func (app *App) start() {
 
 	app.mux.HandleFunc("/post", app.savePost).Methods("POST")
 	app.mux.HandleFunc("/posts", app.getAllPosts).Methods("GET")
+	app.mux.HandleFunc("/categories", app.getAllCategories).Methods("GET")
+	app.mux.HandleFunc("/subcategories/{id}", app.getSubcategories).Methods("GET")
 	app.mux.HandleFunc("/", app.getAllPosts).Methods("GET")
-
-	log.Fatal(http.ListenAndServe(":8081", r))
 }
 
-func (app *App) getAllPosts(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	var all []Post
-	err := app.db.Find(&all).Error
+func isCategoryNotExists(db *gorm.DB) bool {
+	var categories []Category
+
+	result := db.Find(&categories)
+	fmt.Println("Categories rows:", result.RowsAffected)
+	if result.RowsAffected > 0 {
+		return false
+	} else {
+		return true
+	}
+}
+
+func createDefaultValues(db *gorm.DB) {
+	var categories = []Category{{Name: "Jobs"}, {Name: "Property"}, {Name: "For Sale"}}
+	result := db.Create(&categories)
+	if result.Error != nil {
+		fmt.Println(result.Error)
+	}
+
+	var subcategories = []Subcategory{
+		{CategoryId: 1, Name: "Accounting"},
+		{CategoryId: 1, Name: "HR"},
+		{CategoryId: 1, Name: "Legal"},
+		{CategoryId: 1, Name: "Customer Service"},
+		{CategoryId: 1, Name: "Healthcare"},
+		{CategoryId: 1, Name: "Hospitality"},
+		{CategoryId: 1, Name: "Housekeeping"},
+		{CategoryId: 1, Name: "Software"},
+		{CategoryId: 1, Name: "Accounting"},
+		{CategoryId: 2, Name: "For Sale"},
+		{CategoryId: 2, Name: "To Rent"},
+		{CategoryId: 2, Name: "To Share"},
+		{CategoryId: 2, Name: "Sublet"},
+		{CategoryId: 2, Name: "Storage"},
+		{CategoryId: 3, Name: "Appliances"},
+		{CategoryId: 3, Name: "Audio equipment"},
+		{CategoryId: 3, Name: "Books"},
+		{CategoryId: 3, Name: "Clothes"},
+		{CategoryId: 3, Name: "Computers"},
+		{CategoryId: 3, Name: "Furniture"},
+		{CategoryId: 3, Name: "Gym equipment"},
+		{CategoryId: 3, Name: "Sports equipment"},
+	}
+	db.Create(&subcategories)
+}
+
+func (app *App) getAllPosts(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Content-Type", "application/json")
+	var posts []Post
+	err := app.db.Find(&posts).Error
 	if err != nil {
-		sendErr(w, http.StatusInternalServerError, err.Error())
+		sendErr(response, http.StatusInternalServerError, err.Error())
 		return
 	}
-	err = json.NewEncoder(w).Encode(all)
+	err = json.NewEncoder(response).Encode(posts)
 	if err != nil {
-		sendErr(w, http.StatusInternalServerError, err.Error())
+		sendErr(response, http.StatusInternalServerError, err.Error())
 	}
 }
 
@@ -162,6 +214,37 @@ func (app *App) savePost(writer http.ResponseWriter, request *http.Request) {
 		sendErr(writer, http.StatusInternalServerError, err.Error())
 	} else {
 		writer.WriteHeader(http.StatusCreated)
+	}
+}
+
+func (app *App) getAllCategories(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Content-Type", "application/json")
+	var categories []Category
+	err := app.db.Find(&categories).Error
+	if err != nil {
+		sendErr(response, http.StatusInternalServerError, err.Error())
+		return
+	}
+	err = json.NewEncoder(response).Encode(categories)
+	if err != nil {
+		sendErr(response, http.StatusInternalServerError, err.Error())
+	}
+}
+
+func (app *App) getSubcategories(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Content-Type", "application/json")
+	var subcategories []Subcategory
+
+	categoryId := mux.Vars(request)["id"]
+	fmt.Println("Categoryid:", categoryId)
+	err := app.db.Find(&subcategories, categoryId).Error
+	if err != nil {
+		sendErr(response, http.StatusInternalServerError, err.Error())
+		return
+	}
+	err = json.NewEncoder(response).Encode(subcategories)
+	if err != nil {
+		sendErr(response, http.StatusInternalServerError, err.Error())
 	}
 }
 
