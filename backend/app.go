@@ -42,17 +42,17 @@ type Subcategory struct {
 type Post struct {
 	gorm.Model
 	SellerId      int
-	Seller        Seller
+	Seller        Seller `json:"-"`
 	CategoryId    int
 	SubcategoryId int
-	Category      Category
-	Subcategory   Subcategory
-	Title         string `gorm:"not null"`
-	Description   string `gorm:"not null"`
-	IsHidden      bool   `gorm:"default:false"`
-	IsFlagged     bool   `gorm:"default:false"`
-	IsDeleted     bool   `gorm:"default:false"`
-	HasImage      bool   `gorm:"default:false"`
+	Category      Category    `json:"-"`
+	Subcategory   Subcategory `json:"-"`
+	Title         string      `gorm:"not null"`
+	Description   string      `gorm:"not null"`
+	IsHidden      bool        `gorm:"default:false"`
+	IsFlagged     bool        `gorm:"default:false"`
+	IsDeleted     bool        `gorm:"default:false"`
+	HasImage      bool        `gorm:"default:false"`
 }
 
 type User struct {
