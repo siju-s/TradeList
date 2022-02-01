@@ -84,7 +84,8 @@ func setupEndpoints(app *App) {
 
 	app.mux.HandleFunc("/post", app.savePost).Methods("POST")
 	app.mux.HandleFunc("/posts", app.getAllPosts).Methods("GET")
-	app.mux.HandleFunc("/post/{id}", app.getPost).Methods("GET")
+	app.mux.HandleFunc("/posts/{id}", app.getPost).Methods("GET")
+	app.mux.HandleFunc("/posts/{id}", app.updatePost).Methods("PUT")
 	app.mux.HandleFunc("/categories", app.getAllCategories).Methods("GET")
 	app.mux.HandleFunc("/subcategories/{id}", app.getSubcategories).Methods("GET")
 	app.mux.HandleFunc("/", app.getAllPosts).Methods("GET")
@@ -213,6 +214,17 @@ func (app *App) getPost(response http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		sendErr(response, http.StatusInternalServerError, err.Error())
 	}
+}
+
+//Update Post
+func (app *App) updatePost(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "application/json")
+	var post Post
+	param := mux.Vars(request)
+	app.db.First(&post, param["id"])
+	json.NewDecoder(request.Body).Decode(&post)
+	app.db.Save(&post)
+	json.NewEncoder(writer).Encode(post)
 }
 
 func sendErr(w http.ResponseWriter, code int, message string) {
