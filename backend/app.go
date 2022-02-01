@@ -214,6 +214,7 @@ func (app *App) getPost(response http.ResponseWriter, request *http.Request) {
 		sendErr(response, http.StatusInternalServerError, err.Error())
 	}
 }
+
 func sendErr(w http.ResponseWriter, code int, message string) {
 	resp, _ := json.Marshal(map[string]string{"error": message})
 	http.Error(w, string(resp), code)
