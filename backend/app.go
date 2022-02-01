@@ -86,6 +86,7 @@ func setupEndpoints(app *App) {
 	app.mux.HandleFunc("/posts", app.getAllPosts).Methods("GET")
 	app.mux.HandleFunc("/posts/{id}", app.getPost).Methods("GET")
 	app.mux.HandleFunc("/posts/{id}", app.updatePost).Methods("PUT")
+	app.mux.HandleFunc("/posts/{id}", app.deletePost).Methods("DELETE")
 	app.mux.HandleFunc("/categories", app.getAllCategories).Methods("GET")
 	app.mux.HandleFunc("/subcategories/{id}", app.getSubcategories).Methods("GET")
 	app.mux.HandleFunc("/", app.getAllPosts).Methods("GET")
@@ -225,6 +226,15 @@ func (app *App) updatePost(writer http.ResponseWriter, request *http.Request) {
 	json.NewDecoder(request.Body).Decode(&post)
 	app.db.Save(&post)
 	json.NewEncoder(writer).Encode(post)
+}
+
+//Delete Post
+func (app *App) deletePost(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "application/json")
+	var post Post
+	param := mux.Vars(request)
+	app.db.Delete(&post, param["id"])
+	json.NewEncoder(writer).Encode("Record deleted successfully")
 }
 
 func sendErr(w http.ResponseWriter, code int, message string) {
