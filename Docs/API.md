@@ -13,7 +13,7 @@ Returns all the posts
 
 * **URL**
 
-  /posts
+  /post
 
 * **Method:**
 

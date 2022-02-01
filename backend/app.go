@@ -10,6 +10,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var db *gorm.DB
+
 type App struct {
 	db  *gorm.DB
 	mux *mux.Router
@@ -64,32 +66,32 @@ type User struct {
 }
 
 func (app *App) start() {
-	err := app.db.AutoMigrate(&Contact{}, &Category{}, &Subcategory{}, &User{}, &Seller{}, &Post{})
+	db = app.db
+	err := db.AutoMigrate(&Contact{}, &Category{}, &Subcategory{}, &User{}, &Seller{}, &Post{})
 	if err != nil {
 		return
 	}
-	result := app.db.Exec("PRAGMA foreign_keys = ON", nil)
+	result := db.Exec("PRAGMA foreign_keys = ON", nil)
 	if result.Error != nil {
 		print(result.Error)
 		return
 	}
-	setupEndpoints(app)
-	if isCategoryNotExists(app.db) {
-		createDefaultValues(app.db)
+	setupEndpoints(app.mux)
+	if isCategoryNotExists(db) {
+		createDefaultValues(db)
 	}
 	log.Fatal(http.ListenAndServe(":8081", app.mux))
 }
 
-func setupEndpoints(app *App) {
-
-	app.mux.HandleFunc("/post", app.savePost).Methods("POST")
-	app.mux.HandleFunc("/posts", app.getAllPosts).Methods("GET")
-	app.mux.HandleFunc("/posts/{id}", app.getPost).Methods("GET")
-	app.mux.HandleFunc("/posts/{id}", app.updatePost).Methods("PUT")
-	app.mux.HandleFunc("/posts/{id}", app.deletePost).Methods("DELETE")
-	app.mux.HandleFunc("/categories", app.getAllCategories).Methods("GET")
-	app.mux.HandleFunc("/subcategories/{id}", app.getSubcategories).Methods("GET")
-	app.mux.HandleFunc("/", app.getAllPosts).Methods("GET")
+func setupEndpoints(request *mux.Router) {
+	request.HandleFunc("/post", createPost).Methods("POST")
+	request.HandleFunc("/post", getAllPosts).Methods("GET")
+	request.HandleFunc("/post/{id}", getPostById).Methods("GET")
+	request.HandleFunc("/post/{id}", updatePost).Methods("PUT")
+	request.HandleFunc("/post/{id}", deletePost).Methods("DELETE")
+	request.HandleFunc("/categories", getAllCategories).Methods("GET")
+	request.HandleFunc("/subcategories/{id}", getSubcategories).Methods("GET")
+	request.HandleFunc("/", getAllPosts).Methods("GET")
 }
 
 func isCategoryNotExists(db *gorm.DB) bool {
@@ -138,11 +140,10 @@ func createDefaultValues(db *gorm.DB) {
 	db.Create(&subcategories)
 }
 
-//Get all Posts
-func (app *App) getAllPosts(response http.ResponseWriter, request *http.Request) {
+func getAllPosts(response http.ResponseWriter, _ *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	var posts []Post
-	err := app.db.Find(&posts).Error
+	err := db.Find(&posts).Error
 	if err != nil {
 		sendErr(response, http.StatusInternalServerError, err.Error())
 		return
@@ -153,8 +154,7 @@ func (app *App) getAllPosts(response http.ResponseWriter, request *http.Request)
 	}
 }
 
-//Create Post
-func (app *App) savePost(writer http.ResponseWriter, request *http.Request) {
+func createPost(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	var post Post
 	err := json.NewDecoder(request.Body).Decode(&post)
@@ -162,7 +162,7 @@ func (app *App) savePost(writer http.ResponseWriter, request *http.Request) {
 		sendErr(writer, http.StatusBadRequest, err.Error())
 		return
 	}
-	err = app.db.Save(&post).Error
+	err = db.Save(&post).Error
 	if err != nil {
 		sendErr(writer, http.StatusInternalServerError, err.Error())
 	} else {
@@ -170,10 +170,10 @@ func (app *App) savePost(writer http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func (app *App) getAllCategories(response http.ResponseWriter, request *http.Request) {
+func getAllCategories(response http.ResponseWriter, _ *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	var categories []Category
-	err := app.db.Find(&categories).Error
+	err := db.Find(&categories).Error
 	if err != nil {
 		sendErr(response, http.StatusInternalServerError, err.Error())
 		return
@@ -184,13 +184,13 @@ func (app *App) getAllCategories(response http.ResponseWriter, request *http.Req
 	}
 }
 
-func (app *App) getSubcategories(response http.ResponseWriter, request *http.Request) {
+func getSubcategories(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	var subcategories []Subcategory
 
 	categoryId := mux.Vars(request)["id"]
-	fmt.Println("Categoryid:", categoryId)
-	err := app.db.Find(&subcategories, categoryId).Error
+	fmt.Println("CategoryId:", categoryId)
+	err := db.Find(&subcategories, categoryId).Error
 	if err != nil {
 		sendErr(response, http.StatusInternalServerError, err.Error())
 		return
@@ -201,12 +201,11 @@ func (app *App) getSubcategories(response http.ResponseWriter, request *http.Req
 	}
 }
 
-//Get Post by ID
-func (app *App) getPost(response http.ResponseWriter, request *http.Request) {
+func getPostById(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	var post Post
 	param := mux.Vars(request)
-	err := app.db.First(&post, param["id"]).Error
+	err := db.First(&post, param["id"]).Error
 	if err != nil {
 		sendErr(response, http.StatusInternalServerError, err.Error())
 		return
@@ -217,28 +216,34 @@ func (app *App) getPost(response http.ResponseWriter, request *http.Request) {
 	}
 }
 
-//Update Post
-func (app *App) updatePost(writer http.ResponseWriter, request *http.Request) {
+func updatePost(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	var post Post
 	param := mux.Vars(request)
-	app.db.First(&post, param["id"])
-	json.NewDecoder(request.Body).Decode(&post)
-	app.db.Save(&post)
-	json.NewEncoder(writer).Encode(post)
+	db.First(&post, param["id"])
+	err := json.NewDecoder(request.Body).Decode(&post)
+	if err != nil {
+		return
+	}
+	db.Save(&post)
+	err = json.NewEncoder(writer).Encode(post)
+	if err != nil {
+		return
+	}
 }
 
-//Delete Post
-func (app *App) deletePost(writer http.ResponseWriter, request *http.Request) {
+func deletePost(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	var post Post
 	param := mux.Vars(request)
-	app.db.Delete(&post, param["id"])
-	json.NewEncoder(writer).Encode("Record deleted successfully")
+	db.Delete(&post, param["id"])
+	err := json.NewEncoder(writer).Encode("Record deleted successfully")
+	if err != nil {
+		return
+	}
 }
 
 func sendErr(w http.ResponseWriter, code int, message string) {
 	resp, _ := json.Marshal(map[string]string{"error": message})
 	http.Error(w, string(resp), code)
-
 }
