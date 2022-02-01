@@ -1,5 +1,13 @@
-### SETUP
+##SETUP
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [Frontend](#frontend)
+- [Backend](#backend)
+- [Troubleshooting](#troubleshooting)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ## Frontend
 
 1. Install [Node](https://nodejs.org/en/download/)
@@ -37,7 +45,12 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 ```
 5. Run `air` on terminal to start the watcher
 
-### TROUBLESHOOTING
+## Generic
+1. DocToc - Table of contents generation. Install using `npm install -g doctoc`
+
+Then, run `doctoc filename.md` to generate table of contents.
+
+## Troubleshooting
 
 1. Permissions denied error on Mac
 
