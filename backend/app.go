@@ -63,46 +63,6 @@ type User struct {
 	Contact  Contact `gorm:"embedded"`
 }
 
-//Struct for Products
-
-type Product struct {
-	ID       string `json:"id"`
-	Category string `json:"category"`
-	Name     string `json:"name"`
-	Price    string `json:"price"`
-}
-
-//Init products var as a slice Product struct
-var products []Product
-
-//Get all Products
-func getProducts(w http.ResponseWriter, r *http.Request) {
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(products)
-
-}
-
-//Get Single Product
-func getProduct(w http.ResponseWriter, r *http.Request) {
-
-}
-
-//Create Product
-func createProduct(w http.ResponseWriter, r *http.Request) {
-
-}
-
-//Update Product
-func updateProduct(w http.ResponseWriter, r *http.Request) {
-
-}
-
-//Delete Product
-func deleteProduct(w http.ResponseWriter, r *http.Request) {
-
-}
-
 func (app *App) start() {
 	err := app.db.AutoMigrate(&Contact{}, &Category{}, &Subcategory{}, &User{}, &Seller{}, &Post{})
 	if err != nil {
@@ -121,21 +81,10 @@ func (app *App) start() {
 }
 
 func setupEndpoints(app *App) {
-	//Init Router
-	r := mux.NewRouter()
-
-	//Mock Data
-	products = append(products, Product{ID: "1", Category: "job", Name: "SDE", Price: "100000"})
-
-	//Route Handlers / Endpoints
-	r.HandleFunc("/api/product", getProducts).Methods("GET")
-	r.HandleFunc("/api/product/{id}", getProduct).Methods("GET")
-	r.HandleFunc("/api/product", createProduct).Methods("POST")
-	r.HandleFunc("/api/product/{id}", updateProduct).Methods("PUT")
-	r.HandleFunc("/api/product/{id}", deleteProduct).Methods("DELETE")
 
 	app.mux.HandleFunc("/post", app.savePost).Methods("POST")
 	app.mux.HandleFunc("/posts", app.getAllPosts).Methods("GET")
+	app.mux.HandleFunc("/post/{id}", app.getPost).Methods("GET")
 	app.mux.HandleFunc("/categories", app.getAllCategories).Methods("GET")
 	app.mux.HandleFunc("/subcategories/{id}", app.getSubcategories).Methods("GET")
 	app.mux.HandleFunc("/", app.getAllPosts).Methods("GET")
@@ -187,6 +136,7 @@ func createDefaultValues(db *gorm.DB) {
 	db.Create(&subcategories)
 }
 
+//Get all Posts
 func (app *App) getAllPosts(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	var posts []Post
@@ -201,6 +151,7 @@ func (app *App) getAllPosts(response http.ResponseWriter, request *http.Request)
 	}
 }
 
+//Create Post
 func (app *App) savePost(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	var post Post
@@ -248,6 +199,21 @@ func (app *App) getSubcategories(response http.ResponseWriter, request *http.Req
 	}
 }
 
+//Get Post by ID
+func (app *App) getPost(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Content-Type", "application/json")
+	var post Post
+	param := mux.Vars(request)
+	err := app.db.First(&post, param["id"]).Error
+	if err != nil {
+		sendErr(response, http.StatusInternalServerError, err.Error())
+		return
+	}
+	err = json.NewEncoder(response).Encode(post)
+	if err != nil {
+		sendErr(response, http.StatusInternalServerError, err.Error())
+	}
+}
 func sendErr(w http.ResponseWriter, code int, message string) {
 	resp, _ := json.Marshal(map[string]string{"error": message})
 	http.Error(w, string(resp), code)
