@@ -5,14 +5,15 @@ This is a repo for CEN5035 Software Engineering Project. It replicates the Craig
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [API document](#api-document)
+- [Documents](#documents)
 - [Contributors](#contributors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## API document
+## Documents
 
-[API endpoints](Docs/API.md) 
+* [Setup](SETUP.md)  
+* [API endpoints](Docs/API.md)  
 
 ## Contributors
 * Mansi Singh  (Frontend)

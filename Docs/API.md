@@ -2,16 +2,14 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [GetPosts](#get-posts)
-- [CreatePost](#create-post)
+- [Get Posts](#get-posts)
+- [Create Post](#create-post)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Get Posts
 
-
-#Get Posts
-
-Returns json data about a single user.
+Returns all the posts
 
 * **URL**
 
@@ -68,9 +66,9 @@ Returns json data about a single user.
     });
   ```
 
-##Create Post
+## Create Post
 
-Returns json data about a single user.
+Creates a new post
 
 * **URL**
 
