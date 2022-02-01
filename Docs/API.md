@@ -4,6 +4,7 @@
 
 - [Get Posts](#get-posts)
 - [Create Post](#create-post)
+- [Fetch Categories](#fetch-categories)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -110,3 +111,47 @@ Creates a new post
   "Description": "Post1Desc"
   }
 ```
+## Fetch Categories
+
+* **URL**
+
+  /categories
+
+* **Method:**
+
+  `GET`
+
+* **URL Params**
+
+  **Required:**
+
+  `None`
+
+* **Data Params** (Post request)
+
+  `None`
+
+* **Constraints**
+
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:**
+```
+[
+    {
+        "CategoryId": 1,
+        "Name": "Jobs"
+    },
+    {
+        "CategoryId": 2,
+        "Name": "Property"
+    },
+    {
+        "CategoryId": 3,
+        "Name": "For Sale"
+    }
+]
+```
+

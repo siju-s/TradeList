@@ -12,7 +12,7 @@ This is a repo for CEN5035 Software Engineering Project. It replicates the Craig
 
 ## Documents
 
-* [Setup](SETUP.md)  
+* [Setup](Docs/SETUP.md)  
 * [API endpoints](Docs/API.md)  
 
 ## Contributors
