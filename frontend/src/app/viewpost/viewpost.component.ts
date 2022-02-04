@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {Post, PostService} from "../post.service";
 
 @Component({
   selector: 'app-viewpost',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewpostComponent implements OnInit {
 
-  constructor() { }
+  post:Array<Post> = []
+
+  constructor(private postService: PostService, private changeDetection: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.postService.getPosts().subscribe(data => {
+      this.post = data
+      console.log(data[0].Title)
+      this.changeDetection.detectChanges()
+    })
   }
+  //
+  // public postItem (index: number, item: Post) {
+  //   return item.title;
+  // }
+
 
 }

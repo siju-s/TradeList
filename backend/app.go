@@ -3,11 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
+	"github.com/rs/cors"
+	"gorm.io/gorm"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
-	"gorm.io/gorm"
 )
 
 var db *gorm.DB
@@ -80,18 +80,21 @@ func (app *App) start() {
 	if isCategoryNotExists(db) {
 		createDefaultValues(db)
 	}
-	log.Fatal(http.ListenAndServe(":8081", app.mux))
+	handler := cors.AllowAll().Handler(app.mux)
+	log.Fatal(http.ListenAndServe(":8081", handler))
 }
 
 func setupEndpoints(request *mux.Router) {
-	request.HandleFunc("/post", createPost).Methods("POST")
-	request.HandleFunc("/post", getAllPosts).Methods("GET")
+	request.HandleFunc("/post", createPost).Methods("POST", "OPTIONS")
+	request.HandleFunc("/post", getAllPosts).Methods("GET", "OPTIONS")
 	request.HandleFunc("/post/{id}", getPostById).Methods("GET")
 	request.HandleFunc("/post/{id}", updatePost).Methods("PUT")
 	request.HandleFunc("/post/{id}", deletePost).Methods("DELETE")
 	request.HandleFunc("/categories", getAllCategories).Methods("GET")
 	request.HandleFunc("/subcategories/{id}", getSubcategories).Methods("GET")
-	request.HandleFunc("/", getAllPosts).Methods("GET")
+	//request.HandleFunc("/", getAllPosts).Methods("GET")
+
+	//request.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/dist/Tradelist/")))
 }
 
 func isCategoryNotExists(db *gorm.DB) bool {
@@ -155,7 +158,11 @@ func getAllPosts(response http.ResponseWriter, _ *http.Request) {
 }
 
 func createPost(writer http.ResponseWriter, request *http.Request) {
+	fmt.Println("Createpost")
 	writer.Header().Set("Content-Type", "application/json")
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
+	writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
 	var post Post
 	err := json.NewDecoder(request.Body).Decode(&post)
 	if err != nil {
@@ -167,6 +174,10 @@ func createPost(writer http.ResponseWriter, request *http.Request) {
 		sendErr(writer, http.StatusInternalServerError, err.Error())
 	} else {
 		writer.WriteHeader(http.StatusCreated)
+		err := json.NewEncoder(writer).Encode("Post created")
+		if err != nil {
+			return
+		}
 	}
 }
 
