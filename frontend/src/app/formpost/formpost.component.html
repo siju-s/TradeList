@@ -47,14 +47,14 @@
             <textarea formControlName="Description" matInput placeholder="Mention all the important details regarding the posting"></textarea>
           </mat-form-field>
 
-          <div class="col-md-6">
-            <mat-form-field class="full-width">
-              <input  formControlName="Compensation" matInput placeholder="Compensation">
-            </mat-form-field>
-          </div>
+          <div class="col-md-6" class="full-width">
+<!--            <mat-form-field class="full-width">-->
+<!--              <input  formControlName="Compensation" matInput placeholder="Compensation">-->
+<!--            </mat-form-field>-->
           <mat-card-header>
             <mat-card-title>Personal Information</mat-card-title>
           </mat-card-header>
+          </div>
 
           <div class="col-md-6">
             <mat-form-field class="full-width">
@@ -75,10 +75,12 @@
             <mat-checkbox >Show my personal information</mat-checkbox>
 
           </div>
+          <div class="col-md-6" class="full-width">
+
           <mat-card-header>
             <mat-card-title>Contact  Information</mat-card-title>
           </mat-card-header>
-
+          </div>
           <div class="col-md-6 ">
             <mat-form-field class="full-width">
                 <input formControlName="email" matInput placeholder="Email" type = email>
