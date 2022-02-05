@@ -17,6 +17,17 @@ This is a repo for CEN5035 Software Engineering Project. It replicates the Craig
 * [Sprint 1 Report](Demos/Sprint1.md)
 * [DB schema](Demos/DB_schema.png)
 
+## Videos
+
+
+
+https://user-images.githubusercontent.com/13053550/152627527-3781afe9-f3e9-40aa-8675-b2194feb68ad.mp4
+
+
+
+https://user-images.githubusercontent.com/13053550/152627547-079fd6bb-95a3-429a-be7c-822bcbe66377.mp4
+
+
 
 ## Contributors
 * Mansi Singh  (Frontend)
