@@ -35,3 +35,7 @@ All of these components are developed using Angular and Material.
 * View Post Component : The view post component uses material UI components like MatCardModule and MatButtonModule for the card layout. This component will display the posts that the end user has created using the Create Post Component Form. The View Post component displays the name, description, categories, images along with the contact information of the user who has created the posting. It also allows the user to share and flag the posting in case they want to forward it to someone or find it inappropriate. This component receives data from the backend and displays the contents in a card format. 
 The following screenshot displays the data entered by the user from the create post component :
 ![Alt text](Viewpost_Frontend.png)
+
+## Demo Links: 
+https://github.com/siju-s/TradeList/blob/e53f112267c53db21df3ee259fb68a33aeb8d99a/Demos/sprint1_frontend_demo.mp4
+https://github.com/siju-s/TradeList/blob/e53f112267c53db21df3ee259fb68a33aeb8d99a/Demos/sprint1_backend_demo.mp4
