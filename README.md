@@ -6,6 +6,7 @@ This is a repo for CEN5035 Software Engineering Project. It replicates the Craig
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Documents](#documents)
+- [Videos](#videos)
 - [Contributors](#contributors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
