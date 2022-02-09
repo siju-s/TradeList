@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"gorm.io/gorm"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -27,6 +28,7 @@ type Seller struct {
 	SellerId int     `gorm:"primaryKey"`
 	Contact  Contact `gorm:"embedded"`
 	Rating   int     `gorm:"default:0"`
+	//TODO Add seller logo
 }
 
 type Category struct {
@@ -65,9 +67,49 @@ type User struct {
 	Contact  Contact `gorm:"embedded"`
 }
 
+type JobPost struct {
+	Post Post
+	Job  Job
+}
+
+type PayType struct {
+	Name string `gorm:"primaryKey"`
+}
+
+type Job struct {
+	ID            int  `gorm:"primaryKey"`
+	PostId        uint `gorm:"not null"`
+	Post          Post `json:"-"`
+	SubcategoryId int
+	Subcategory   Subcategory `json:"-"`
+	Salary        float32
+	Pay           string       `gorm:"default:yearly"`
+	PayType       PayType      `json:"-" gorm:"foreignKey:Pay"`
+	Type          string       `gorm:"default:fulltime"`
+	JobType       JobType      `json:"-" gorm:"foreignKey:Type;references:Name"`
+	Location      string       `gorm:"default:onsite"`
+	LocationType  LocationType `json:"-" gorm:"foreignKey:Location;references:Name"`
+	Place         string       `gorm:"default:Gainesville"`
+	Places        Places       `json:"-" gorm:"foreignKey:Place;references:Name"`
+}
+
+type JobType struct {
+	//ID   int `gorm:"primaryKey"`
+	Name string `gorm:"primaryKey"`
+}
+
+type LocationType struct {
+	Name string `gorm:"primaryKey"`
+}
+
+type Places struct {
+	Name string `gorm:"primaryKey"`
+}
+
 func (app *App) start() {
 	db = app.db
-	err := db.AutoMigrate(&Contact{}, &Category{}, &Subcategory{}, &User{}, &Seller{}, &Post{})
+	err := db.AutoMigrate(&Contact{}, &Category{}, &Subcategory{}, &User{}, &Seller{}, &Post{}, &PayType{}, &JobType{}, &Places{}, &LocationType{},
+		&Job{})
 	if err != nil {
 		return
 	}
@@ -90,11 +132,12 @@ func setupEndpoints(request *mux.Router) {
 	request.HandleFunc("/post/{id}", getPostById).Methods("GET")
 	request.HandleFunc("/post/{id}", updatePost).Methods("PUT")
 	request.HandleFunc("/post/{id}", deletePost).Methods("DELETE")
+
 	request.HandleFunc("/categories", getAllCategories).Methods("GET")
 	request.HandleFunc("/subcategories/{id}", getSubcategories).Methods("GET")
-	//request.HandleFunc("/", getAllPosts).Methods("GET")
 
-	//request.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/dist/Tradelist/")))
+	request.HandleFunc("/post/category/{id}", createJobPost).Methods("POST", "OPTIONS")
+	request.HandleFunc("/post/category/{id}", getPostByCategoryId).Methods("GET", "OPTIONS")
 }
 
 func isCategoryNotExists(db *gorm.DB) bool {
@@ -126,11 +169,13 @@ func createDefaultValues(db *gorm.DB) {
 		{CategoryId: 1, Name: "Housekeeping"},
 		{CategoryId: 1, Name: "Software"},
 		{CategoryId: 1, Name: "Accounting"},
+
 		{CategoryId: 2, Name: "For Sale"},
 		{CategoryId: 2, Name: "To Rent"},
 		{CategoryId: 2, Name: "To Share"},
 		{CategoryId: 2, Name: "Sublet"},
 		{CategoryId: 2, Name: "Storage"},
+
 		{CategoryId: 3, Name: "Appliances"},
 		{CategoryId: 3, Name: "Audio equipment"},
 		{CategoryId: 3, Name: "Books"},
@@ -178,6 +223,94 @@ func createPost(writer http.ResponseWriter, request *http.Request) {
 		if err != nil {
 			return
 		}
+	}
+}
+
+func createJobPost(writer http.ResponseWriter, request *http.Request) {
+	fmt.Println("Jobpost")
+	writer.Header().Set("Content-Type", "application/json")
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
+	writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	var jobPost JobPost
+
+	body, _ := ioutil.ReadAll(request.Body)
+	err := json.Unmarshal(body, &jobPost)
+
+	fmt.Println(jobPost)
+
+	if err != nil {
+		sendErr(writer, http.StatusBadRequest, "Malformed Post data")
+		return
+	}
+
+	err = db.Debug().Save(&jobPost.Post).Error
+	fmt.Println("Postid:", jobPost.Post.ID)
+	if err == nil {
+		jobPost.Job.PostId = jobPost.Post.ID
+		jobPost.Job.SubcategoryId = jobPost.Post.SubcategoryId
+		err = db.Debug().Save(&jobPost.Job).Error
+	}
+	//TODO Secure multiple db insert through transaction
+	//err = performTransaction(post, job)
+
+	if err != nil {
+		sendErr(writer, http.StatusInternalServerError, err.Error())
+	} else {
+		writer.WriteHeader(http.StatusCreated)
+		err := json.NewEncoder(writer).Encode("Post created")
+		if err != nil {
+			return
+		}
+	}
+}
+
+func performTransaction(table ...interface{}) error {
+	err := db.Transaction(func(tx *gorm.DB) error {
+		// do some database operations in the transaction (use 'tx' from this point, not 'db')
+		for _, data := range table {
+			if err := tx.Save(&data).Error; err != nil {
+				// return any error will rollback
+				return err
+			}
+		}
+		// return nil will commit the whole transaction
+		return nil
+	})
+	return err
+}
+
+func getPostByCategoryId(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Content-Type", "application/json")
+	var posts []Post
+	param := mux.Vars(request)
+	err := db.Debug().Where("category_id = ?", param["id"]).Find(&posts).Error
+	if err != nil {
+		sendErr(response, http.StatusInternalServerError, err.Error())
+		return
+	}
+	//Job post
+	if param["id"] == "1" {
+		getJobPost(response, posts)
+	}
+}
+
+func getJobPost(response http.ResponseWriter, posts []Post) {
+	var jobPosts []JobPost
+	for _, post := range posts {
+		var job Job
+		err := db.Debug().Where("post_id = ?", post.ID).Find(&job).Error
+		if err == nil {
+			var jobPost JobPost
+			jobPost.Post = post
+			jobPost.Job = job
+
+			jobPosts = append(jobPosts, jobPost)
+		}
+	}
+	err := json.NewEncoder(response).Encode(jobPosts)
+	if err != nil {
+		sendErr(response, http.StatusInternalServerError, err.Error())
 	}
 }
 
