@@ -31,10 +31,10 @@ https://user-images.githubusercontent.com/13053550/152627547-079fd6bb-95a3-429a-
 
 
 ## Contributors
-* Mansi Singh  (Frontend)
-* Sharwari Marathe  (Frontend)
-* Siju Sakaria (Backend)
-* Yashasvi Mutteneni (Backend)
+* Mansi Singh (@singh-mansi)
+* Sharwari Marathe (@sharwarimarathe)
+* Siju Sakaria (@siju-s)
+* Yashasvi Mutteneni (@yashincontrol)
 
 
 
