@@ -155,3 +155,56 @@ Creates a new post
 ]
 ```
 
+## Create Job post
+
+Creates a new job posting
+
+* **URL**
+
+  /post
+
+* **Method:**
+
+  `PUT`
+
+* **URL Params**
+
+  **Required:**
+
+  `None`
+
+* **Data Params** (Post request)
+
+  `SellerId`, `CategoryId`, `SubCategoryId`, `Title`, `Description`
+
+
+* **Constraints**
+  `CategoryId`, `SellerId` and `SubCategoryId` should exist in the DB
+
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:**
+```
+[]
+```
+* **Sample input**
+```
+ {
+        "Post": {
+            "SellerId": 1,
+            "CategoryId": 1,
+            "SubcategoryId": 1,
+            "Title": "test7",
+            "Description": "test7desc"
+            },
+        "Job": {
+            "Salary": 500,
+            "Pay": "monthly",
+            "Type": "fulltime",
+            "Location": "remote",
+            "Place": "Gainesville"
+            }
+    }
+```

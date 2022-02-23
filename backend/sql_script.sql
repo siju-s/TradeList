@@ -1,4 +1,6 @@
 
+insert into sellers(name) values ("Siju");
+
 insert into job_types(name) values ("fulltime");
 insert into job_types(name) values ("parttime");
 insert into job_types(name) values ("contract");
