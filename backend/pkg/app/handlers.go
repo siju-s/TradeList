@@ -99,13 +99,59 @@ func (server *Server) Home(writer http.ResponseWriter, request *http.Request) {
 		writer.WriteHeader(http.StatusUnauthorized)
 		return
 	}
-	// Finally, return the welcome message to the user, along with their
-	// username given in the token
+
 	writer.Write([]byte(fmt.Sprintf("Welcome %s!", claims.Username)))
 
 }
 
 func (server *Server) Refresh(writer http.ResponseWriter, request *http.Request) {
+	c, err := request.Cookie("token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			writer.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	tknStr := c.Value
+	claims := &Claims{}
+	tkn, err := jwt.ParseWithClaims(tknStr, claims, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+	if !tkn.Valid {
+		writer.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	if err != nil {
+		if err == jwt.ErrSignatureInvalid {
+			writer.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	// if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) > 30*time.Second {
+	// 	writer.WriteHeader(http.StatusBadRequest)
+	// 	return
+	// }
+
+	expirationTime := time.Now().Add(5 * time.Minute)
+	claims.ExpiresAt = expirationTime.Unix()
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(jwtKey)
+	if err != nil {
+		writer.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	// Set the new token as the users `session_token` cookie
+	http.SetCookie(writer, &http.Cookie{
+		Name:    "refresh_token",
+		Value:   tokenString,
+		Expires: expirationTime,
+	})
 
 }
 
