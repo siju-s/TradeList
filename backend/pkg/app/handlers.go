@@ -3,12 +3,111 @@ package app
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
+	"time"
 	"tradelist/pkg/api"
 	"tradelist/pkg/apihelpers"
+
+	"github.com/golang-jwt/jwt"
+	"github.com/gorilla/mux"
 )
+
+var jwtKey = []byte("secret_key")
+
+var users = map[string]string{
+	"user1": "password1",
+	"user2": "password2",
+}
+
+type Credentials struct {
+	Password string `json:"password"`
+	Username string `json:"username"`
+}
+
+type Claims struct {
+	Username           string `json:"username"`
+	jwt.StandardClaims        //go get github.com/golang-jwt/jwt
+
+}
+
+func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
+	var credentials Credentials
+	err := json.NewDecoder(request.Body).Decode(&credentials)
+	if err != nil {
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	expectedPassword, ok := users[credentials.Username]
+
+	if !ok || expectedPassword != credentials.Password {
+		writer.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	expirationTime := time.Now().Add(time.Minute * 5)
+
+	claims := &Claims{
+		Username: credentials.Username,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: expirationTime.Unix(),
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(jwtKey)
+	if err != nil {
+		// If there is an error in creating the JWT return an internal server error
+		writer.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	http.SetCookie(writer, &http.Cookie{
+		Name:    "token",
+		Value:   tokenString,
+		Expires: expirationTime,
+	})
+
+}
+
+func (server *Server) Home(writer http.ResponseWriter, request *http.Request) {
+	c, err := request.Cookie("token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			writer.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	tknStr := c.Value
+
+	claims := &Claims{}
+
+	tkn, err := jwt.ParseWithClaims(tknStr, claims, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+	if err != nil {
+		if err == jwt.ErrSignatureInvalid {
+			writer.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if !tkn.Valid {
+		writer.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	// Finally, return the welcome message to the user, along with their
+	// username given in the token
+	writer.Write([]byte(fmt.Sprintf("Welcome %s!", claims.Username)))
+
+}
+
+func (server *Server) Refresh(writer http.ResponseWriter, request *http.Request) {
+
+}
 
 func (server *Server) CreatePost(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
