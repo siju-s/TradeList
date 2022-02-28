@@ -57,11 +57,11 @@ export class FormpostComponent {
   createPost() {
     console.log('Form data is ', this.profileForm.value);
     const post: Post = {
-      sellerid: 1,  //Mock
-      categoryid: 1,
-      subcategoryid: 1,
+      Sellerid: 1,  //Mock
+      Categoryid: 1,
+      Subcategoryid: 1,
       Title: 'Test',
-      description: 'Test desc'
+      Description: 'Test desc'
     };
     this.postService.createPost(post)
   }

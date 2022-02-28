@@ -14,8 +14,8 @@ export class ViewpostComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe(data => {
-      this.post = data
-      console.log(data[0].Title)
+      this.post = data.data
+      console.log(data.data[0])
       this.changeDetection.detectChanges()
     })
   }
