@@ -131,7 +131,7 @@ func (server *Server) Refresh(writer http.ResponseWriter, request *http.Request)
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
-
+	//commenting out for testing purposes
 	// if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) > 30*time.Second {
 	// 	writer.WriteHeader(http.StatusBadRequest)
 	// 	return
@@ -146,12 +146,23 @@ func (server *Server) Refresh(writer http.ResponseWriter, request *http.Request)
 		return
 	}
 
-	// Set the new token as the users `session_token` cookie
+	// Set the new token as the users `refresh_token` cookie
 	http.SetCookie(writer, &http.Cookie{
 		Name:    "refresh_token",
 		Value:   tokenString,
 		Expires: expirationTime,
 	})
+
+}
+
+func (server *Server) Logout(writer http.ResponseWriter, request *http.Request) {
+	cookie := http.Cookie{
+		Name:   "token",
+		MaxAge: -1,
+	}
+	http.SetCookie(writer, &cookie)
+
+	writer.Write([]byte("Old cookie deleted. Logged out!\n"))
 
 }
 
