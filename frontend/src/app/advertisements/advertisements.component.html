@@ -1,14 +1,20 @@
-<div >      
-    <ngb-carousel>
-      <ng-template ngbSlide *ngFor="let image of images">
-        <div class="wrapper">
-          <img [src]="image.src" alt="Random first slide">
-        </div>
-        <div class="carousel-caption">
-          <h3>{{ image.title }}</h3>
-          <p>{{ image.short }}</p>
-        </div>
-      </ng-template>
-    </ngb-carousel>
-         
-    </div>
+
+<div class="container" >
+    <mat-grid-list cols="2" rowHeight="500px">
+      <mat-grid-tile class="grid-container">
+          <ngb-carousel>
+            <ng-template ngbSlide *ngFor="let image of images">
+              <div class="wrapper">
+                <img [src]="image.src" alt="Random first slide">
+              </div>
+              <div class="carousel-caption">
+                <h3>{{ image.title }}</h3>
+                <p>{{ image.short }}</p>
+              </div>
+            </ng-template>
+          </ngb-carousel>
+    
+      </mat-grid-tile>
+      <mat-grid-tile>2</mat-grid-tile>
+    </mat-grid-list>
+  </div>

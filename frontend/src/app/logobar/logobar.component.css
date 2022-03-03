@@ -1,32 +1,16 @@
 .spacer {
     flex: 1;
   }
-  .example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
-
-  .example-full-width {
-    width: 100%;
-  }
-  .logo{
-      height: 35%;
-      width: 35%;
+    .logo{
+      height: 15%;
+      width: 25%;
       display: block;
       margin-left: auto;
       margin-right: auto;
-      width: 50%;
-  }
-  .search-field{
-      float: right;
       
-     
   }
+
   .logobar{
      background-color: #f9cf00;
   }
-  .center {
-    margin: auto;
-    width: 100%;
-  }
+ 
