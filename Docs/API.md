@@ -263,4 +263,32 @@ Takes the user to the home page after successfully logging in
 ```
 Welcome User1
 ```
+## Logout
 
+User will be logged out 
+
+* **URL**
+
+  /logout
+
+* **Method:**
+
+  `POST`
+
+*  **URL Params**
+
+   **Required:**
+
+   `None`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** 
+```
+Old cookie deleted. Logged out!
+```
