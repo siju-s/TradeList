@@ -14,30 +14,44 @@ type PostService interface {
 	GetPostById(categoryId string) map[string]interface{}
 	UpdatePost(post Post, postId string) map[string]interface{}
 	DeletePost(postId string) map[string]interface{}
+	//GetDb() *gorm.DB
+	GetRepo() Repo
 }
 
 type postService struct {
-	db *gorm.DB
+	db   *gorm.DB
+	repo Repo
 }
 
-func CreatePostService(db *gorm.DB) PostService {
-	return &postService{db: db}
+func (service *postService) GetRepo() Repo {
+	return service.repo
 }
+
+//func CreatePostService(db *gorm.DB) PostService {
+//	return &postService{db: db}
+//}
+
+func CreatePostService(repo Repo) PostService {
+	return &postService{repo: repo}
+}
+
+//func (service *postService) GetDb() *gorm.DB {
+//	return service.db
+//}
 
 func (service *postService) Create(post Post) map[string]interface{} {
-	err := service.db.Save(&post).Error
-	if err != nil {
-		return apihelpers.Message(0, err.Error())
+	err := service.repo.Save(&post)
+	if err != "" {
+		return apihelpers.Message(0, err)
 	} else {
 		return apihelpers.Message(http.StatusCreated, "Post created")
 	}
 }
 
 func (service *postService) GetAllPosts() map[string]interface{} {
-	var posts []Post
-	err := service.db.Find(&posts).Error
-	if err != nil {
-		return apihelpers.Message(http.StatusInternalServerError, err.Error())
+	posts, err := service.repo.GetAllPosts()
+	if err != "" {
+		return apihelpers.Message(http.StatusInternalServerError, err)
 	} else {
 		size := len(posts)
 
@@ -54,10 +68,9 @@ func (service *postService) GetAllPosts() map[string]interface{} {
 }
 
 func (service *postService) GetAllCategories() map[string]interface{} {
-	var categories []Category
-	err := service.db.Find(&categories).Error
-	if err != nil {
-		return apihelpers.Message(http.StatusInternalServerError, err.Error())
+	categories, err := service.repo.GetCategories()
+	if err != "" {
+		return apihelpers.Message(http.StatusInternalServerError, err)
 	}
 	size := len(categories)
 

@@ -67,4 +67,9 @@ func createDefaultValues(db *gorm.DB) {
 		{CategoryId: 3, Name: "Sports equipment"},
 	}
 	db.Create(&subcategories)
+
+	var seller = api.Seller{
+		Contact: api.Contact{Name: "Test Seller"},
+	}
+	db.Create(&seller)
 }

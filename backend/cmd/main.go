@@ -14,7 +14,9 @@ func main() {
 		panic(err.Error())
 	}
 
-	postService := api.CreatePostService(db)
+	repo := api.CreateRepo(db)
+
+	postService := api.CreatePostService(repo)
 	jobService := api.CreateJobService(db)
 	server := app.CreateServer(mux.NewRouter(), postService, jobService)
 	server.Migrate(db)

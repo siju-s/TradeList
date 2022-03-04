@@ -1,7 +1,7 @@
 package app
 
 func (server *Server) Routes() {
-	router := server.router
+	router := server.Router
 	router.HandleFunc("/post", server.CreatePost).Methods("POST", "OPTIONS")
 	router.HandleFunc("/post", server.GetAllPosts).Methods("GET", "OPTIONS")
 	router.HandleFunc("/post/{id}", server.GetPostById).Methods("GET")

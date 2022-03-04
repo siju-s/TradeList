@@ -7,8 +7,9 @@ import (
 )
 
 type ResponseData struct {
-	Data interface{} `json:"data"`
-	Meta interface{} `json:"meta"`
+	Data    interface{} `json:"data"`
+	Message string
+	status  int
 }
 
 func Message(status int, message string) map[string]interface{} {

@@ -178,19 +178,19 @@ func (server *Server) CreatePost(writer http.ResponseWriter, request *http.Reque
 		sendErr(writer, http.StatusBadRequest, err.Error())
 		return
 	}
-	response := server.postService.Create(post)
+	response := server.PostService.Create(post)
 	apihelpers.Respond(writer, response)
 }
 
 func (server *Server) GetAllPosts(writer http.ResponseWriter, _ *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
-	response := server.postService.GetAllPosts()
+	response := server.PostService.GetAllPosts()
 	apihelpers.Respond(writer, response)
 }
 
 func (server *Server) GetAllCategories(writer http.ResponseWriter, _ *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
-	response := server.postService.GetAllCategories()
+	response := server.PostService.GetAllCategories()
 	apihelpers.Respond(writer, response)
 }
 
@@ -198,7 +198,7 @@ func (server *Server) GetSubcategories(writer http.ResponseWriter, request *http
 	writer.Header().Set("Content-Type", "application/json")
 	categoryId := mux.Vars(request)["id"]
 	fmt.Println("CategoryId:", categoryId)
-	response := server.postService.GetSubcategories(categoryId)
+	response := server.PostService.GetSubcategories(categoryId)
 	apihelpers.Respond(writer, response)
 }
 
@@ -206,7 +206,7 @@ func (server *Server) GetPostById(writer http.ResponseWriter, request *http.Requ
 	writer.Header().Set("Content-Type", "application/json")
 	postId := mux.Vars(request)["id"]
 	fmt.Println("PostId:", postId)
-	response := server.postService.GetPostById(postId)
+	response := server.PostService.GetPostById(postId)
 	apihelpers.Respond(writer, response)
 }
 
@@ -224,7 +224,7 @@ func (server *Server) UpdatePost(writer http.ResponseWriter, request *http.Reque
 		sendErr(writer, http.StatusBadRequest, err.Error())
 		return
 	}
-	response := server.postService.UpdatePost(post, postId)
+	response := server.PostService.UpdatePost(post, postId)
 	apihelpers.Respond(writer, response)
 }
 
@@ -233,7 +233,7 @@ func (server *Server) DeletePost(writer http.ResponseWriter, request *http.Reque
 
 	postId := mux.Vars(request)["id"]
 	fmt.Println("PostId:", postId)
-	response := server.postService.DeletePost(postId)
+	response := server.PostService.DeletePost(postId)
 	apihelpers.Respond(writer, response)
 }
 

@@ -9,20 +9,25 @@ import (
 )
 
 type Server struct {
-	router      *mux.Router
-	postService api.PostService
+	Router      *mux.Router
+	PostService api.PostService
 	jobService  api.JobService
 }
 
 func CreateServer(router *mux.Router, postService api.PostService, jobService api.JobService) *Server {
 	return &Server{
-		router:      router,
-		postService: postService,
+		Router:      router,
+		PostService: postService,
 		jobService:  jobService}
 }
 
 func (server *Server) Run() {
 	server.Routes()
-	handler := cors.AllowAll().Handler(server.router)
+	handler := cors.AllowAll().Handler(server.Router)
 	log.Fatal(http.ListenAndServe(":8081", handler))
+}
+
+func (server *Server) RunTest() {
+	server.Routes()
+	cors.AllowAll().Handler(server.Router)
 }
