@@ -1,7 +1,9 @@
-.city{
-    align-items: right;
-}
+
+
 
 .spacer {
     flex: 1;
   }
+.toolbarcomp{
+    height: 44px;
+}
