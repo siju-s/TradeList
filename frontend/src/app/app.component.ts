@@ -7,4 +7,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Tradelist';
+
+  displaylogin = false;
+  displaysignup = false;
+  onPresslogin() {
+    //this.display = true;
+
+    //To toggle the component
+    this.displaylogin = !this.displaylogin;
+  }
+  onPresssignup() {
+    this.displaysignup = !this.displaysignup;
+  }
+
 }

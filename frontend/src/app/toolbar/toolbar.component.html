@@ -3,8 +3,11 @@
     <mat-toolbar color="primary" class="toolbarcomp">
         <div class="spacer"></div>
         <button mat-raised-button color="primary">Gnv</button>
-       <button mat-raised-button color="primary">Login</button>
+       <button mat-raised-button color="primary" (click)="onPress()">Login</button>
        <button mat-raised-button color="primary">Signup</button>
 
     </mat-toolbar>
 
+    <div id="comp-render" *ngIf="display">
+        <app-loginform></app-loginform>
+     </div>

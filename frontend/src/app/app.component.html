@@ -2,8 +2,26 @@
   <link rel="stylesheet" href="app.component.css">
 </head>
 <!-- Toolbar -->
-<div>
+<!--<div>
   <app-toolbar></app-toolbar>
+</div>-->
+
+
+
+<mat-toolbar color="primary" class="toolbarcomp">
+  <div class="spacer"></div>
+  <button mat-raised-button color="primary">Gnv</button>
+ <button mat-raised-button color="primary" (click)="onPresslogin()">Login</button>
+ <button mat-raised-button color="primary" (click)="onPresssignup()">Signup</button>
+
+</mat-toolbar>
+
+<div id="comp-render" *ngIf="displaylogin">
+  <app-loginform></app-loginform>
+</div>
+
+<div id="comp-render" *ngIf="displaysignup">
+  <app-createuserform></app-createuserform>
 </div>
 
 <!-- Logo bar -->
@@ -19,6 +37,7 @@
 <div>
   <app-advertisements></app-advertisements>
 </div>
+
 
 <!-- View Post -->
 <!--<div>
