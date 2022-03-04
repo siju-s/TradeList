@@ -234,3 +234,33 @@ User can login using username and password
 
     * **Code:** 200 <br />
      
+## Home
+
+Takes the user to the home page after successfully logging in
+
+* **URL**
+
+  /home
+
+* **Method:**
+
+  `GET`
+
+*  **URL Params**
+
+   **Required:**
+
+   `None`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** 
+```
+Welcome User1
+```
+
