@@ -26,6 +26,8 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import { LoginformComponent } from './loginform/loginform.component';
+import { CreateuserformComponent } from './createuserform/createuserform.component';
 
 @NgModule({
 
@@ -39,7 +41,9 @@ AppComponent,
  AdvertisementsComponent,
  EventCalenderComponent,
  BestofTgComponent,
- ViewpostComponent
+ ViewpostComponent,
+ LoginformComponent,
+ CreateuserformComponent
 
 ],
 
