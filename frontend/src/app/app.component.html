@@ -16,13 +16,9 @@
 
 </mat-toolbar>
 
-<div id="comp-render" *ngIf="displaylogin">
-  <app-loginform></app-loginform>
-</div>
 
-<div id="comp-render" *ngIf="displaysignup">
-  <app-createuserform></app-createuserform>
-</div>
+
+
 
 <!-- Logo bar -->
 <div>
@@ -32,25 +28,36 @@
 <div>
   <app-navbar></app-navbar>
 </div>
-
-<!-- Advertisements -->
-<div>
-  <app-advertisements></app-advertisements>
+<div class="container">
+  <div class="row">
+<div class="col-lg-12" id="comp-render" *ngIf="displaylogin">
+  <app-loginform></app-loginform>
 </div>
 
+<div class="col-lg-12" id="comp-render" *ngIf="displaysignup">
+  <app-createuserform></app-createuserform>
+</div>
+</div>
+</div>
+<!-- Advertisements -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+        <app-advertisements></app-advertisements>
+</div>
 
-<!-- View Post -->
+<!-- Create Post -->
+<div class="col-lg-6">
+  <app-formpost></app-formpost>
+
+ </div>
+ <div>
+</div>
+ <!-- View Post -->
 <!--<div>
   <app-viewpost></app-viewpost>
 </div>
 -->
-<!-- Create Post -->
-<!--<div>
-  <app-formpost></app-formpost>
-
- </div>-->
-
- 
 <!-- LoginForm
 
 <div>

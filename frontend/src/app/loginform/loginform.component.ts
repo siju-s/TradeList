@@ -12,4 +12,6 @@ export class LoginformComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
+
 }
