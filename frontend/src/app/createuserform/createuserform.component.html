@@ -1,1 +1,26 @@
-<p>createuserform works!</p>
+<div class="form-container">
+    <form>
+        <mat-card class="cardcontainer">
+            <mat-card-header class="cardheader">
+                <mat-card-title>Create User</mat-card-title>
+            </mat-card-header>
+        <mat-card-content>
+            <mat-form-field class="full-width">
+                <input  formControlName="FirstName" matInput placeholder="FirstName">
+              </mat-form-field><br>
+              <mat-form-field class="full-width">
+                <input  formControlName="LastName" matInput placeholder="LastName">
+              </mat-form-field><br>
+              <mat-form-field class="full-width">
+                <input  formControlName="Email" matInput placeholder="Email">
+              </mat-form-field><br>
+              <mat-form-field class="full-width">
+                <input type="password" formControlName="Password" matInput placeholder="Password">
+              </mat-form-field>
+              <mat-card-actions>
+                <button mat-raised-button color="primary">Create</button>
+              </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+    </form>
+    </div>
