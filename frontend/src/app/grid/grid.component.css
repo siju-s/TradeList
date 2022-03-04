@@ -1,0 +1,33 @@
+mat-toolbar {
+    justify-content: space-between;
+}
+.card-button{
+    background-color: green;
+    color: white;
+    font-weight: 600;
+    height: 50px;
+}
+.card-button:hover{
+    background-color: #95b7df;
+
+}
+.content {
+    padding: 16px;
+}
+
+.content > mat-card {
+    margin-bottom: 16px;
+}
+
+.column-label {
+    margin-right: 8px;
+    font-size: 1rem;
+}
+.wrapper{
+    max-width: 100%;
+    max-height:100%;
+}
+img{
+    height: 70%;
+    width: 100%;
+}

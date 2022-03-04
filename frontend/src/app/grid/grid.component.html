@@ -1,0 +1,58 @@
+<mat-toolbar color="primary">
+    <span>Housing options</span>
+    <button mat-button (click)="toggleGridColumns()" fxHide.lt-md>
+      <span *ngIf="gridColumns === 4"></span>
+      <span *ngIf="gridColumns === 3"></span>
+    </button>
+  </mat-toolbar>
+<div class="content">
+    <div fxLayout="row wrap">
+        <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of [1,2,3,4,5,6]">
+        <mat-card class="mat-elevation-z4" >
+          <mat-card-header>
+            <mat-card-title>House on Rent posting {{num}}</mat-card-title>
+            
+          </mat-card-header>
+          <!-- <img mat-card-image class="card-image" src="assets/images/image.jpeg" alt="House Image" height="400px"> -->
+          <div class="wrapper">      
+            <ngb-carousel>
+              <ng-template ngbSlide *ngFor="let image of images">
+                <div >
+                  <img [src]="image.src" alt="Random first slide">
+                </div>
+                <div class="carousel-caption">
+                  <h3>{{ image.title }}</h3>
+                  <p>{{ image.short }}</p>
+                  
+                </div>
+              </ng-template>
+            </ngb-carousel>
+            
+                 
+            </div>
+          <mat-card-content>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae fugiat sed modi incidunt, vel dolorum mollitia dolorem similique, cupiditate fuga doloremque ex architecto ab minus tempore culpa necessitatibus fugit voluptates.
+            </p>
+          </mat-card-content>
+          <p>Categories : <span><button mat-button>Housing</button>
+                <button mat-button>Renting</button>
+                <button mat-button>Apartments</button></span>
+            </p>
+            <mat-card-actions class="center">
+            <button mat-button class="card-button">INFO</button>
+            <button mat-button class="card-button">SHARE</button>
+            <button mat-button class="card-button">CONTACT</button>
+            <button mat-button class="card-button">FLAG</button>
+            </mat-card-actions>
+          <!-- <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+    </div>
+    </div>
+
+
+  <!-- <img mat-card-image class="card-image" src="assets/images/image.jpeg" alt="House Image" height="200px"> -->

@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material/material.module';
 import { BrowserAnimationsModule }
        from '@angular/platform-browser/animations';
-
+import {MatGridListModule} from '@angular/material/grid-list';
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -28,6 +28,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { LoginformComponent } from './loginform/loginform.component';
 import { CreateuserformComponent } from './createuserform/createuserform.component';
+import { GridComponent } from './grid/grid.component';
+import { AppRoutingModule } from './app-routing.module';
+import {MatSliderModule} from '@angular/material/slider';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
 
@@ -43,12 +47,13 @@ AppComponent,
  BestofTgComponent,
  ViewpostComponent,
  LoginformComponent,
- CreateuserformComponent
+ CreateuserformComponent,
+ GridComponent,
 
 ],
 
 imports: [
-
+  AppRoutingModule,
 BrowserModule,
 FormsModule,
 HttpClientModule,
@@ -65,6 +70,9 @@ NgbModule,
   MatNativeDateModule,
   MatButtonModule,
   MatCheckboxModule,
+  FlexLayoutModule,
+  MatSliderModule,
+  MatGridListModule,
 
 ],
 
