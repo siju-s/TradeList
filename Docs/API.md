@@ -208,3 +208,29 @@ Creates a new job posting
             }
     }
 ```
+## Login
+
+User can login using username and password 
+
+* **URL**
+
+  /login
+
+* **Method:**
+
+  `POST`
+
+*  **URL Params**
+
+   **Required:**
+
+   `None`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+     
