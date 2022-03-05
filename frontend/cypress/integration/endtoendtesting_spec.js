@@ -16,6 +16,33 @@ describe("Test 3", function(){
     })
 })
 
+
+
+describe("Test 11", function(){
+    it("Find description in create post form is  functional", function(){
+        cy.contains('Description').click({force: true})
+       
+    })
+
+})
+
+describe("Test 12", function(){
+    it("Find address in create post form is  functional", function(){
+        cy.contains('Address').click({force: true})
+       
+    })
+
+})
+
+describe("Test 13", function(){
+    it("Find checkbox in create post form is  functional", function(){
+        cy.contains('Show my personal information').click({force: true})
+       
+    })
+
+})
+
+
 describe("Test 4", function(){
     it("Checks if navbar is  functional", function(){
         cy.contains('Community').click()
@@ -64,7 +91,4 @@ describe("Test 10", function(){
     })
 
 })
-
-
-
 
