@@ -5,6 +5,10 @@
 - [Get Posts](#get-posts)
 - [Create Post](#create-post)
 - [Fetch Categories](#fetch-categories)
+- [Create Job post](#create-job-post)
+- [Login](#login)
+- [Home](#home)
+- [Logout](#logout)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
