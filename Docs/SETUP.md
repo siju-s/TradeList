@@ -24,11 +24,15 @@ ng new frontend
 ```
 ng add @angular/material
 ```
-5. To launch the server, navigate to `frontend` folder and run 
+5. Add `Angular devkit`
+```
+npm install --save-dev @angular-devkit/build-angular
+```
+6. To launch the server, navigate to `frontend` folder and run 
 ```
 npm start
 ```
-6. Navigate to [http://localhost:4200](http://localhost:4200) to view the application
+7. Navigate to [http://localhost:4200](http://localhost:4200) to view the application
 
 ## Backend
 
