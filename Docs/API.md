@@ -9,6 +9,7 @@
 - [Login](#login)
 - [Home](#home)
 - [Logout](#logout)
+- [Refresh](#refresh)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -296,3 +297,31 @@ User will be logged out
 ```
 Old cookie deleted. Logged out!
 ```
+
+## Refresh
+
+New token will be generated 
+
+* **URL**
+
+  /refresh
+
+* **Method:**
+
+  `POST`
+
+*  **URL Params**
+
+   **Required:**
+
+   `None`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** 
+
