@@ -6,11 +6,42 @@ type Repo interface {
 	Save(value interface{}) string
 	GetAllPosts() ([]Post, string)
 	GetCategories() ([]Category, string)
+	GetSubcategories(categoryId string) ([]Subcategory, string)
+	GetPostById(id string) (Post, string)
+	UpdatePost(post Post, postId string) (Post, string)
+	DeletePost(postId string) (Post, string)
 	GetDb() *gorm.DB
 }
 
 type repo struct {
 	db *gorm.DB
+}
+
+func (r repo) GetPostById(id string) (Post, string) {
+	var post Post
+	err := r.db.First(post, id).Find(&id).Error
+	return post, handleError(err)
+}
+
+func (r repo) UpdatePost(post Post, postId string) (Post, string) {
+	var postData Post
+	err := r.db.First(&postData, postId).Error
+
+	err = r.db.Where("ID = ?", postId).Updates(&post).Error
+	return post, handleError(err)
+}
+
+func (r repo) DeletePost(postId string) (Post, string) {
+	var post Post
+	err := r.db.Delete(&post, postId).Error
+
+	return post, handleError(err)
+}
+
+func (r repo) GetSubcategories(categoryId string) ([]Subcategory, string) {
+	var subcategories []Subcategory
+	err := r.db.Find(&subcategories, categoryId).Error
+	return subcategories, handleError(err)
 }
 
 func (r repo) GetDb() *gorm.DB {
@@ -40,7 +71,7 @@ func (r repo) GetAllPosts() ([]Post, string) {
 }
 
 func (r repo) Save(value interface{}) string {
-	return r.db.Save(&value).Error.Error()
+	return r.db.Debug().Save(&value).Error.Error()
 }
 
 func CreateRepo(db *gorm.DB) Repo {

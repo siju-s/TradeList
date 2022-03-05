@@ -86,10 +86,9 @@ func (service *postService) GetAllCategories() map[string]interface{} {
 }
 
 func (service *postService) GetSubcategories(categoryId string) map[string]interface{} {
-	var subcategories []Subcategory
-	err := service.db.Find(&subcategories, categoryId).Error
-	if err != nil {
-		return apihelpers.Message(http.StatusInternalServerError, err.Error())
+	subcategories, err := service.repo.GetSubcategories(categoryId)
+	if err != "" {
+		return apihelpers.Message(http.StatusInternalServerError, err)
 	}
 	size := len(subcategories)
 
@@ -105,10 +104,9 @@ func (service *postService) GetSubcategories(categoryId string) map[string]inter
 }
 
 func (service *postService) GetPostById(id string) map[string]interface{} {
-	var post Post
-	err := service.db.First(post, id).Find(&id).Error
-	if err != nil {
-		return apihelpers.Message(http.StatusInternalServerError, err.Error())
+	post, err := service.repo.GetPostById(id)
+	if err != "" {
+		return apihelpers.Message(http.StatusInternalServerError, err)
 	}
 	response := apihelpers.Message(http.StatusOK, "Post found")
 	response["data"] = post
@@ -116,25 +114,18 @@ func (service *postService) GetPostById(id string) map[string]interface{} {
 }
 
 func (service *postService) UpdatePost(post Post, postId string) map[string]interface{} {
-	var postData Post
-	err := service.db.First(&postData, postId).Error
-	if err != nil {
-		return apihelpers.Message(http.StatusInternalServerError, err.Error())
-	}
-
-	err = service.db.Where("ID = ?", postId).Updates(&post).Error
-	if err != nil {
-		return apihelpers.Message(http.StatusInternalServerError, err.Error())
+	_, err := service.repo.UpdatePost(post, postId)
+	if err != "" {
+		return apihelpers.Message(http.StatusInternalServerError, err)
 	}
 	response := apihelpers.Message(http.StatusOK, "Postid "+postId+" updated")
 	return response
 }
 
 func (service *postService) DeletePost(postId string) map[string]interface{} {
-	var post Post
-	err := service.db.Delete(&post, postId).Error
-	if err != nil {
-		return apihelpers.Message(http.StatusInternalServerError, err.Error())
+	_, err := service.repo.DeletePost(postId)
+	if err != "" {
+		return apihelpers.Message(http.StatusInternalServerError, err)
 	}
 	response := apihelpers.Message(http.StatusOK, "Postid "+postId+" deleted")
 	return response

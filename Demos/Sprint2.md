@@ -1,5 +1,5 @@
 ## Project : Tradelist (Sprint 2)
-* Contributers : Siju Sakaria, Yashasvi Mutteneni, Mansi Singh, Sharwari Marathe
+* Contributors : Siju Sakaria, Yashasvi Mutteneni, Mansi Singh, Sharwari Marathe
 
 ## Backend 
 The programming language used is Golang. ORM library for Golang used is GORM and the database used is SQLite.
@@ -13,7 +13,9 @@ Following are the endpoints created:
 * refresh: This endpoint is used to create a new token. A new token will be issued only if the old one is within 30 seconds of expiry. It uses the HTTP POST method.
 * logout: This endpoint deletes the token and the user is logged out. It uses the HTTP POST method. 
 
+* Unit tests and API tests have been added for the backend
 
+![Alt text](Backend_tests.png)
 
 
 ## Frontend
