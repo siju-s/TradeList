@@ -21,9 +21,9 @@ All of these components are developed using Angular and Material.
 * Login Form component : The login form is used for authenticating returning users, this component is developed using Material and Angular. It uses material components such as MatCard Module, MatFormFieldModule, MatSelectModule, Form Builder. 
 ![Alt text](login.png)
 * Create User Component : The create user form is used for registering new users, this component was also developed using the same components mentioned above. Users can toggle between the two forms depending on their requirement.
-![Alt text](create user.png)
+![Alt text](createuser.png)
 * Grid Component :
 * Index Page : The index page contains all the components that we have developed tp this date. This is a rough sketch of how out website would look like in the end. End to end user testing and unit testing was performed on each component. 
-![Alt text](index page.png)
+![Alt text](index.png)
 
 
