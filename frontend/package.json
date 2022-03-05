@@ -24,6 +24,7 @@
     "@angular/router": "~13.2.5",
     "@ng-bootstrap/ng-bootstrap": "^11.0.0",
     "bootstrap": "^4.6.1",
+    "cypress": "^9.5.1",
     "hammerjs": "^2.0.8",
     "jquery": "^3.6.0",
     "rxjs": "~7.5.0",
