@@ -28,6 +28,7 @@ import {Post, PostService} from "../post.service";
   providers: [NgbCarouselConfig]
 })
 export class GridComponent implements OnInit {
+  componentName = "user"
   images = [
 
     {title: 'Second Slide', short: 'Second Slide Short', src: "assets/images/image.jpeg"},

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./logobar.component.css']
 })
 export class LogobarComponent implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit(): void {

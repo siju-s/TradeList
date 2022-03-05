@@ -50,4 +50,20 @@ describe('GridComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should create', () => {
+    expect(component.componentName).toBe("user");
+  });
+  it('should create', () => {
+    expect(component.title).toBe("Card View Demo");
+  });
+  it('should create', () => {
+    expect(component.gridColumns).toBe(3);
+  });
+  it('should create', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('#check').textContent).toBe('Housing options');
+    
+  });
+
+
 });

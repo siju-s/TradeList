@@ -22,4 +22,10 @@ describe('LogobarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should create ', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('#logobar').textContent).toBe('');
+    
+  });
+  
 });
