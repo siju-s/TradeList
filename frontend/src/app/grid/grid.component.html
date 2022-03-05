@@ -7,14 +7,14 @@
   </mat-toolbar>
 <div class="content">
     <div fxLayout="row wrap">
-        <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of [1,2,3,4,5,6]">
+        <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of post;let index=index;">
         <mat-card class="mat-elevation-z4" >
           <mat-card-header>
-            <mat-card-title>House on Rent posting {{num}}</mat-card-title>
-            
+            <mat-card-title>{{item.Title}}</mat-card-title>
+
           </mat-card-header>
           <!-- <img mat-card-image class="card-image" src="assets/images/image.jpeg" alt="House Image" height="400px"> -->
-          <div class="wrapper">      
+          <div class="wrapper">
             <ngb-carousel>
               <ng-template ngbSlide *ngFor="let image of images">
                 <div >
@@ -23,16 +23,16 @@
                 <div class="carousel-caption">
                   <h3>{{ image.title }}</h3>
                   <p>{{ image.short }}</p>
-                  
+
                 </div>
               </ng-template>
             </ngb-carousel>
-            
-                 
+
+
             </div>
           <mat-card-content>
             <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae fugiat sed modi incidunt, vel dolorum mollitia dolorem similique, cupiditate fuga doloremque ex architecto ab minus tempore culpa necessitatibus fugit voluptates.
+              {{item.Description}}
             </p>
           </mat-card-content>
           <p>Categories : <span><button mat-button>Housing</button>

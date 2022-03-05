@@ -18,8 +18,9 @@
 
 // }
 // ###################
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import {Post, PostService} from "../post.service";
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -28,7 +29,7 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 })
 export class GridComponent implements OnInit {
   images = [
-    
+
     {title: 'Second Slide', short: 'Second Slide Short', src: "assets/images/image.jpeg"},
     {title: 'First Slide', short: 'First Slide Short', src: "assets/images/floorplans copy.png"},
     {title: 'Third Slide', short: 'Third Slide Short', src: "assets/images/amenities.jpg"}
@@ -43,9 +44,21 @@ export class GridComponent implements OnInit {
   //   // config.keyboard = true;
   //   // config.pauseOnHover = true;
   // }
-  constructor() { }
+  // constructor() { }
+
+  post:Array<Post> = []
+
+  constructor(private postService: PostService, private changeDetection: ChangeDetectorRef) { }
+
   ngOnInit(): void {
+    this.postService.getPosts().subscribe(data => {
+      this.post = data.data
+      console.log(data.data[0])
+      this.changeDetection.detectChanges()
+    })
   }
+  // ngOnInit(): void {
+  // }
 
 }
 // ***********
