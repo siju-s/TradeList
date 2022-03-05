@@ -5,7 +5,7 @@
 The programming language used is Golang. ORM library for Golang used is GORM and the database used is SQLite.
 
 Following are the endpoints created:
-![Alt text]()
+![Alt text](endpoints_sprint2.png)
 * CreateJobPost: This endpoint is used to create a job post. It uses the HTTP POST method. Once the request is sent, the job details will be stored in the database. 
 * GetPostByCategoryId: This endpoint is used to retrieve the job post based on the job category ID. It uses the HTTP GET method. Once the request is sent the job post will be retrieved from the database.
 * Login: This endpoint is used to log the user into the webpage using the username and password entered by the user. If the user enters the correct credential they will be logged in and a token will be created with an expiration time. This endpoint uses the HTTP POST method.
