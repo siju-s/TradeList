@@ -44,6 +44,11 @@ go run .
 curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 ```
 5. Run `air` on terminal to start the watcher
+6. To get JWT for Golang, run the following command:
+
+```
+go get github.com/golang-jwt/jwt
+```
 
 ## Generic
 1. DocToc - Table of contents generation. Install using `npm install -g doctoc`
