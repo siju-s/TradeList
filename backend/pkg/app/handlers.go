@@ -1,10 +1,20 @@
 package app
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/globalsign/mgo/bson"
 	"io/ioutil"
+	"log"
+	"mime/multipart"
 	"net/http"
+	"os"
+	"path/filepath"
 	"time"
 	"tradelist/pkg/api"
 	"tradelist/pkg/apihelpers"
@@ -12,6 +22,12 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
 	"golang.org/x/crypto/bcrypt"
+)
+
+const (
+	S3_ACCESS_ID = "AKIAXEAFBTWQPDWH5K6H"
+	S3_SECRET    = "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"
+	S3_BUCKET    = "uploadtradelist"
 )
 
 var jwtKey = []byte("secret_key")
@@ -289,6 +305,77 @@ func (server *Server) GetPostByCategoryId(writer http.ResponseWriter, request *h
 	fmt.Println("CategoryId:", categoryId)
 	response := server.jobService.GetPostByCategoryId(categoryId)
 	apihelpers.Respond(writer, response)
+}
+
+func (server *Server) UploadHandler(w http.ResponseWriter, r *http.Request) {
+	//maxSize := int64(5120000) // allow only 5MB of file size
+
+	//err := r.ParseMultipartForm(maxSize)
+	//if err != nil {
+	//	log.Println(err)
+	//	fmt.Fprintf(w, "Image too large. Max Size: %v", maxSize)
+	//	return
+	//}
+
+	file, err := os.Open("red_image.jpg")
+
+	//file, fileHeader, err := r.FormFile(UPLOAD_IMAGE_KEY)
+	if err != nil {
+		log.Println(err)
+		fmt.Fprintf(w, "Could not get uploaded file")
+		return
+	}
+	defer file.Close()
+	fileInfo, _ := file.Stat()
+	var size = fileInfo.Size()
+
+	// create an AWS session which can be
+	// reused if we're uploading many files
+	newSession, err := session.NewSession(&aws.Config{
+		Region: aws.String("us-east-1"),
+		Credentials: credentials.NewStaticCredentials(
+			S3_ACCESS_ID,
+			S3_SECRET,
+			"")})
+	if err != nil {
+		fmt.Println(err)
+		fmt.Fprintf(w, "Could not upload files")
+		return
+	}
+
+	fileName, err := UploadFileToS3(newSession, file, size)
+	if err != nil {
+		fmt.Fprintf(w, "Could not upload file")
+		fmt.Fprintf(w, err.Error())
+	} else {
+		fmt.Fprintf(w, "Image uploaded successfully: %v", fileName)
+	}
+}
+
+func UploadFileToS3(s *session.Session, file multipart.File, size int64) (string, error) {
+	//size := fileHeader.Size
+	buffer := make([]byte, size)
+	file.Read(buffer)
+
+	// create a unique file name for the file
+	tempFileName := "pictures/" + bson.NewObjectId().Hex() + filepath.Ext(".jpg")
+
+	_, err := s3.New(s).PutObject(&s3.PutObjectInput{
+		Bucket:               aws.String(S3_BUCKET),
+		Key:                  aws.String(tempFileName),
+		ACL:                  aws.String("public-read"), // could be private if you want it to be access by only authorized users
+		Body:                 bytes.NewReader(buffer),
+		ContentLength:        aws.Int64(size),
+		ContentType:          aws.String(http.DetectContentType(buffer)),
+		ContentDisposition:   aws.String("attachment"),
+		ServerSideEncryption: aws.String("AES256"),
+		StorageClass:         aws.String("INTELLIGENT_TIERING"),
+	})
+	if err != nil {
+		return "", err
+	}
+
+	return tempFileName, err
 }
 
 func sendErr(w http.ResponseWriter, code int, message string) {

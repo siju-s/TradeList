@@ -42,7 +42,8 @@ type Post struct {
 	IsHidden      bool        `gorm:"default:false"`
 	IsFlagged     bool        `gorm:"default:false"`
 	IsDeleted     bool        `gorm:"default:false"`
-	HasImage      bool        `gorm:"default:false"`
+	//HasImage      bool        `gorm:"default:false"`
+	Image []Images
 }
 
 type User struct {
@@ -51,6 +52,12 @@ type User struct {
 	SellerId int
 	Seller   Seller
 	Contact  Contact `gorm:"embedded"`
+}
+
+type Images struct {
+	ID       int `gorm:"primaryKey"`
+	Url      string
+	SellerId int
 }
 
 type JobPost struct {

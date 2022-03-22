@@ -3,12 +3,19 @@ module tradelist
 go 1.17
 
 require (
+	github.com/aws/aws-sdk-go v1.43.19
 	github.com/gorilla/mux v1.8.0
 	github.com/mitchellh/mapstructure v1.4.3
 	github.com/rs/cors v1.8.2
 	github.com/stretchr/testify v1.7.0
 	gorm.io/driver/sqlite v1.3.1
 	gorm.io/gorm v1.23.1
+)
+
+require (
+	github.com/aws/smithy-go v1.11.1 // indirect
+	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 )
 
 require golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064 // indirect
