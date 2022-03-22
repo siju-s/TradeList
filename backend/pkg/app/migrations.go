@@ -69,7 +69,7 @@ func createDefaultValues(db *gorm.DB) {
 	db.Create(&subcategories)
 
 	var seller = api.Seller{
-		Contact: api.Contact{Name: "Test Seller"},
+		Contact: api.Contact{FirstName: "Test", LastName: "Seller"},
 	}
 	db.Create(&seller)
 }
