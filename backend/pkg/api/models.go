@@ -3,9 +3,11 @@ package api
 import "gorm.io/gorm"
 
 type Contact struct {
-	Name  string
-	Email string
-	Phone string
+	FirstName string
+	LastName  string
+	Email     string
+	Password  string
+	Phone     string
 }
 
 type Seller struct {
