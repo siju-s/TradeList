@@ -28,11 +28,15 @@ ng add @angular/material
 ```
 npm install --save-dev @angular-devkit/build-angular
 ```
-6. To launch the server, navigate to `frontend` folder and run 
+6. Add `Angular Flex-Layout`
+```
+npm i @angular/flex-layout
+```
+7. To launch the server, navigate to `frontend` folder and run 
 ```
 npm start
 ```
-7. Navigate to [http://localhost:4200](http://localhost:4200) to view the application
+8. Navigate to [http://localhost:4200](http://localhost:4200) to view the application
 
 ## Backend
 
