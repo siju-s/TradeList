@@ -11,6 +11,7 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var jwtKey = []byte("secret_key")
@@ -28,6 +29,31 @@ type Credentials struct {
 type Claims struct {
 	Username           string `json:"username"`
 	jwt.StandardClaims        //go get github.com/golang-jwt/jwt
+
+}
+
+func (server *Server) Signup(writer http.ResponseWriter, request *http.Request) {
+
+	var data map[string]string // string as a key and string as a value
+	err := json.NewDecoder(request.Body).Decode(&data)
+	if err != nil {
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
+	contact := api.Contact{
+		FirstName: data["first name"],
+		LastName:  data["last name"],
+		Email:     data["email"],
+		Password:  password,
+	}
+	user := api.User{
+		Contact: contact,
+	}
+
+	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusCreated)
+	json.NewEncoder(writer).Encode(user)
 
 }
 

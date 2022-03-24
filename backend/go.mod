@@ -11,9 +11,11 @@ require (
 	gorm.io/gorm v1.23.1
 )
 
+require golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064 // indirect
+
 require (
-	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/mattn/go-sqlite3 v1.14.9 // indirect
