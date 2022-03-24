@@ -57,6 +57,11 @@ curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh
 ```
 go get github.com/golang-jwt/jwt
 ```
+7. To get bcrypt for password hashing in Golang, run the following command:
+
+```
+go get golang.org/x/crypto/bcrypt
+```
 
 ## Generic
 1. DocToc - Table of contents generation. Install using `npm install -g doctoc`
