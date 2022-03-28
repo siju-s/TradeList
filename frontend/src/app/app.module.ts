@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatIconModule } from '@angular/material/icon';
 import { MaterialModule } from './material/material.module';
 import { BrowserAnimationsModule }
        from '@angular/platform-browser/animations';
@@ -32,7 +32,8 @@ import { GridComponent } from './grid/grid.component';
 import { AppRoutingModule } from './app-routing.module';
 import {MatSliderModule} from '@angular/material/slider';
 import { FlexLayoutModule } from "@angular/flex-layout";
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar'; 
 @NgModule({
 
 declarations: [
@@ -73,7 +74,9 @@ NgbModule,
   FlexLayoutModule,
   MatSliderModule,
   MatGridListModule,
-
+  MatIconModule,
+  MatProgressBarModule,
+  MatToolbarModule
 ],
 
 providers: [],
