@@ -9,11 +9,11 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/globalsign/mgo/bson"
+	"github.com/mitchellh/mapstructure"
 	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
-	"os"
 	"path/filepath"
 	"time"
 	"tradelist/pkg/api"
@@ -224,6 +224,52 @@ func (server *Server) CreatePost(writer http.ResponseWriter, request *http.Reque
 	apihelpers.Respond(writer, response)
 }
 
+//TODO 1. Read post data correctly
+// 2. Upload image to AWS
+// 3. Save image url in DB
+// 4. Verify any user can upload images
+func (server *Server) CreatePost1(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "application/json")
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
+	writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	err := request.ParseMultipartForm(32 << 20)
+	if err != nil {
+		return
+	}
+	var post api.Post
+	var result map[string]interface{}
+
+	for key, value := range request.Form {
+		fmt.Printf("%s = %s\n\n", key, value)
+		json.Unmarshal([]byte(value[0]), &result)
+
+		mapstructure.Decode(result, &post)
+	}
+	filelist := server.UploadHandler(writer, request)
+
+	fmt.Println(post)
+
+	var images []api.Images
+	for _, path := range filelist {
+		var image api.Images
+		image.Url = path
+		image.SellerId = post.SellerId
+		images = append(images, image)
+	}
+	//post.Image = images
+	fmt.Println(filelist)
+
+	images = append(images)
+
+	if err != nil {
+		sendErr(writer, http.StatusBadRequest, err.Error())
+		return
+	}
+	response := server.PostService.Create(post)
+	apihelpers.Respond(writer, response)
+}
+
 func (server *Server) GetAllPosts(writer http.ResponseWriter, _ *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	response := server.PostService.GetAllPosts()
@@ -307,7 +353,7 @@ func (server *Server) GetPostByCategoryId(writer http.ResponseWriter, request *h
 	apihelpers.Respond(writer, response)
 }
 
-func (server *Server) UploadHandler(w http.ResponseWriter, r *http.Request) {
+func (server *Server) UploadHandler(w http.ResponseWriter, r *http.Request) []string {
 	//maxSize := int64(5120000) // allow only 5MB of file size
 
 	//err := r.ParseMultipartForm(maxSize)
@@ -317,20 +363,10 @@ func (server *Server) UploadHandler(w http.ResponseWriter, r *http.Request) {
 	//	return
 	//}
 
-	file, err := os.Open("red_image.jpg")
+	//file, err := os.Open("red_image.jpg")
 
-	//file, fileHeader, err := r.FormFile(UPLOAD_IMAGE_KEY)
-	if err != nil {
-		log.Println(err)
-		fmt.Fprintf(w, "Could not get uploaded file")
-		return
-	}
-	defer file.Close()
-	fileInfo, _ := file.Stat()
-	var size = fileInfo.Size()
+	files := r.MultipartForm.File["files"]
 
-	// create an AWS session which can be
-	// reused if we're uploading many files
 	newSession, err := session.NewSession(&aws.Config{
 		Region: aws.String("us-east-1"),
 		Credentials: credentials.NewStaticCredentials(
@@ -340,25 +376,40 @@ func (server *Server) UploadHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 		fmt.Fprintf(w, "Could not upload files")
-		return
+		return nil
 	}
 
-	fileName, err := UploadFileToS3(newSession, file, size)
-	if err != nil {
-		fmt.Fprintf(w, "Could not upload file")
-		fmt.Fprintf(w, err.Error())
-	} else {
-		fmt.Fprintf(w, "Image uploaded successfully: %v", fileName)
+	var filenames []string
+
+	for _, header := range files {
+		file, err := header.Open()
+		if err != nil {
+			log.Println(err)
+			fmt.Fprintf(w, "Could not get uploaded file")
+			return nil
+		}
+
+		fileName, err := UploadFileToS3(newSession, file, header)
+		if err != nil {
+			fmt.Fprintf(w, "Could not upload file")
+			fmt.Fprintf(w, err.Error())
+		} else {
+			fmt.Fprintf(w, "Image uploaded successfully: %v", fileName)
+		}
+		file.Close()
+		filenames = append(filenames, fileName)
 	}
+	return filenames
 }
 
-func UploadFileToS3(s *session.Session, file multipart.File, size int64) (string, error) {
-	//size := fileHeader.Size
+// TODO Take in user id to identify user data
+func UploadFileToS3(s *session.Session, file multipart.File, header *multipart.FileHeader) (string, error) {
+	size := header.Size
 	buffer := make([]byte, size)
 	file.Read(buffer)
 
 	// create a unique file name for the file
-	tempFileName := "pictures/" + bson.NewObjectId().Hex() + filepath.Ext(".jpg")
+	tempFileName := "pictures/" + bson.NewObjectId().Hex() + filepath.Ext(header.Filename)
 
 	_, err := s3.New(s).PutObject(&s3.PutObjectInput{
 		Bucket:               aws.String(S3_BUCKET),

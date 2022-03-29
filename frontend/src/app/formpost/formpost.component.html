@@ -1,5 +1,5 @@
 <form [formGroup]="profileForm" class="form-container">
-  
+
   <mat-card>
       <mat-card-header>
         <mat-card-title class="formtitle">Create a Post!</mat-card-title>
@@ -12,15 +12,15 @@
             </mat-form-field>
           </div> -->
             <mat-label>Title</mat-label>
-            
+
             <mat-form-field class="full-width" appearance="fill">
-  
+
               <input  formControlName="Title"matInput placeholder="Give an appropriate title for the posting">
             </mat-form-field>
             <mat-label>Location</mat-label>
             <mat-form-field appearance="fill" class="full-width">
                 <input  formControlName="Location" matInput placeholder="Location">
-                
+
                 <mat-select>
 
                 <ng-container *ngFor="let local of allLocations">
@@ -50,7 +50,7 @@
               <input  formControlName="SubCategory" id="SubCategory" matInput placeholder="List furtber details">
               <!-- <mat-label>Location</mat-label> -->
               <mat-select>
-                
+
               <ng-container *ngFor="let subcategory of allSubCategories">
               <mat-option [value]="subcategory">
                   {{subcategory.subcategoryName}}
@@ -60,13 +60,13 @@
           </mat-form-field>
           <mat-label>Description</mat-label>
           <mat-form-field class="full-width" appearance="fill">
-            
+
             <textarea formControlName="Description" matInput placeholder="Mention all the important details regarding the posting"></textarea>
           </mat-form-field>
           <mat-label>Price</mat-label>
-            
+
             <mat-form-field class="full-width" appearance="fill">
-            
+
               <input  formControlName="Price"matInput placeholder="Add the price">
           </mat-form-field>
 
@@ -75,25 +75,27 @@
 <!--              <input  formControlName="Compensation" matInput placeholder="Compensation">-->
 <!--            </mat-form-field>-->
           <mat-card-header>
-          
+
             <mat-card-title>Personal Information</mat-card-title>
           </mat-card-header>
           </div>
-          
-          
+
+
           <mat-label>Select atleast one option through which you can be contacted
           </mat-label>
           <mat-form-field class="full-width" appearance="fill">
             <input formControlName="email" matInput placeholder="Email" type = email>
           </mat-form-field>
 
-          
+
           <mat-form-field class="full-width" appearance="fill">
             <input formControlName="PhoneNo" matInput placeholder="PhoneNo" type = number>
           </mat-form-field>
 
         </div>
-        
+        <div class="row">
+          <app-upload-files></app-upload-files>
+        </div>
       </mat-card-content>
       <mat-card-actions>
         <button (click)="createPost()" mat-raised-button color="primary">Save</button>

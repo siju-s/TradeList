@@ -7,7 +7,8 @@ import (
 )
 
 func (server *Server) Migrate(db *gorm.DB) {
-	err := db.AutoMigrate(api.Contact{}, api.Category{}, api.Subcategory{}, api.User{}, api.Seller{}, api.Post{},
+	err := db.AutoMigrate(api.Contact{}, api.Category{}, api.Subcategory{}, api.User{}, api.Seller{},
+		api.Images{}, api.Post{},
 		api.PayType{}, api.JobType{}, api.Places{}, api.LocationType{}, api.Job{})
 	if err != nil {
 		return

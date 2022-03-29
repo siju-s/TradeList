@@ -43,7 +43,7 @@ type Post struct {
 	IsFlagged     bool        `gorm:"default:false"`
 	IsDeleted     bool        `gorm:"default:false"`
 	//HasImage      bool        `gorm:"default:false"`
-	Image []Images
+	//Image []Images `json:"omitempty" gorm:"foreignKey:Url"`
 }
 
 type User struct {

@@ -33,7 +33,9 @@ import { AppRoutingModule } from './app-routing.module';
 import {MatSliderModule} from '@angular/material/slider';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatToolbarModule } from '@angular/material/toolbar'; 
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { UploadFilesComponent } from "./upload.component";
+
 @NgModule({
 
 declarations: [
@@ -50,6 +52,7 @@ AppComponent,
  LoginformComponent,
  CreateuserformComponent,
  GridComponent,
+  UploadFilesComponent
 
 ],
 

@@ -1,6 +1,7 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {Post, PostService} from "../post.service";
+import {UploadFilesComponent} from "../upload.component";
 
 export class Location {
   constructor(public Id: number, public locationName: string) {
@@ -22,10 +23,13 @@ export class SubCategory {
   styleUrls: ['./formpost.component.css']
 })
 
-export class FormpostComponent {
+export class FormpostComponent implements AfterViewInit {
+
+  @ViewChild(UploadFilesComponent) child?: UploadFilesComponent;
+
   constructor(private formBuilder: FormBuilder, private postService: PostService) {
   }
-  
+
   // allSubCategories = []
   // locations = [];
   allLocations = [
@@ -78,8 +82,8 @@ export class FormpostComponent {
 		 new SubCategory( 3,  "Gym equipment"),
      new SubCategory( 3,  "Sports equipment")
   ];
-  
-  
+
+
   profileForm = this.formBuilder.group({
     Description: [''],
     Compensation: [''],
@@ -92,14 +96,26 @@ export class FormpostComponent {
 
   createPost() {
     console.log('Form data is ', this.profileForm.value);
+
+    // console.log(this.uploadFilesComponent.getSelectedFiles());
+
+    const files = this.child?.getSelectedFiles();
+
+    console.log(files);
+
+
     const post: Post = {
       Sellerid: 1,  //Mock
       Categoryid: 1,
       Subcategoryid: 1,
       Title: 'Test',
-      Description: 'Test desc'
+      Description: 'Test desc',
+      // Image:files
     };
-    this.postService.createPost(post)
+    this.postService.createPost(post, files)
+  }
+
+  ngAfterViewInit(): void {
   }
 
 }
