@@ -1,9 +1,12 @@
 package api
 
-import "gorm.io/gorm"
+import (
+	"fmt"
+	"gorm.io/gorm"
+)
 
 type Repo interface {
-	Save(value interface{}) string
+	Save(value Post) string
 	GetAllPosts() ([]Post, string)
 	GetCategories() ([]Category, string)
 	GetSubcategories(categoryId string) ([]Subcategory, string)
@@ -70,8 +73,13 @@ func (r repo) GetAllPosts() ([]Post, string) {
 	return posts, handleError(err)
 }
 
-func (r repo) Save(value interface{}) string {
-	return r.db.Debug().Save(&value).Error.Error()
+func (r repo) Save(value Post) string {
+	result := r.db.Save(&value).Error
+	fmt.Println(result)
+	if result == nil {
+		return ""
+	}
+	return result.Error()
 }
 
 func CreateRepo(db *gorm.DB) Repo {

@@ -208,27 +208,11 @@ func (server *Server) Logout(writer http.ResponseWriter, request *http.Request) 
 
 }
 
-func (server *Server) CreatePost(writer http.ResponseWriter, request *http.Request) {
-	writer.Header().Set("Content-Type", "application/json")
-	writer.Header().Set("Access-Control-Allow-Origin", "*")
-	writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-
-	var post api.Post
-	err := json.NewDecoder(request.Body).Decode(&post)
-
-	if err != nil {
-		sendErr(writer, http.StatusBadRequest, err.Error())
-		return
-	}
-	response := server.PostService.Create(post)
-	apihelpers.Respond(writer, response)
-}
-
-//TODO 1. Read post data correctly
-// 2. Upload image to AWS
-// 3. Save image url in DB
+//TODO 1. Read post data correctly DONE
+// 2. Upload image to AWS DONE
+// 3. Save image url in DB DONE
 // 4. Verify any user can upload images
-func (server *Server) CreatePost1(writer http.ResponseWriter, request *http.Request) {
+func (server *Server) CreatePost(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	writer.Header().Set("Access-Control-Allow-Origin", "*")
 	writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -257,10 +241,8 @@ func (server *Server) CreatePost1(writer http.ResponseWriter, request *http.Requ
 		image.SellerId = post.SellerId
 		images = append(images, image)
 	}
-	//post.Image = images
-	fmt.Println(filelist)
-
-	images = append(images)
+	post.Image = images
+	fmt.Println(post.Image)
 
 	if err != nil {
 		sendErr(writer, http.StatusBadRequest, err.Error())

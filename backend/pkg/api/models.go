@@ -43,7 +43,7 @@ type Post struct {
 	IsFlagged     bool        `gorm:"default:false"`
 	IsDeleted     bool        `gorm:"default:false"`
 	//HasImage      bool        `gorm:"default:false"`
-	//Image []Images `json:"omitempty" gorm:"foreignKey:Url"`
+	Image []Images `json:"omitempty" gorm:"foreignKey:PostId;references:ID"`
 }
 
 type User struct {
@@ -58,6 +58,7 @@ type Images struct {
 	ID       int `gorm:"primaryKey"`
 	Url      string
 	SellerId int
+	PostId   int
 }
 
 type JobPost struct {

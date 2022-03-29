@@ -40,10 +40,8 @@ func CreatePostService(repo Repo) PostService {
 //}
 
 func (service *postService) Create(post Post) map[string]interface{} {
-	err := service.repo.Save(&post)
-	//if len(post.Image) != 0 {
-	//	err = service.repo.Save(&post.Image)
-	//}
+	err := service.repo.Save(post)
+
 	if err != "" {
 		return apihelpers.Message(0, err)
 	} else {
