@@ -336,17 +336,6 @@ func (server *Server) GetPostByCategoryId(writer http.ResponseWriter, request *h
 }
 
 func (server *Server) UploadHandler(w http.ResponseWriter, r *http.Request) []string {
-	//maxSize := int64(5120000) // allow only 5MB of file size
-
-	//err := r.ParseMultipartForm(maxSize)
-	//if err != nil {
-	//	log.Println(err)
-	//	fmt.Fprintf(w, "Image too large. Max Size: %v", maxSize)
-	//	return
-	//}
-
-	//file, err := os.Open("red_image.jpg")
-
 	files := r.MultipartForm.File["files"]
 
 	newSession, err := session.NewSession(&aws.Config{
