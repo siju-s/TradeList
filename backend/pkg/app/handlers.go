@@ -254,6 +254,30 @@ func GenerateRandomString(n int) string {
 	return string(ret)
 }
 
+func (server *Server) Reset(writer http.ResponseWriter, request *http.Request) {
+
+	var data map[string]string // string as a key and string as a value
+	err := json.NewDecoder(request.Body).Decode(&data)
+	if err != nil {
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if data["password"] != data["password_confirm"] {
+
+		writer.Write([]byte("Passwords do not match!\n"))
+		return
+	}
+	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
+
+	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(http.StatusCreated)
+	json.NewEncoder(writer).Encode(password)
+
+	writer.Write([]byte("Password Reset Successfully!\n"))
+
+}
+
 //TODO 1. Read post data correctly DONE
 // 2. Upload image to AWS DONE
 // 3. Save image url in DB DONE
