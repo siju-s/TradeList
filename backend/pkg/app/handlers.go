@@ -14,6 +14,7 @@ import (
 	"log"
 	"mime/multipart"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strconv"
 	"time"
@@ -25,11 +26,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-const (
-	S3_ACCESS_ID = "AKIAXEAFBTWQPDWH5K6H"
-	S3_SECRET    = "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"
-	S3_BUCKET    = "uploadtradelist"
-)
+func GetEnvWithKey(key string) string {
+	return os.Getenv(key)
+}
 
 var jwtKey = []byte("secret_key")
 
@@ -255,7 +254,8 @@ func (server *Server) CreatePost(writer http.ResponseWriter, request *http.Reque
 
 func (server *Server) GetAllPosts(writer http.ResponseWriter, _ *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
-	response := server.PostService.GetAllPosts(S3_BUCKET)
+	var S3Bucket = GetEnvWithKey("AWS_BUCKET")
+	response := server.PostService.GetAllPosts(S3Bucket)
 	apihelpers.Respond(writer, response)
 }
 
@@ -339,11 +339,15 @@ func (server *Server) GetPostByCategoryId(writer http.ResponseWriter, request *h
 func UploadHandler(w http.ResponseWriter, r *http.Request, userid int) []string {
 	files := r.MultipartForm.File["files"]
 
+	var S3AccessId = GetEnvWithKey("AWS_ACCESS_KEY_ID")
+	var S3Secret = GetEnvWithKey("AWS_SECRET_ACCESS_KEY")
+	var S3Region = GetEnvWithKey("AWS_REGION")
+
 	newSession, err := session.NewSession(&aws.Config{
-		Region: aws.String("us-east-1"),
+		Region: aws.String(S3Region),
 		Credentials: credentials.NewStaticCredentials(
-			S3_ACCESS_ID,
-			S3_SECRET,
+			S3AccessId,
+			S3Secret,
 			"")})
 	if err != nil {
 		fmt.Println(err)
@@ -379,11 +383,13 @@ func UploadFileToS3(s *session.Session, file multipart.File, header *multipart.F
 	buffer := make([]byte, size)
 	file.Read(buffer)
 
+	var S3Bucket = GetEnvWithKey("AWS_BUCKET")
+
 	// create a unique file name for the file
 	tempFileName := "pictures/" + strconv.Itoa(userid) + "/" + bson.NewObjectId().Hex() + filepath.Ext(header.Filename)
 
 	_, err := s3.New(s).PutObject(&s3.PutObjectInput{
-		Bucket:               aws.String(S3_BUCKET),
+		Bucket:               aws.String(S3Bucket),
 		Key:                  aws.String(tempFileName),
 		ACL:                  aws.String("public-read"), // could be private if you want it to be access by only authorized users
 		Body:                 bytes.NewReader(buffer),
