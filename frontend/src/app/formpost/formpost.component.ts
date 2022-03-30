@@ -8,14 +8,14 @@ export class Location {
   }
 }
 
-export class Type {
-  constructor(public Id: number, public typeName: string) {
-  }
-}
-export class SubCategory {
-  constructor(public Id: number, public subcategoryName: string) {
-  }
-}
+// export class Category {
+//   constructor(public Id: number, public title: string) {
+//   }
+// }
+// export class SubCategory {
+//   constructor(public Id: number, public title: string) {
+//   }
+// }
 
 @Component({
   selector: 'app-formpost',
@@ -38,11 +38,14 @@ export class FormpostComponent implements AfterViewInit {
     new Location(102, 'NewYork'),
     new Location(103, 'Seattle')
   ];
-  allTypes = [
-    new Type(1, 'Job'),
-    new Type(2, 'Property'),
-    new Type(3, 'For Sale'),
-  ];
+  // mainCategory = new Category(1, 'Job');
+  // mainSubcategory = new SubCategory(1,  "Accounting");
+  // mainGroups = [
+  //   new Category(1, 'Job'),
+  //   new Category(2, 'Property'),
+  //   new Category(3, 'For Sale'),
+  // ];
+
   // allTypes = [
   //   new Type(1, 'Job offered'),
   //   new Type(1, 'Gig offered'),
@@ -58,31 +61,209 @@ export class FormpostComponent implements AfterViewInit {
   //   new Type(112, 'Event/ class'),
 
   // ];
-  allSubCategories = [
-     new SubCategory(1,  "Accounting"),
-		 new SubCategory(1, "HR"),
-		 new SubCategory(1,  "Legal"),
-		 new SubCategory(1,  "Customer Service"),
-		 new SubCategory(1,  "Healthcare"),
-		 new SubCategory(1,  "Hospitality"),
-		 new SubCategory(1,  "Housekeeping"),
-		 new SubCategory(1,  "Software"),
-		 new SubCategory(1,  "Accounting"),
-     new SubCategory(2, "For Sale"),
-     new SubCategory(2, "To Rent"),
-     new SubCategory(2,  "To Share"),
-     new SubCategory(2,  "Sublet"),
-     new SubCategory(2,  "Storage"),
-     new SubCategory( 3,  "Appliances"),
-     new SubCategory( 3,  "Audio equipment"),
-     new SubCategory( 3,  "Books"),
-     new SubCategory( 3,  "Clothes"),
-     new SubCategory( 3,  "Computers"),
-     new SubCategory( 3,  "Furniture"),
-		 new SubCategory( 3,  "Gym equipment"),
-     new SubCategory( 3,  "Sports equipment")
-  ];
+  // subCategories = [
+  //    new SubCategory(1,  "Accounting"),
+	// 	 new SubCategory(1, "HR"),
+	// 	 new SubCategory(1,  "Legal"),
+	// 	 new SubCategory(1,  "Customer Service"),
+	// 	 new SubCategory(1,  "Healthcare"),
+	// 	 new SubCategory(1,  "Hospitality"),
+	// 	 new SubCategory(1,  "Housekeeping"),
+	// 	 new SubCategory(1,  "Software"),
+  //    new SubCategory(2, "For Sale"),
+  //    new SubCategory(2, "To Rent"),
+  //    new SubCategory(2,  "To Share"),
+  //    new SubCategory(2,  "Sublet"),
+  //    new SubCategory(2,  "Storage"),
+  //    new SubCategory( 3,  "Appliances"),
+  //    new SubCategory( 3,  "Audio equipment"),
+  //    new SubCategory( 3,  "Books"),
+  //    new SubCategory( 3,  "Clothes"),
+  //    new SubCategory( 3,  "Computers"),
+  //    new SubCategory( 3,  "Furniture"),
+	// 	 new SubCategory( 3,  "Gym equipment"),
+  //    new SubCategory( 3,  "Sports equipment")
+  // ];
+  // selected(){
+  //   alert("hey there")
+  // }
+  // filterSubById(id: number) {
+  //   return this.subCategories.filter(item => item.Id === id);
+  // }
+//   mainCategory = {
+//     title: 'abc',
+//     id: 1
+//   };
+//   subCategory = {
+//     title: 'xxx',
+//     parentId: 1
+//   };
 
+//   mainGroups = [
+//     {
+//       title: 'abc',
+//       id: 1
+//     },
+//     {
+//       title: 'def',
+//       id: 2
+//     }
+//   ]
+
+//   subCategories = [
+//     {
+//       title: 'xxx',
+//       parentId: 1
+//     },
+//     {
+//       title: 'yyy',
+//       parentId: 1
+//     },
+//     {
+//       title: 'zzz',
+//       parentId: 2
+//     }
+//   ]
+
+//   filterSubById(id:any) {
+//     return this.subCategories.filter(item => item.parentId === id);
+// }
+  selectedDay: string ='';
+  selectedId:number=0;
+  mainGroups = [
+        {
+          title: 'Job',
+          id: 1
+        },
+        {
+          title: 'Property',
+          id: 2
+        },
+        {
+          title: 'For Sale',
+          id: 3
+        }
+      ]
+    
+  selectChangeHandler(event : any){
+    this.selectedDay = event.target.value;
+    for(let i=0; i<this.mainGroups.length;i++){
+      if(this.selectedDay == this.mainGroups[i].title){
+        this.selectedId = this.mainGroups[i].id
+      }
+    }
+  }
+  // subCategories = [
+  //    new SubCategory(1,  "Accounting"),
+	// 	 new SubCategory(1, "HR"),
+	// 	 new SubCategory(1,  "Legal"),
+	// 	 new SubCategory(1,  "Customer Service"),
+	// 	 new SubCategory(1,  "Healthcare"),
+	// 	 new SubCategory(1,  "Hospitality"),
+	// 	 new SubCategory(1,  "Housekeeping"),
+	// 	 new SubCategory(1,  "Software"),
+  //    new SubCategory(2, "For Sale"),
+  //    new SubCategory(2, "To Rent"),
+  //    new SubCategory(2,  "To Share"),
+  //    new SubCategory(2,  "Sublet"),
+  //    new SubCategory(2,  "Storage"),
+  //    new SubCategory( 3,  "Appliances"),
+  //    new SubCategory( 3,  "Audio equipment"),
+  //    new SubCategory( 3,  "Books"),
+  //    new SubCategory( 3,  "Clothes"),
+  //    new SubCategory( 3,  "Computers"),
+  //    new SubCategory( 3,  "Furniture"),
+	// 	 new SubCategory( 3,  "Gym equipment"),
+  //    new SubCategory( 3,  "Sports equipment")
+  // ];
+  subCategories = [
+        {
+          title: 'Accounting',
+          parentId: 1
+        },
+        {
+          title: 'HR',
+          parentId: 1
+        },
+        {
+          title: 'Legal',
+          parentId: 1
+        },
+        {
+          title: 'Customer Service',
+          parentId: 1
+        },
+        {
+          title: 'Healthcare',
+          parentId: 1
+        },
+        {
+          title: 'Hospitality',
+          parentId: 1
+        },
+        {
+          title: 'Software',
+          parentId: 1
+        },
+        {
+          title: 'For Sale',
+          parentId: 2
+        },
+        {
+          title: 'To Rent',
+          parentId: 2
+        },
+        {
+          title: 'To Share',
+          parentId: 2
+        },
+        {
+          title: 'Sublet',
+          parentId: 2
+        },
+        
+        {
+          title: 'Storage',
+          parentId: 2
+        },
+        {
+          title: 'Appliances',
+          parentId: 3
+        },
+        {
+          title: 'Audio equipment',
+          parentId: 3
+        },
+        {
+          title: 'Books',
+          parentId: 3
+        },
+        {
+          title: 'Clothes',
+          parentId: 3
+        },
+        {
+          title: 'Computers',
+          parentId: 3
+        },
+        {
+          title: 'Furniture',
+          parentId: 3
+        },
+        {
+          title: 'Gym equipment',
+          parentId: 3
+        },
+        {
+          title: 'Sports equipment',
+          parentId: 3
+        }
+      ]
+  filterSubById() {
+        return this.subCategories.filter(item => item.parentId === this.selectedId);
+    }
+  
+  
 
   profileForm = this.formBuilder.group({
     Description: [''],

@@ -18,53 +18,66 @@
               <input  formControlName="Title"matInput placeholder="Give an appropriate title for the posting">
             </mat-form-field>
             <mat-label>Location</mat-label>
-            <mat-form-field appearance="fill" class="full-width">
-                <input  formControlName="Location" matInput placeholder="Location">
+            <!-- <mat-form-field class="full-width" > -->
+                <!-- <input  formControlName="Location" matInput placeholder="Location" class="full-width"> -->
+                
+                <select class="full-width">
 
-                <mat-select>
-
-                <ng-container *ngFor="let local of allLocations">
-                <mat-option [value]="local">
+                <!-- <ng-container *ngFor="let local of allLocations"> -->
+                <option [value]="local" *ngFor="let local of allLocations">
                     {{local.locationName}}
-                </mat-option>
-                </ng-container>
-                </mat-select>
-            </mat-form-field>
+                </option>
+                <!-- </ng-container> -->
+                </select>
+            <!-- </mat-form-field> -->
 
-            <mat-label>Category</mat-label>
+            <!-- <mat-label>Category</mat-label>
             <mat-form-field appearance="fill" class="full-width">
                 <input  formControlName="Category" matInput placeholder="Tell us what you are posting">
-                <!-- <mat-label>Location</mat-label> -->
-                <mat-select>
+                <mat-select >
 
-                <ng-container *ngFor="let type of allTypes">
-                <mat-option [value]="type">
-                    {{type.typeName}}
+                <ng-container *ngFor="let category of mainGroups">
+                <mat-option [value]="category" [(ngModel)]="mainCategory">
+                    {{category.title}}
                 </mat-option>
+                
                 </ng-container>
-                </mat-select>
-
+              </mat-select>
+              {{mainCategory.title | json}}
             </mat-form-field>
             <mat-label>Sub Category</mat-label>
-            <mat-form-field appearance="fill" class="full-width">
-              <input  formControlName="SubCategory" id="SubCategory" matInput placeholder="List furtber details">
-              <!-- <mat-label>Location</mat-label> -->
-              <mat-select>
-
-              <ng-container *ngFor="let subcategory of allSubCategories">
-              <mat-option [value]="subcategory">
-                  {{subcategory.subcategoryName}}
+          <mat-form-field appearance="fill" class="full-width">
+              <input  formControlName="SubCategory" id="SubCategory" matInput placeholder="List further details">
+              
+              <mat-select [(ngModel)] = "mainSubcategory">
+                
+              <ng-container *ngFor="let subcategory of filterSubById(mainCategory.Id)">
+              <mat-option [value]="subcategory"  >
+                  {{subcategory.title}}
               </mat-option>
               </ng-container>
               </mat-select>
-          </mat-form-field>
-          <mat-label>Description</mat-label>
-          <mat-form-field class="full-width" appearance="fill">
-
-            <textarea formControlName="Description" matInput placeholder="Mention all the important details regarding the posting"></textarea>
-          </mat-form-field>
+          </mat-form-field> -->
+          <!-- Category -->
+        <mat-label>Category</mat-label>
+        
+         <select class="full-width" (change) = "selectChangeHandler($event)">
+            <option disabled [ngValue]="null">-/-</option>
+            
+            <option [ngValue]="category" *ngFor="let category of mainGroups">{{category.title}}</option>
+              
+          </select>
+       
+          
+        
+        <mat-label>Sub Category</mat-label>
+         <select appearance="fill" class="full-width" >
+          <option [ngValue]="subcategory" *ngFor="let subcategory of filterSubById()">{{subcategory.title}}</option>
+        </select>
+      
+      
           <mat-label>Price</mat-label>
-
+        
             <mat-form-field class="full-width" appearance="fill">
 
               <input  formControlName="Price"matInput placeholder="Add the price">

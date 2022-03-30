@@ -22,3 +22,15 @@
     font-weight: 1000;
     color: #4484CE;
 }
+select{
+    padding:17px;
+    background: rgb(245, 245, 245);
+    margin-bottom:20px;
+    
+    border : None
+}
+#example-additional-selection{
+    opacity: 0.75;
+    font-size: 0.75em;
+}
+span::before { content: '\A'; white-space: pre; }
