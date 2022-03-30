@@ -1,20 +1,20 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"log"
 	"os"
 	"time"
 	"tradelist/pkg/api"
 	"tradelist/pkg/app"
+
+	"github.com/gorilla/mux"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func main() {
-	LoadEnv()
+	//LoadEnv()
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 		logger.Config{
@@ -41,9 +41,11 @@ func main() {
 	server.Run()
 }
 
+/*
 func LoadEnv() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatalf("Error loading .env file")
 	}
 }
+*/

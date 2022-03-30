@@ -98,3 +98,9 @@ type LocationType struct {
 type Places struct {
 	Name string `gorm:"primaryKey"`
 }
+
+type PasswordReset struct {
+	ID    uint
+	Email string
+	Token string `gorm:"unique"`
+}

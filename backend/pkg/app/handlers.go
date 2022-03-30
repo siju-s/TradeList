@@ -4,22 +4,25 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/globalsign/mgo/bson"
-	"github.com/mitchellh/mapstructure"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"mime/multipart"
 	"net/http"
+	"net/smtp"
 	"os"
 	"path/filepath"
 	"strconv"
 	"time"
 	"tradelist/pkg/api"
 	"tradelist/pkg/apihelpers"
+
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/globalsign/mgo/bson"
+	"github.com/mitchellh/mapstructure"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
@@ -206,6 +209,49 @@ func (server *Server) Logout(writer http.ResponseWriter, request *http.Request) 
 
 	writer.Write([]byte("Old cookie deleted. Logged out!\n"))
 
+}
+
+func (server *Server) Forgot(writer http.ResponseWriter, request *http.Request) {
+
+	var data map[string]string // string as a key and string as a value
+	err := json.NewDecoder(request.Body).Decode(&data)
+	if err != nil {
+		writer.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	email := data["email"]
+	token := GenerateRandomString(12)
+
+	/*passwordReset := api.PasswordReset{
+
+		Email: email,
+		Token: token,
+	}*/
+
+	from := "admin@example.com"
+
+	to := []string{
+		email,
+	}
+	url := "http://localhost:4200/reset/" + token
+	message := []byte("Click <a href=\"" + url + "\">here</a> to reset your password")
+
+	smtp.SendMail("0.0.0.0:1025", nil, from, to, message)
+
+	writer.Write([]byte("Check your mail!\n"))
+
+}
+
+func GenerateRandomString(n int) string {
+	var letterRunes = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+	ret := make([]rune, n)
+
+	for i := range ret {
+		ret[i] = letterRunes[rand.Intn(len(letterRunes))]
+	}
+
+	return string(ret)
 }
 
 //TODO 1. Read post data correctly DONE

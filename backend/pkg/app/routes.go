@@ -19,6 +19,7 @@ func (server *Server) Routes() {
 	router.HandleFunc("/home", server.Home).Methods("GET")
 	router.HandleFunc("/refresh", server.Refresh).Methods("POST")
 	router.HandleFunc("/logout", server.Logout).Methods("POST")
+	router.HandleFunc("/forgot", server.Forgot).Methods("POST")
 
 	//router.HandleFunc("/upload", server.UploadHandler).Methods("POST", "OPTIONS")
 
