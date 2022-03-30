@@ -1,10 +1,15 @@
 .col-lg-6{
-   margin-left: 0;
-   margin-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 .spacer {
-    flex: 1;
-  }
+   flex: 1;
+ }
 .toolbarcomp{
-    height: 44px;
+
+   height: 44px;
+}
+span{
+ margin-top: 10px;
+ padding: 10px;
 }

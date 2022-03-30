@@ -1,4 +1,4 @@
-<div class="form-container">
+<!--<div class="form-container">
 <form>
     <mat-card class="cardcontainer">
         <mat-card-header class="cardheader">
@@ -12,9 +12,41 @@
             <input type="password" formControlName="Password" matInput placeholder="Password" required>
           </mat-form-field>
           <mat-card-actions>
-            <button mat-raised-button color="primary">Login</button>
+            <button mat-raised-button color="primary" (click)="modal.close('Save click')>Login</button>
           </mat-card-actions>
     </mat-card-content>
 </mat-card>
 </form>
-</div>
+</div>-->
+
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Login</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+      
+        <div class="input-group">
+          <input id="userEmail" class="form-control" placeholder="Email" name="email" required>
+   
+        </div>
+       <br><br>
+        <div class="input-group">
+
+          <input type="password" id="password" class="form-control" placeholder="Password" name="password" required>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button"  button mat-raised-button color="primary" (click)="modal.close('Save click')">Login</button>
+  </div>
+</ng-template>
+
+<button button mat-raised-button color="primary" (click)="open(content)">Login</button>
+
+<hr>

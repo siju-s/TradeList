@@ -1,4 +1,4 @@
-<div class="form-container">
+<!--<div class="createuserform-container">
     <form>
         <mat-card class="cardcontainer">
             <mat-card-header class="cardheader">
@@ -23,4 +23,46 @@
         </mat-card-content>
     </mat-card>
     </form>
+    </div>-->
+
+    <div class="createuserform-container">
+      <ng-template #content let-modal>
+     
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Sign up</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <div class="input-group">
+                <input id="FirstName" class="form-control" placeholder="First Name" name="firstname" required>
+         
+              </div>
+             <br><br>
+             <div class="input-group">
+              <input id="LastName" class="form-control" placeholder="Last Name" name="lastname" required>
+       
+            </div>
+           <br><br>
+              <div class="input-group">
+                <input id="userEmail" class="form-control" placeholder="Email" name="email" required>
+         
+              </div>
+             <br><br>
+              <div class="input-group">
+      
+                <input type="password" id="password" class="form-control" placeholder="Password" name="password" required>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"  button mat-raised-button color="primary" (click)="modal.close('Save click')">Sign up</button>
+        </div>
+      </ng-template>
+      
+      <button button mat-raised-button color="primary" (click)="open(content)">Sign up</button>
+      
+      <hr>
     </div>
