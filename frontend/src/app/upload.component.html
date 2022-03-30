@@ -1,20 +1,11 @@
 <div class="row">
 <div class="col-8">
   <label class="btn btn-default p-0">
-    <input type="file" multiple (change)="selectFiles($event)" />
+    <input type="file" accept=".jpg,.png" multiple (change)="selectFiles($event)"  />
   </label>
 </div>
-<div class="col-4">
-  <button
-    class="btn btn-success btn-sm"
-    [disabled]="!selectedFiles"
-    (click)="uploadFiles()"
-  >
-    Upload
-  </button>
 </div>
-</div>
-<div *ngFor="let progressInfo of progressInfos" class="mb-2">
+<div *ngFor="let progressInfo of progressInfos" class="upload">
   <span>{{ progressInfo.fileName }}</span>
   <div class="progress">
     <div
@@ -38,10 +29,9 @@
   <div class="card-header">List of Files</div>
   <ul
     class="list-group list-group-flush"
-    *ngFor="let file of fileInfos | async"
-  >
+    *ngFor="let file of files">
     <li class="list-group-item">
-      <a href="{{ file.url }}">{{ file.name }}</a>
+     {{ file.name }}
     </li>
   </ul>
 </div>

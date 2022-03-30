@@ -11,9 +11,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UploadFilesComponent implements OnInit {
-  selectedFiles?: FileList;
+  selectedFiles: FileList;
   progressInfos: any[] = [];
   message: string[] = [];
+  files : Array<File> = [];
   fileInfos?: Observable<any>;
   constructor(private uploadService: UploadFilesService) { }
 
@@ -21,12 +22,20 @@ export class UploadFilesComponent implements OnInit {
     this.fileInfos = this.uploadService.getFiles();
   }
 
-  selectFiles(event:any): void {
+  selectFiles(event:Event): void {
     this.message = [];
     this.progressInfos = [];
-    this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles)
-    console.log(this)
+    this.files = [];
+    this.selectedFiles = (event.target as HTMLInputElement).files!;
+
+
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      let file = this.selectedFiles.item(i);
+      if (file != null) {
+        this.files.push(file);
+      }
+    }
+    console.log(this.files)
   }
 
   getSelectedFiles() : FileList {
