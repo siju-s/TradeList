@@ -62,6 +62,18 @@ go get github.com/golang-jwt/jwt
 ```
 go get golang.org/x/crypto/bcrypt
 ```
+8. Install MailHog to test emails locally:
+
+```
+sudo apt-get -y install golang-go
+go get github.com/mailhog/MailHog
+```
+ To start MailHog:
+
+```
+~/go/bin/MailHog
+```
+   
 
 ## Generic
 1. DocToc - Table of contents generation. Install using `npm install -g doctoc`
