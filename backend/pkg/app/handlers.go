@@ -15,6 +15,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"time"
 	"tradelist/pkg/api"
 	"tradelist/pkg/apihelpers"
@@ -230,7 +231,7 @@ func (server *Server) CreatePost(writer http.ResponseWriter, request *http.Reque
 
 		mapstructure.Decode(result, &post)
 	}
-	filelist := server.UploadHandler(writer, request)
+	filelist := UploadHandler(writer, request, post.SellerId)
 
 	fmt.Println(post)
 
@@ -254,7 +255,7 @@ func (server *Server) CreatePost(writer http.ResponseWriter, request *http.Reque
 
 func (server *Server) GetAllPosts(writer http.ResponseWriter, _ *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
-	response := server.PostService.GetAllPosts()
+	response := server.PostService.GetAllPosts(S3_BUCKET)
 	apihelpers.Respond(writer, response)
 }
 
@@ -335,7 +336,7 @@ func (server *Server) GetPostByCategoryId(writer http.ResponseWriter, request *h
 	apihelpers.Respond(writer, response)
 }
 
-func (server *Server) UploadHandler(w http.ResponseWriter, r *http.Request) []string {
+func UploadHandler(w http.ResponseWriter, r *http.Request, userid int) []string {
 	files := r.MultipartForm.File["files"]
 
 	newSession, err := session.NewSession(&aws.Config{
@@ -360,7 +361,7 @@ func (server *Server) UploadHandler(w http.ResponseWriter, r *http.Request) []st
 			return nil
 		}
 
-		fileName, err := UploadFileToS3(newSession, file, header)
+		fileName, err := UploadFileToS3(newSession, file, header, userid)
 		if err != nil {
 			fmt.Fprintf(w, "Could not upload file")
 			fmt.Fprintf(w, err.Error())
@@ -373,14 +374,13 @@ func (server *Server) UploadHandler(w http.ResponseWriter, r *http.Request) []st
 	return filenames
 }
 
-// TODO Take in user id to identify user data
-func UploadFileToS3(s *session.Session, file multipart.File, header *multipart.FileHeader) (string, error) {
+func UploadFileToS3(s *session.Session, file multipart.File, header *multipart.FileHeader, userid int) (string, error) {
 	size := header.Size
 	buffer := make([]byte, size)
 	file.Read(buffer)
 
 	// create a unique file name for the file
-	tempFileName := "pictures/" + bson.NewObjectId().Hex() + filepath.Ext(header.Filename)
+	tempFileName := "pictures/" + strconv.Itoa(userid) + "/" + bson.NewObjectId().Hex() + filepath.Ext(header.Filename)
 
 	_, err := s3.New(s).PutObject(&s3.PutObjectInput{
 		Bucket:               aws.String(S3_BUCKET),

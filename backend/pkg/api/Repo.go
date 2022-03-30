@@ -7,7 +7,7 @@ import (
 
 type Repo interface {
 	Save(value Post) string
-	GetAllPosts() ([]Post, string)
+	GetAllPosts(bucketid string) ([]Post, string)
 	GetCategories() ([]Category, string)
 	GetSubcategories(categoryId string) ([]Subcategory, string)
 	GetPostById(id string) (Post, string)
@@ -15,6 +15,10 @@ type Repo interface {
 	DeletePost(postId string) (Post, string)
 	GetDb() *gorm.DB
 }
+
+const (
+	AwsUrl = ".s3.amazonaws.com/"
+)
 
 type repo struct {
 	db *gorm.DB
@@ -67,10 +71,28 @@ func handleError(err error) string {
 	return msg
 }
 
-func (r repo) GetAllPosts() ([]Post, string) {
+func (r repo) GetAllPosts(bucketid string) ([]Post, string) {
 	var posts []Post
 	err := r.db.Find(&posts).Error
+	if err == nil {
+		for idx, post := range posts {
+			images, err := r.GetImagesForPost(post.ID)
+			fmt.Println("Post id:", post.ID, "image", len(images), "idx:", idx)
+			if err == "" {
+				for i, img := range images {
+					images[i].Url = "https://" + bucketid + AwsUrl + img.Url
+				}
+				posts[idx].Image = images
+			}
+		}
+	}
 	return posts, handleError(err)
+}
+
+func (r repo) GetImagesForPost(postId uint) ([]Images, string) {
+	var images []Images
+	err := r.db.Where("post_id = ?", postId).Find(&images).Error
+	return images, handleError(err)
 }
 
 func (r repo) Save(value Post) string {

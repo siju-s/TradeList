@@ -42,8 +42,7 @@ type Post struct {
 	IsHidden      bool        `gorm:"default:false"`
 	IsFlagged     bool        `gorm:"default:false"`
 	IsDeleted     bool        `gorm:"default:false"`
-	//HasImage      bool        `gorm:"default:false"`
-	Image []Images `json:"omitempty" gorm:"foreignKey:PostId;references:ID"`
+	Image         []Images    `gorm:"foreignKey:PostId;references:ID"`
 }
 
 type User struct {
