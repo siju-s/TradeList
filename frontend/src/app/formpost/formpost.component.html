@@ -2,9 +2,16 @@
 
   <mat-card>
       <mat-card-header>
-        <mat-card-title class="formtitle">Create a Post!</mat-card-title>
+        <mat-card-title class="formtitle"><span>Create a Post!</span></mat-card-title>
       </mat-card-header>
       <mat-card-content>
+        
+        <mat-card-header>
+
+          <mat-card-title  id="header1"><span>Posting Information</span></mat-card-title>
+        </mat-card-header>
+        
+      
         <div class="row">
           <!-- <div class="col-md-6">
             <mat-form-field class="full-width">
@@ -74,7 +81,8 @@
          <select appearance="fill" class="full-width" >
           <option [ngValue]="subcategory" *ngFor="let subcategory of filterSubById()">{{subcategory.title}}</option>
         </select>
-      
+        
+        
       
           <mat-label>Price</mat-label>
         
@@ -82,6 +90,13 @@
 
               <input  formControlName="Price"matInput placeholder="Add the price">
           </mat-form-field>
+
+          <mat-label>Image</mat-label>
+
+          <p><span>Upload images related to your posting</span></p>
+          <div class="image">
+            <app-upload-files></app-upload-files>
+          </div>
 
           <div class="col-md-6" class="full-width">
 <!--            <mat-form-field class="full-width">-->
@@ -106,9 +121,7 @@
           </mat-form-field>
 
         </div>
-        <div class="row">
-          <app-upload-files></app-upload-files>
-        </div>
+        
       </mat-card-content>
       <mat-card-actions>
         <button (click)="createPost()" mat-raised-button color="primary">Save</button>
