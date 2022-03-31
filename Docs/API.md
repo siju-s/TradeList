@@ -78,11 +78,11 @@ Creates a new post
 
 * **URL**
 
-  /post
+  /post (Deprecated, use /post/category/{id}) where id is categoryid
 
 * **Method:**
 
-  `PUT`
+  `POST`
 
 * **URL Params**
 
@@ -108,13 +108,14 @@ Creates a new post
 ```
 * **Sample input**
 ```
-  {
+files: //Filelist from form data
+data: "  {
   "SellerId": 1,
   "CategoryId": 1,
   "SubcategoryId": 1,
-  "Title": "Post1",
-  "Description": "Post1Desc"
-  }
+  "Title": "Test3",
+  "Description": "Test3Desc"
+  }"
 ```
 ## Fetch Categories
 
@@ -166,11 +167,11 @@ Creates a new job posting
 
 * **URL**
 
-  /post
+  /post/category/1
 
 * **Method:**
 
-  `PUT`
+  `POST`
 
 * **URL Params**
 
@@ -184,7 +185,13 @@ Creates a new job posting
 
 
 * **Constraints**
-  `CategoryId`, `SellerId` and `SubCategoryId` should exist in the DB
+  `CategoryId`  
+  `SellerId`  
+   `SubCategoryId`  
+  `Pay`  
+  `Type`  
+  `Location`  
+  `Place`  should exist in the DB
 
 
 * **Success Response:**

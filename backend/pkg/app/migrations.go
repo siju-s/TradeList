@@ -73,4 +73,37 @@ func createDefaultValues(db *gorm.DB) {
 		Contact: api.Contact{FirstName: "Test", LastName: "Seller"},
 	}
 	db.Create(&seller)
+	createDefaultJobValues(db)
+}
+
+func createDefaultJobValues(db *gorm.DB) {
+	var paytype = []api.PayType{
+		{"monthly"},
+		{"yearly"},
+		{"hourly"},
+	}
+	var locationtype = []api.LocationType{
+		{"remote"},
+		{"onsite"},
+		{"hybrid"},
+	}
+	var jobtype = []api.JobType{
+		{"fulltime"},
+		{"parttime"},
+		{"internship"},
+	}
+	var place = []api.Places{
+		{"Gainesville"},
+		{"California"},
+		{"Chicago"},
+		{"NewYork"},
+	}
+	result := db.Create(&paytype)
+	result = db.Create(&locationtype)
+	result = db.Create(&jobtype)
+	result = db.Create(&place)
+
+	if result.Error != nil {
+		fmt.Println(result.Error)
+	}
 }

@@ -2,7 +2,7 @@ package app
 
 func (server *Server) Routes() {
 	router := server.Router
-	router.HandleFunc("/post", server.CreatePost).Methods("POST", "OPTIONS")
+	//router.HandleFunc("/post", server.CreatePost).Methods("POST", "OPTIONS")
 	router.HandleFunc("/post", server.GetAllPosts).Methods("GET", "OPTIONS")
 	router.HandleFunc("/post/{id}", server.GetPostById).Methods("GET")
 	router.HandleFunc("/post/{id}", server.UpdatePost).Methods("PUT")
@@ -11,7 +11,7 @@ func (server *Server) Routes() {
 	router.HandleFunc("/categories", server.GetAllCategories).Methods("GET")
 	router.HandleFunc("/subcategories/{id}", server.GetSubcategories).Methods("GET")
 
-	router.HandleFunc("/post/category/{id}", server.CreateJobPost).Methods("POST", "OPTIONS")
+	router.HandleFunc("/post/category/{id}", server.CreatePost).Methods("POST", "OPTIONS")
 	router.HandleFunc("/post/category/{id}", server.GetPostByCategoryId).Methods("GET", "OPTIONS")
 
 	router.HandleFunc("/login", server.Login).Methods("POST")
@@ -21,7 +21,4 @@ func (server *Server) Routes() {
 	router.HandleFunc("/logout", server.Logout).Methods("POST")
 	router.HandleFunc("/forgot", server.Forgot).Methods("POST")
 	router.HandleFunc("/reset", server.Reset).Methods("POST")
-
-	//router.HandleFunc("/upload", server.UploadHandler).Methods("POST", "OPTIONS")
-
 }

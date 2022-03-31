@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"gorm.io/gorm"
 	"net/http"
 	"tradelist/pkg/apihelpers"
@@ -14,22 +13,26 @@ type JobService interface {
 }
 
 type jobService struct {
-	db *gorm.DB
+	db   *gorm.DB
+	repo Repo
 }
 
-func CreateJobService(db *gorm.DB) JobService {
-	return &jobService{db: db}
+func (service *jobService) GetRepo() Repo {
+	return service.repo
+}
+
+func CreateJobService(repo Repo) JobService {
+	return &jobService{repo: repo}
 }
 
 func (service *jobService) CreateJobPost(jobPost JobPost) map[string]interface{} {
-	err := service.db.Debug().Save(&jobPost.Post).Error
-	fmt.Println("Postid:", jobPost.Post.ID)
-	if err == nil {
-		jobPost.Job.PostId = jobPost.Post.ID
-		jobPost.Job.SubcategoryId = jobPost.Post.SubcategoryId
-		err = service.db.Debug().Save(&jobPost.Job).Error
+	err := service.repo.SaveJobPost(jobPost)
+
+	if err != "" {
+		return apihelpers.Message(0, err)
+	} else {
+		return apihelpers.Message(http.StatusCreated, "Post created")
 	}
-	return apihelpers.Message(http.StatusCreated, "JobPost created")
 }
 
 func (service *jobService) GetPostByCategoryId(id string) map[string]interface{} {

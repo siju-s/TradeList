@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"math/rand"
 	"mime/multipart"
@@ -293,33 +292,52 @@ func (server *Server) CreatePost(writer http.ResponseWriter, request *http.Reque
 	}
 	var post api.Post
 	var result map[string]interface{}
+	categoryId, err := strconv.Atoi(mux.Vars(request)["id"])
+	var jobPost api.JobPost
 
 	for key, value := range request.Form {
 		fmt.Printf("%s = %s\n\n", key, value)
 		json.Unmarshal([]byte(value[0]), &result)
+		mapstructure.Decode(result["Post"], &post)
 
-		mapstructure.Decode(result, &post)
+		if categoryId == 1 {
+			mapstructure.Decode(result, &jobPost)
+			post = jobPost.Post
+		} else {
+			sendErr(writer, http.StatusBadRequest, "Invalid categoryid:"+strconv.Itoa(categoryId))
+			return
+		}
 	}
-	filelist := UploadHandler(writer, request, post.SellerId)
-
-	fmt.Println(post)
-
-	var images []api.Images
-	for _, path := range filelist {
-		var image api.Images
-		image.Url = path
-		image.SellerId = post.SellerId
-		images = append(images, image)
-	}
+	images := uploadImages(writer, request, post.SellerId)
+	jobPost.Post.Image = images
 	post.Image = images
-	fmt.Println(post.Image)
+
+	fmt.Println(jobPost.Post.Image)
 
 	if err != nil {
 		sendErr(writer, http.StatusBadRequest, err.Error())
 		return
 	}
-	response := server.PostService.Create(post)
+	var response map[string]interface{}
+	if categoryId == 1 {
+		response = server.jobService.CreateJobPost(jobPost)
+	} else {
+		response = server.PostService.Create(post)
+	}
 	apihelpers.Respond(writer, response)
+}
+
+func uploadImages(writer http.ResponseWriter, request *http.Request, sellerid int) []api.Images {
+	filelist := UploadHandler(writer, request, sellerid)
+
+	var images []api.Images
+	for _, path := range filelist {
+		var image api.Images
+		image.Url = path
+		image.SellerId = sellerid
+		images = append(images, image)
+	}
+	return images
 }
 
 func (server *Server) GetAllPosts(writer http.ResponseWriter, _ *http.Request) {
@@ -378,26 +396,6 @@ func (server *Server) DeletePost(writer http.ResponseWriter, request *http.Reque
 	apihelpers.Respond(writer, response)
 }
 
-func (server *Server) CreateJobPost(writer http.ResponseWriter, request *http.Request) {
-	writer.Header().Set("Content-Type", "application/json")
-	writer.Header().Set("Access-Control-Allow-Origin", "*")
-	writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-
-	var jobPost api.JobPost
-
-	body, _ := ioutil.ReadAll(request.Body)
-	err := json.Unmarshal(body, &jobPost)
-
-	fmt.Println(jobPost)
-
-	if err != nil {
-		sendErr(writer, http.StatusBadRequest, "Malformed Post data")
-		return
-	}
-	response := server.jobService.CreateJobPost(jobPost)
-	apihelpers.Respond(writer, response)
-}
-
 func (server *Server) GetPostByCategoryId(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	categoryId := mux.Vars(request)["id"]
@@ -440,7 +438,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request, userid int) []string 
 			fmt.Fprintf(w, "Could not upload file")
 			fmt.Fprintf(w, err.Error())
 		} else {
-			fmt.Fprintf(w, "Image uploaded successfully: %v", fileName)
+			fmt.Println(w, "Image uploaded successfully: %v", fileName)
 		}
 		file.Close()
 		filenames = append(filenames, fileName)

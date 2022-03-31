@@ -7,6 +7,7 @@ import (
 
 type Repo interface {
 	Save(value Post) string
+	SaveJobPost(value JobPost) string
 	GetAllPosts(bucketid string) ([]Post, string)
 	GetCategories() ([]Category, string)
 	GetSubcategories(categoryId string) ([]Subcategory, string)
@@ -99,6 +100,18 @@ func (r repo) Save(value Post) string {
 	result := r.db.Save(&value).Error
 	fmt.Println(result)
 	if result == nil {
+		return ""
+	}
+	return result.Error()
+}
+
+func (r repo) SaveJobPost(jobPost JobPost) string {
+	result := r.db.Save(&jobPost.Post).Error
+	fmt.Println(result)
+	if result == nil {
+		jobPost.Job.PostId = jobPost.Post.ID
+		jobPost.Job.SubcategoryId = jobPost.Post.SubcategoryId
+		r.db.Save(&jobPost.Job)
 		return ""
 	}
 	return result.Error()
