@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {Job, JobPost, Post, PostService} from "../post.service";
 import {UploadFilesComponent} from "../upload.component";
-
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class Location {
   constructor(public Id: number, public locationName: string) {
   }
@@ -27,9 +27,27 @@ export class FormpostComponent implements AfterViewInit {
 
   @ViewChild(UploadFilesComponent) child?: UploadFilesComponent;
 
-  constructor(private formBuilder: FormBuilder, private postService: PostService) {
+  constructor(private formBuilder: FormBuilder, private postService: PostService, private modalService: NgbModal) {
   }
-
+  title = 'appBootstrap';
+  closeResult: string = '';
+  open(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  } 
+ 
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
   // allSubCategories = []
   // locations = [];
   allLocations = [
