@@ -68,11 +68,6 @@ func createDefaultValues(db *gorm.DB) {
 		{CategoryId: 3, Name: "Sports equipment"},
 	}
 	db.Create(&subcategories)
-
-	var seller = api.Seller{
-		Contact: api.Contact{FirstName: "Test", LastName: "Seller"},
-	}
-	db.Create(&seller)
 	createDefaultJobValues(db)
 }
 

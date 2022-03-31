@@ -11,10 +11,7 @@ type Contact struct {
 }
 
 type Seller struct {
-	SellerId int     `gorm:"primaryKey"`
-	Contact  Contact `gorm:"embedded"`
-	Rating   int     `gorm:"default:0"`
-	//TODO Add seller logo
+	Rating int `gorm:"default:0"`
 }
 
 type Category struct {
@@ -32,7 +29,7 @@ type Subcategory struct {
 type Post struct {
 	gorm.Model
 	SellerId      int
-	Seller        Seller `json:"-"`
+	User          User `json:"-" gorm:"foreignKey:SellerId"`
 	CategoryId    int
 	SubcategoryId int
 	Category      Category    `json:"-"`
@@ -46,10 +43,9 @@ type Post struct {
 }
 
 type User struct {
-	ID       int  `gorm:"primaryKey;autoIncrement"`
-	IsSeller bool `gorm:"default:false"`
-	SellerId int
-	Seller   Seller
+	ID       int     `gorm:"primaryKey;autoIncrement"`
+	IsSeller bool    `gorm:"default:false"`
+	Seller   Seller  `gorm:"embedded"`
 	Contact  Contact `gorm:"embedded"`
 }
 
@@ -87,7 +83,6 @@ type Job struct {
 }
 
 type JobType struct {
-	//ID   int `gorm:"primaryKey"`
 	Name string `gorm:"primaryKey"`
 }
 

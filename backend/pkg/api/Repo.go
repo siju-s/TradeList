@@ -6,6 +6,7 @@ import (
 )
 
 type Repo interface {
+	CreateUser(user User) (User, string)
 	Save(value Post) string
 	SaveJobPost(value JobPost) string
 	GetAllPosts(bucketid string) ([]Post, string)
@@ -23,6 +24,11 @@ const (
 
 type repo struct {
 	db *gorm.DB
+}
+
+func (r repo) CreateUser(user User) (User, string) {
+	result := r.db.Create(&user)
+	return user, handleError(result.Error)
 }
 
 func (r repo) GetPostById(id string) (Post, string) {

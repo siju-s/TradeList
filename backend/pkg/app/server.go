@@ -9,16 +9,19 @@ import (
 )
 
 type Server struct {
-	Router      *mux.Router
-	PostService api.PostService
-	jobService  api.JobService
+	Router       *mux.Router
+	PostService  api.PostService
+	jobService   api.JobService
+	loginService api.LoginService
 }
 
-func CreateServer(router *mux.Router, postService api.PostService, jobService api.JobService) *Server {
+func CreateServer(router *mux.Router, postService api.PostService, jobService api.JobService, loginService api.LoginService) *Server {
 	return &Server{
-		Router:      router,
-		PostService: postService,
-		jobService:  jobService}
+		Router:       router,
+		PostService:  postService,
+		jobService:   jobService,
+		loginService: loginService,
+	}
 }
 
 func (server *Server) Run() {

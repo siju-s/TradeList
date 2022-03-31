@@ -52,27 +52,17 @@ type Claims struct {
 
 func (server *Server) Signup(writer http.ResponseWriter, request *http.Request) {
 
-	var data map[string]string // string as a key and string as a value
-	err := json.NewDecoder(request.Body).Decode(&data)
+	var user api.User
+	err := json.NewDecoder(request.Body).Decode(&user)
 	if err != nil {
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
-	contact := api.Contact{
-		FirstName: data["first name"],
-		LastName:  data["last name"],
-		Email:     data["email"],
-		Password:  password,
-	}
-	user := api.User{
-		Contact: contact,
-	}
+	password, _ := bcrypt.GenerateFromPassword([]byte(user.Contact.Password), 14)
+	user.Contact.Password = password
 
-	writer.Header().Set("Content-Type", "application/json")
-	writer.WriteHeader(http.StatusCreated)
-	json.NewEncoder(writer).Encode(user)
-
+	response := server.loginService.SignUp(user)
+	apihelpers.Respond(writer, response)
 }
 
 func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
