@@ -20,9 +20,9 @@ export class PostService {
     return result
   }
 
-  createPost(post: Post, files?: FileList) {
+  createPost(jobPost: JobPost, files?: FileList) {
     const formData = new FormData();
-    formData.append('data', JSON.stringify(post))
+    formData.append('data', JSON.stringify(jobPost))
     for (let i = 0; i < files!.length; i++) {
       formData.append('files', files![i], files![i].name);
     }
@@ -31,8 +31,8 @@ export class PostService {
       .append("Access-Control-Allow-Origin", "*")
       .append("Accept", "multipart/form-data");
 
-    console.log(formData)
-    this.http.post<any>(environment.gateway + '/post', formData).subscribe(data => {
+    console.log(formData.getAll('data'))
+    this.http.post<any>(environment.gateway + '/post/category/' + jobPost.Post.Categoryid, formData).subscribe(data => {
       console.log(data)
     });
   }
@@ -47,6 +47,19 @@ export interface Post {
   Description: string;
   CreatedAt?:string;
   Image?:FileList;
+}
+
+export interface Job {
+  Salary:number;
+  Pay:string;
+  Type:string;
+  Location:string;
+  Place:string;
+}
+
+export interface JobPost {
+  Post:Post;
+  Job:Job;
 }
 
 export interface Response {

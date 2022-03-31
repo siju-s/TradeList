@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {Post, PostService} from "../post.service";
+import {Job, JobPost, Post, PostService} from "../post.service";
 import {UploadFilesComponent} from "../upload.component";
 
 export class Location {
@@ -144,7 +144,7 @@ export class FormpostComponent implements AfterViewInit {
           id: 3
         }
       ]
-    
+
   selectChangeHandler(event : any){
     this.selectedDay = event.target.value;
     for(let i=0; i<this.mainGroups.length;i++){
@@ -221,7 +221,7 @@ export class FormpostComponent implements AfterViewInit {
           title: 'Sublet',
           parentId: 2
         },
-        
+
         {
           title: 'Storage',
           parentId: 2
@@ -262,8 +262,8 @@ export class FormpostComponent implements AfterViewInit {
   filterSubById() {
         return this.subCategories.filter(item => item.parentId === this.selectedId);
     }
-  
-  
+
+
 
   profileForm = this.formBuilder.group({
     Description: [''],
@@ -284,16 +284,29 @@ export class FormpostComponent implements AfterViewInit {
 
     console.log(files);
 
-
+   // TODO Make sure dummy data is replaced with data from form
     const post: Post = {
       Sellerid: 1,  //Mock
       Categoryid: 1,
       Subcategoryid: 1,
       Title: 'Test',
       Description: 'Test desc',
-      // Image:files
     };
-    this.postService.createPost(post, files)
+
+    const job : Job = {
+      Salary: 500,
+      Pay: "monthly",
+      Type: "fulltime",
+      Location: "remote",
+      Place: "Gainesville"
+    }
+
+    const jobPost : JobPost = {
+      Post : post,
+      Job : job
+    }
+
+    this.postService.createPost(jobPost, files)
   }
 
   ngAfterViewInit(): void {
