@@ -30,7 +30,7 @@
      
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title">Sign up</h4>
-          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+          <button type="button" id="signupclose" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
         </div>
         <div class="modal-body">
           <form [formGroup]="form" (ngSubmit)="submit()">
@@ -65,7 +65,7 @@
                 <label for="email">Email</label>
                 <input 
                     formControlName="email"
-                    id="email" 
+                    id="useremail" 
                     type="text" 
                     class="form-control">
                 <div *ngIf="f['email'].touched && f['email'].invalid" class="alert alert-danger">
@@ -77,7 +77,7 @@
               <label for="password">Password</label>
               <input 
                   formControlName="password"
-                  id="password" 
+                  id="userpassword" 
                   type="password" 
                   class="form-control">
               <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
@@ -87,7 +87,7 @@
           </div>
            
             
-            <button class="btn btn-primary" [disabled]="form.invalid" type="submit">Submit</button>
+            <button class="btn btn-primary" id="signupsubmit" [disabled]="form.invalid" type="submit">Submit</button>
         </form>
         </div>
       </ng-template>
