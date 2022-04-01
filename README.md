@@ -15,9 +15,9 @@ This is a repo for CEN5035 Software Engineering Project. It replicates the Craig
 
 * [Setup](Docs/SETUP.md)  
 * [API endpoints](Docs/API.md)
-* [Sprint 1 Report](Demos/Sprint1.md)
-* [Sprint 2 Report](Demos/Sprint2.md)
-* [DB schema](Demos/DB_schema.png)
+* [Sprint 1 Report](Demos/Sprint1/Sprint1.md)
+* [Sprint 2 Report](Demos/Sprint2/Sprint2.md)
+* [DB schema](Demos/Sprint1/DB_schema.png)
 
 ## Videos
 
