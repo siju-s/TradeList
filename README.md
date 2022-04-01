@@ -19,6 +19,13 @@ This is a repo for CEN5035 Software Engineering Project. It replicates the Craig
 * [Sprint 2 Report](Demos/Sprint2/Sprint2.md)
 * [DB schema](Demos/Sprint1/DB_schema.png)
 
+## Run
+
+1. Navigate to `backend\cmd` folder and run `go run .` This will run the server on port 8081
+2. Navigate to `frontend` folder and run `ng serve`
+3. Website will be accessible at `http://localhost:4200`
+
+
 ## Videos
 
 
