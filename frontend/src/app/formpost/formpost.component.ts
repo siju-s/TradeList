@@ -81,13 +81,13 @@ export class FormpostComponent implements AfterViewInit {
   // ];
   // subCategories = [
   //    new SubCategory(1,  "Accounting"),
-	// 	 new SubCategory(1, "HR"),
-	// 	 new SubCategory(1,  "Legal"),
-	// 	 new SubCategory(1,  "Customer Service"),
-	// 	 new SubCategory(1,  "Healthcare"),
-	// 	 new SubCategory(1,  "Hospitality"),
-	// 	 new SubCategory(1,  "Housekeeping"),
-	// 	 new SubCategory(1,  "Software"),
+  //   new SubCategory(1, "HR"),
+  //   new SubCategory(1,  "Legal"),
+  //   new SubCategory(1,  "Customer Service"),
+  //   new SubCategory(1,  "Healthcare"),
+  //   new SubCategory(1,  "Hospitality"),
+  //   new SubCategory(1,  "Housekeeping"),
+  //   new SubCategory(1,  "Software"),
   //    new SubCategory(2, "For Sale"),
   //    new SubCategory(2, "To Rent"),
   //    new SubCategory(2,  "To Share"),
@@ -99,7 +99,7 @@ export class FormpostComponent implements AfterViewInit {
   //    new SubCategory( 3,  "Clothes"),
   //    new SubCategory( 3,  "Computers"),
   //    new SubCategory( 3,  "Furniture"),
-	// 	 new SubCategory( 3,  "Gym equipment"),
+  //   new SubCategory( 3,  "Gym equipment"),
   //    new SubCategory( 3,  "Sports equipment")
   // ];
   // selected(){
@@ -146,40 +146,40 @@ export class FormpostComponent implements AfterViewInit {
 //   filterSubById(id:any) {
 //     return this.subCategories.filter(item => item.parentId === id);
 // }
-  // selectedDay: string ='';
-  // selectedId:number=0;
-  // mainGroups = [
-  //       {
-  //         title: 'Job',
-  //         id: 1
-  //       },
-  //       {
-  //         title: 'Property',
-  //         id: 2
-  //       },
-  //       {
-  //         title: 'For Sale',
-  //         id: 3
-  //       }
-  //     ]
+  selectedDay: string ='';
+  selectedId:number=0;
+  mainGroups = [
+        {
+          title: 'Job',
+          id: 1
+        },
+        {
+          title: 'Property',
+          id: 2
+        },
+        {
+          title: 'For Sale',
+          id: 3
+        }
+      ]
 
-  // selectChangeHandler(event : any){
-  //   this.selectedDay = event.target.value;
-  //   for(let i=0; i<this.mainGroups.length;i++){
-  //     if(this.selectedDay == this.mainGroups[i].title){
-  //       this.selectedId = this.mainGroups[i].id
-  //     }
-  //   }
-  // }
+  selectChangeHandler(event : any){
+    this.selectedDay = event.target.value;
+    for(let i=0; i<this.mainGroups.length;i++){
+      if(this.selectedDay == this.mainGroups[i].title){
+        this.selectedId = this.mainGroups[i].id
+      }
+    }
+  }
   // subCategories = [
   //    new SubCategory(1,  "Accounting"),
-	// 	 new SubCategory(1, "HR"),
-	// 	 new SubCategory(1,  "Legal"),
-	// 	 new SubCategory(1,  "Customer Service"),
-	// 	 new SubCategory(1,  "Healthcare"),
-	// 	 new SubCategory(1,  "Hospitality"),
-	// 	 new SubCategory(1,  "Housekeeping"),
-	// 	 new SubCategory(1,  "Software"),
+  //   new SubCategory(1, "HR"),
+  //   new SubCategory(1,  "Legal"),
+  //   new SubCategory(1,  "Customer Service"),
+  //   new SubCategory(1,  "Healthcare"),
+  //   new SubCategory(1,  "Hospitality"),
+  //   new SubCategory(1,  "Housekeeping"),
+  //   new SubCategory(1,  "Software"),
   //    new SubCategory(2, "For Sale"),
   //    new SubCategory(2, "To Rent"),
   //    new SubCategory(2,  "To Share"),
@@ -191,10 +191,95 @@ export class FormpostComponent implements AfterViewInit {
   //    new SubCategory( 3,  "Clothes"),
   //    new SubCategory( 3,  "Computers"),
   //    new SubCategory( 3,  "Furniture"),
-	// 	 new SubCategory( 3,  "Gym equipment"),
+  //   new SubCategory( 3,  "Gym equipment"),
   //    new SubCategory( 3,  "Sports equipment")
   // ];
-  // 
+  subCategories = [
+        {
+          title: 'Accounting',
+          parentId: 1
+        },
+        {
+          title: 'HR',
+          parentId: 1
+        },
+        {
+          title: 'Legal',
+          parentId: 1
+        },
+        {
+          title: 'Customer Service',
+          parentId: 1
+        },
+        {
+          title: 'Healthcare',
+          parentId: 1
+        },
+        {
+          title: 'Hospitality',
+          parentId: 1
+        },
+        {
+          title: 'Software',
+          parentId: 1
+        },
+        {
+          title: 'For Sale',
+          parentId: 2
+        },
+        {
+          title: 'To Rent',
+          parentId: 2
+        },
+        {
+          title: 'To Share',
+          parentId: 2
+        },
+        {
+          title: 'Sublet',
+          parentId: 2
+        },
+
+        {
+          title: 'Storage',
+          parentId: 2
+        },
+        {
+          title: 'Appliances',
+          parentId: 3
+        },
+        {
+          title: 'Audio equipment',
+          parentId: 3
+        },
+        {
+          title: 'Books',
+          parentId: 3
+        },
+        {
+          title: 'Clothes',
+          parentId: 3
+        },
+        {
+          title: 'Computers',
+          parentId: 3
+        },
+        {
+          title: 'Furniture',
+          parentId: 3
+        },
+        {
+          title: 'Gym equipment',
+          parentId: 3
+        },
+        {
+          title: 'Sports equipment',
+          parentId: 3
+        }
+      ]
+  filterSubById() {
+        return this.subCategories.filter(item => item.parentId === this.selectedId);
+    }
 
 
 
@@ -246,3 +331,4 @@ export class FormpostComponent implements AfterViewInit {
   }
 
 }
+
