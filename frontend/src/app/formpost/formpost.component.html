@@ -75,22 +75,6 @@
               </ng-container>
               </mat-select>
           </mat-form-field> -->
-          <!-- Category -->
-        <mat-label>Category</mat-label>
-        
-         <select class="full-width" (change) = "selectChangeHandler($event)">
-            <option disabled [ngValue]="null">-/-</option>
-            
-            <option [ngValue]="category" *ngFor="let category of mainGroups">{{category.title}}</option>
-              
-          </select>
-       
-          
-        
-        <mat-label>Sub Category</mat-label>
-         <select appearance="fill" class="full-width" >
-          <option [ngValue]="subcategory" *ngFor="let subcategory of filterSubById()">{{subcategory.title}}</option>
-        </select>
         
         
       
@@ -100,7 +84,7 @@
 
               <input  formControlName="Price"matInput placeholder="Add the price">
           </mat-form-field>
-          <p>addtion 1</p>
+          
 
           <mat-label>Image</mat-label>
 
