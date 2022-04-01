@@ -31,3 +31,15 @@ img{
     height: 70%;
     width: 100%;
 }
+.spacer {
+    flex: 1;
+  }
+.contact-report{
+    margin:10px;
+}
+.contact{
+    padding:10px;
+}
+.report{
+    padding:10px;
+}

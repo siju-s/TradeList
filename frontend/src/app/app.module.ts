@@ -35,6 +35,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { UploadFilesComponent } from "./upload.component";
+import { ContactformComponent } from './contactform/contactform.component';
+import { ReportformComponent } from './reportform/reportform.component';
 
 @NgModule({
 
@@ -52,7 +54,9 @@ AppComponent,
  LoginformComponent,
  CreateuserformComponent,
  GridComponent,
-  UploadFilesComponent
+  UploadFilesComponent,
+  ContactformComponent,
+  ReportformComponent
 
 ],
 

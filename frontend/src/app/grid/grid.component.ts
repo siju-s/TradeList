@@ -20,6 +20,7 @@
 // ###################
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { ContactformComponent } from '../contactform/contactform.component';
 import {Post, PostService} from "../post.service";
 @Component({
   selector: 'app-grid',
@@ -58,6 +59,8 @@ export class GridComponent implements OnInit {
       this.changeDetection.detectChanges()
     })
   }
+
+
   // ngOnInit(): void {
   // }
 
