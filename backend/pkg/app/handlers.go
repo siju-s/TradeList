@@ -51,7 +51,6 @@ type Claims struct {
 }
 
 func (server *Server) Signup(writer http.ResponseWriter, request *http.Request) {
-
 	var user api.User
 	err := json.NewDecoder(request.Body).Decode(&user)
 	if err != nil {
@@ -72,25 +71,18 @@ func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	var user api.User
-	expectedEmail := server.loginService.LoginEmail(user, credentials.Email)
+	user, response := server.loginService.FetchUserInfo(credentials.Email)
 
-	if user.ID == 0 {
-		writer.Write([]byte("User does not exist!\n"))
-		writer.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-	if credentials.Email != string(expectedEmail) {
-		writer.Write([]byte("Incorrect Username!\n"))
-		writer.WriteHeader(http.StatusUnauthorized)
+	if response != nil {
+		apihelpers.Respond(writer, response)
 		return
 	}
 
 	expectedPassword := user.Contact.Password
 
 	if err := bcrypt.CompareHashAndPassword([]byte(expectedPassword), []byte(credentials.Password)); err != nil {
-		writer.Write([]byte("Incorrect Password!\n"))
-		writer.WriteHeader(http.StatusUnauthorized)
+		response = apihelpers.Message(http.StatusUnauthorized, "Incorrect Password")
+		apihelpers.Respond(writer, response)
 		return
 	}
 
@@ -106,7 +98,7 @@ func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
 	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
 		// If there is an error in creating the JWT return an internal server error
-		writer.WriteHeader(http.StatusInternalServerError)
+		response = apihelpers.Message(http.StatusInternalServerError, "Server error")
 		return
 	}
 	http.SetCookie(writer, &http.Cookie{
@@ -114,7 +106,8 @@ func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
 		Value:   tokenString,
 		Expires: expirationTime,
 	})
-
+	response = apihelpers.Message(http.StatusOK, "User found")
+	apihelpers.Respond(writer, response)
 }
 
 func (server *Server) Home(writer http.ResponseWriter, request *http.Request) {
