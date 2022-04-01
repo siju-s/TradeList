@@ -35,7 +35,7 @@ func main() {
 
 	postService := api.CreatePostService(repo)
 	jobService := api.CreateJobService(repo)
-	loginService := api.CreateService(repo)
+	loginService := api.CreateLoginService(repo)
 	server := app.CreateServer(mux.NewRouter(), postService, jobService, loginService)
 	server.Migrate(db)
 

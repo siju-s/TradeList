@@ -11,10 +11,12 @@ type Repo interface {
 	FetchUserInfo(email string) (User, string)
 	Save(value Post) string
 	SaveJobPost(value JobPost) string
+	GetJobPost(posts []Post) ([]JobPost, string)
 	GetAllPosts(bucketid string) ([]Post, string)
 	GetCategories() ([]Category, string)
 	GetSubcategories(categoryId string) ([]Subcategory, string)
 	GetPostById(id string) (Post, string)
+	GetPostByCategoryId(id string) ([]Post, string)
 	UpdatePost(post Post, postId string) (Post, string)
 	DeletePost(postId string) (Post, string)
 	GetDb() *gorm.DB
@@ -42,6 +44,12 @@ func (r repo) FetchUserInfo(email string) (User, string) {
 func (r repo) GetPostById(id string) (Post, string) {
 	var post Post
 	err := r.db.First(post, id).Find(&id).Error
+	return post, handleError(err)
+}
+
+func (r repo) GetPostByCategoryId(id string) ([]Post, string) {
+	var post []Post
+	err := r.db.Where("category_id = ?", id).Find(&post).Error
 	return post, handleError(err)
 }
 
@@ -129,6 +137,25 @@ func (r repo) SaveJobPost(jobPost JobPost) string {
 		return ""
 	}
 	return result.Error()
+}
+
+func (r repo) GetJobPost(posts []Post) ([]JobPost, string) {
+	var jobPosts []JobPost
+	var e string
+	for _, post := range posts {
+		var job Job
+		err := r.db.Where("post_id = ?", post.ID).Find(&job).Error
+		if err == nil {
+			var jobPost JobPost
+			jobPost.Post = post
+			jobPost.Job = job
+
+			jobPosts = append(jobPosts, jobPost)
+		} else {
+			e = err.Error()
+		}
+	}
+	return jobPosts, e
 }
 
 func CreateRepo(db *gorm.DB) Repo {

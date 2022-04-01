@@ -18,7 +18,7 @@ type loginService struct {
 	repo Repo
 }
 
-func CreateService(repo Repo) LoginService {
+func CreateLoginService(repo Repo) LoginService {
 	return &loginService{repo: repo}
 }
 

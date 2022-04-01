@@ -13,6 +13,36 @@ type repoMock struct {
 	mock.Mock
 }
 
+func (r repoMock) GetJobPost(posts []api.Post) ([]api.JobPost, string) {
+	return []api.JobPost{}, "error"
+}
+
+func (r repoMock) GetPostByCategoryId(id string) ([]api.Post, string) {
+	return []api.Post{}, ""
+}
+
+func (r repoMock) CreateUser(user api.User) (api.User, string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r repoMock) FetchUserInfo(email string) (api.User, string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r repoMock) Save(value api.Post) string {
+	return ""
+}
+
+func (r repoMock) SaveJobPost(value api.JobPost) string {
+	return ""
+}
+
+func (r repoMock) GetAllPosts(bucketid string) ([]api.Post, string) {
+	return nil, ""
+}
+
 func (r repoMock) UpdatePost(post api.Post, postId string) (api.Post, string) {
 	return api.Post{}, ""
 }
@@ -28,6 +58,7 @@ func (r repoMock) GetPostById(id string) (api.Post, string) {
 		SubcategoryId: 1,
 		Title:         "Test title",
 		Description:   "Test description"}
+	post.ID = 1
 	return post, ""
 }
 
@@ -55,14 +86,6 @@ func (r repoMock) GetCategories() ([]api.Category, string) {
 	return categories, ""
 }
 
-func (r repoMock) GetAllPosts() ([]api.Post, string) {
-	return nil, ""
-}
-
-func (r repoMock) Save(value interface{}) string {
-	return ""
-}
-
 func TestCreatePost_Success(test *testing.T) {
 	repo := repoMock{}
 
@@ -88,7 +111,7 @@ func TestGetPost_Empty(test *testing.T) {
 	repo := repoMock{}
 	postService := api.CreatePostService(repo)
 
-	message := postService.GetAllPosts()
+	message := postService.GetAllPosts("test")
 
 	if message == nil {
 		test.Fail()
@@ -144,7 +167,7 @@ func TestGetPostById_NotEmpty(test *testing.T) {
 	}
 	var post api.Post
 	mapstructure.Decode(response["data"], &post)
-	if post == (api.Post{}) {
+	if post.ID == 0 {
 		test.Fail()
 	}
 	assert.Equal(test, 200, response["status"])
@@ -180,4 +203,63 @@ func TestUpdatePost(test *testing.T) {
 	}
 	assert.Equal(test, "Postid 1 updated", response["message"])
 	assert.Equal(test, 200, response["status"])
+}
+
+func TestCreateJobPost_Success(test *testing.T) {
+	repo := repoMock{}
+
+	postService := api.CreateJobService(repo)
+
+	var job = api.Job{
+		Salary:   500,
+		Pay:      "monthly",
+		Type:     "fulltime",
+		Location: "remote",
+		Place:    "Gainesville"}
+
+	var post = api.Post{
+		SellerId:      1,
+		CategoryId:    1,
+		SubcategoryId: 1,
+		Title:         "Test title",
+		Description:   "Test description"}
+
+	var jobPost = api.JobPost{
+		Post: post,
+		Job:  job,
+	}
+
+	message := postService.CreateJobPost(jobPost)
+	if message == nil {
+		test.Fail()
+	}
+	status := message["status"]
+	if status != 201 {
+		test.Fail()
+	}
+}
+
+func TestGetJobPost_Empty(test *testing.T) {
+	repo := repoMock{}
+
+	jobService := api.CreateJobService(repo)
+
+	var posts []api.Post
+
+	jobPosts := jobService.GetJobPost(posts)
+
+	assert.Equal(test, jobPosts, []api.JobPost{})
+}
+
+func TestGetPostByCategoryId_NotEmpty(test *testing.T) {
+	repo := repoMock{}
+	jobService := api.CreateJobService(repo)
+
+	response := jobService.GetPostByCategoryId("1")
+
+	if response == nil {
+		test.Fail()
+	}
+	assert.Equal(test, 200, response["status"])
+	assert.Equal(test, "Post found", response["message"])
 }

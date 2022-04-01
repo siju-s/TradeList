@@ -37,8 +37,10 @@ func provideMock() *app.Server {
 	fmt.Println("Mock called")
 
 	postService := api.CreatePostService(repo)
-	jobService := api.CreateJobService(db)
-	server = app.CreateServer(mux.NewRouter(), postService, jobService)
+	jobService := api.CreateJobService(repo)
+	loginService := api.CreateLoginService(repo)
+
+	server = app.CreateServer(mux.NewRouter(), postService, jobService, loginService)
 	server.Migrate(db)
 	server.RunTest()
 	return server
@@ -74,6 +76,13 @@ func TestCreatePost(test *testing.T) {
 }
 
 func createPost(test *testing.T) map[string]interface{} {
+	//var job = api.Job{
+	//	Salary:   500,
+	//	Pay:      "monthly",
+	//	Type:     "fulltime",
+	//	Location: "remote",
+	//	Place:    "Gainesville"}
+
 	var post = api.Post{
 		SellerId:      1,
 		CategoryId:    1,
@@ -118,6 +127,23 @@ func sendRequest(test *testing.T, method string, endpoint string, body io.Reader
 	defer ts.Close()
 	req := httptest.NewRequest(method, endpoint, body)
 	rr := httptest.NewRecorder()
+
+	server.Router.ServeHTTP(rr, req)
+
+	var response map[string]interface{}
+	if err := json.Unmarshal(rr.Body.Bytes(), &response); err != nil {
+		test.Errorf(" Error getting data")
+	}
+	return response
+}
+
+func sendMultipartRequest(test *testing.T, method string, endpoint string, body io.Reader, contentType string) map[string]interface{} {
+	ts := httptest.NewServer(server.Router)
+	defer ts.Close()
+	req := httptest.NewRequest(method, endpoint, body)
+	rr := httptest.NewRecorder()
+
+	req.Header.Add("Content-Type", contentType)
 
 	server.Router.ServeHTTP(rr, req)
 

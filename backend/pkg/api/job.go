@@ -1,7 +1,6 @@
 package api
 
 import (
-	"gorm.io/gorm"
 	"net/http"
 	"tradelist/pkg/apihelpers"
 )
@@ -13,7 +12,6 @@ type JobService interface {
 }
 
 type jobService struct {
-	db   *gorm.DB
 	repo Repo
 }
 
@@ -37,29 +35,21 @@ func (service *jobService) CreateJobPost(jobPost JobPost) map[string]interface{}
 
 func (service *jobService) GetPostByCategoryId(id string) map[string]interface{} {
 	var posts []Post
-	err := service.db.Debug().Where("category_id = ?", id).Find(&posts).Error
-	if err != nil {
-		return apihelpers.Message(http.StatusInternalServerError, err.Error())
+	posts, err := service.repo.GetPostByCategoryId(id)
+	if err != "" {
+		return apihelpers.Message(http.StatusInternalServerError, err)
 	}
 	response := apihelpers.Message(http.StatusOK, "Post found")
-	if id == "1" {
+	if id == "1" && len(posts) > 0 {
 		response["data"] = service.GetJobPost(posts)
 	}
 	return response
 }
 
 func (service *jobService) GetJobPost(posts []Post) []JobPost {
-	var jobPosts []JobPost
-	for _, post := range posts {
-		var job Job
-		err := service.db.Debug().Where("post_id = ?", post.ID).Find(&job).Error
-		if err == nil {
-			var jobPost JobPost
-			jobPost.Post = post
-			jobPost.Job = job
-
-			jobPosts = append(jobPosts, jobPost)
-		}
+	jobPosts, err := service.repo.GetJobPost(posts)
+	if err != "" {
+		return []JobPost{}
 	}
 	return jobPosts
 }
