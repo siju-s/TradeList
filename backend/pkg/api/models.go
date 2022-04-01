@@ -47,6 +47,7 @@ type User struct {
 	IsSeller bool    `gorm:"default:false"`
 	Seller   Seller  `gorm:"embedded"`
 	Contact  Contact `gorm:"embedded"`
+	Token    string
 }
 
 type Images struct {
@@ -92,10 +93,4 @@ type LocationType struct {
 
 type Places struct {
 	Name string `gorm:"primaryKey"`
-}
-
-type PasswordReset struct {
-	ID    uint
-	Email string
-	Token string `gorm:"unique"`
 }
