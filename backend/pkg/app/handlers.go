@@ -40,8 +40,8 @@ var users = map[string]string{
 }
 
 type Credentials struct {
-	Password string `json:"password"`
-	Username string `json:"username"`
+	Email    string `json:"Email"`
+	Password string `json:"Password"`
 }
 
 type Claims struct {
@@ -72,10 +72,24 @@ func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	var user api.User
+	expectedEmail := server.loginService.LoginEmail(user, credentials.Email)
 
-	expectedPassword, ok := users[credentials.Username]
+	if user.ID == 0 {
+		writer.Write([]byte("User does not exist!\n"))
+		writer.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	if credentials.Email != string(expectedEmail) {
+		writer.Write([]byte("Incorrect Username!\n"))
+		writer.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
-	if !ok || expectedPassword != credentials.Password {
+	expectedPassword := user.Contact.Password
+
+	if err := bcrypt.CompareHashAndPassword([]byte(expectedPassword), []byte(credentials.Password)); err != nil {
+		writer.Write([]byte("Incorrect Password!\n"))
 		writer.WriteHeader(http.StatusUnauthorized)
 		return
 	}
@@ -83,7 +97,7 @@ func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
 	expirationTime := time.Now().Add(time.Minute * 5)
 
 	claims := &Claims{
-		Username: credentials.Username,
+		Username: credentials.Email,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},

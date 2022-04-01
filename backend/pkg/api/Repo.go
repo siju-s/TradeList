@@ -2,11 +2,13 @@ package api
 
 import (
 	"fmt"
+
 	"gorm.io/gorm"
 )
 
 type Repo interface {
 	CreateUser(user User) (User, string)
+	LoginEmail(user User, email string) (User, string)
 	Save(value Post) string
 	SaveJobPost(value JobPost) string
 	GetAllPosts(bucketid string) ([]Post, string)
@@ -28,6 +30,11 @@ type repo struct {
 
 func (r repo) CreateUser(user User) (User, string) {
 	result := r.db.Create(&user)
+	return user, handleError(result.Error)
+}
+
+func (r repo) LoginEmail(user User, email string) (User, string) {
+	result := r.db.Where("email= ?", email).First(&user)
 	return user, handleError(result.Error)
 }
 
