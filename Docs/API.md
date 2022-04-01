@@ -7,6 +7,7 @@
 - [Fetch Categories](#fetch-categories)
 - [Create Job post](#create-job-post)
 - [Login](#login)
+- [Signup](#signup)
 - [Home](#home)
 - [Logout](#logout)
 - [Refresh](#refresh)
@@ -232,7 +233,7 @@ User can login using username and password
 
   `POST`
 
-*  **URL Params**
+* **URL Params**
 
    **Required:**
 
@@ -245,6 +246,51 @@ User can login using username and password
 * **Success Response:**
 
     * **Code:** 200 <br />
+
+* **Sample input**
+```
+{
+    "Email":"test2@gmail.com",
+    "Password":"test"    
+}
+```
+## Signup
+
+User can login using username and password
+
+* **URL**
+
+  /signup
+
+* **Method:**
+
+  `POST`
+
+* **URL Params**
+
+  **Required:**
+
+  `None`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+
+* **Sample input**
+```
+{
+    "Contact": {
+    "FirstName":"Test2",
+    "LastName":"User2",
+    "Email":"test2@gmail.com",
+    "Password":"test"
+    }
+}
+```
      
 ## Home
 
