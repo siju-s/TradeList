@@ -34,11 +34,6 @@ func GetEnvWithKey(key string) string {
 
 var jwtKey = []byte("secret_key")
 
-var users = map[string]string{
-	"user1": "password1",
-	"user2": "password2",
-}
-
 type Credentials struct {
 	Email    string `json:"Email"`
 	Password string `json:"Password"`
