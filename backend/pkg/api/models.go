@@ -6,7 +6,7 @@ type Contact struct {
 	FirstName string
 	LastName  string
 	Email     string
-	Password  []byte
+	Password  string
 	Phone     string
 }
 
