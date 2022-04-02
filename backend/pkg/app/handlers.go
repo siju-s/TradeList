@@ -227,8 +227,8 @@ func (server *Server) ForgotPassword(writer http.ResponseWriter, request *http.R
 	to := []string{
 		email,
 	}
-	url := "http://localhost:4200/reset/" + token
-	message := []byte("Click <a href=\"" + url + "\">here</a> to reset your password")
+	//url := "http://localhost:4200/reset/" + token
+	message := []byte("Token to reset password: " + token)
 
 	smtp.SendMail("0.0.0.0:1025", nil, from, to, message)
 
