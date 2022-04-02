@@ -43,3 +43,17 @@ img{
 .report{
     padding:10px;
 }
+.filters{
+    padding:30px;
+    font-family: 'Franklin Gothic Medium';
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 10px;
+
+}
+.filterfield{
+    display: inline-block;
+}
+p + p {
+    margin-left: 10px;
+}

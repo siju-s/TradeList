@@ -1,3 +1,4 @@
+
 <mat-toolbar color="primary">
     <span class="check">Housing options</span>
     <button mat-button (click)="toggleGridColumns()" fxHide.lt-md>
@@ -5,6 +6,30 @@
       <span *ngIf="gridColumns === 3"></span>
     </button>
   </mat-toolbar>
+
+  <div class="filters row wrap">
+  
+    <form>
+      
+      <p class="filterfield">Sort by:</p><br>
+  <input type="radio" id="lowtohigh" name="sortby" value="lowtohigh">
+  <label for="lowtohigh">Low to High</label><br>
+  <input type="radio" id="hightolow" name="sortby" value="hightolow">
+  <label for="hightolow">High to Low</label><br>  
+  <input type="radio" id="pictures" name="sortby" value="pictures">
+  <label for="pictures">Pictures only</label>
+<br>
+  <p class="filterfield">Max - Min : <input type="text" id="max"> - <input type="text" id="min"></p>
+  <br>
+  <p class="filterfield"> Search : </p>
+  <input type="text" id="search" placeholder="Search..."
+      [(ngModel)]="filterTerm">
+  <br><br>
+  <button button mat-raised-button color="primary" type="submit">Submit</button>
+    </form>
+  </div>
+
+    
 <div class="content">
     <div fxLayout="row wrap">
         <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of post;let index=index;">
