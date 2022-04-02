@@ -202,7 +202,7 @@ func (server *Server) Logout(writer http.ResponseWriter, request *http.Request) 
 
 }
 
-func (server *Server) Forgot(writer http.ResponseWriter, request *http.Request) {
+func (server *Server) ForgotPassword(writer http.ResponseWriter, request *http.Request) {
 
 	var data map[string]string // string as a key and string as a value
 	err := json.NewDecoder(request.Body).Decode(&data)
@@ -211,14 +211,16 @@ func (server *Server) Forgot(writer http.ResponseWriter, request *http.Request) 
 		return
 	}
 
-	email := data["email"]
+	email := data["Email"]
 	token := GenerateRandomString(12)
 
-	/*passwordReset := api.PasswordReset{
+	user, response := server.loginService.InsertToken(data["Email"], token)
+	user.Token = token
 
-		Email: email,
-		Token: token,
-	}*/
+	if response != nil {
+		apihelpers.Respond(writer, response)
+		return
+	}
 
 	from := "admin@example.com"
 
@@ -230,7 +232,8 @@ func (server *Server) Forgot(writer http.ResponseWriter, request *http.Request) 
 
 	smtp.SendMail("0.0.0.0:1025", nil, from, to, message)
 
-	writer.Write([]byte("Check your mail!\n"))
+	response = apihelpers.Message(http.StatusOK, "Token sent! Check your mail")
+	apihelpers.Respond(writer, response)
 
 }
 
@@ -245,7 +248,7 @@ func GenerateRandomString(n int) string {
 	return string(ret)
 }
 
-func (server *Server) Reset(writer http.ResponseWriter, request *http.Request) {
+func (server *Server) ResetPassword(writer http.ResponseWriter, request *http.Request) {
 
 	var data map[string]string // string as a key and string as a value
 	err := json.NewDecoder(request.Body).Decode(&data)

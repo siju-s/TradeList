@@ -11,6 +11,7 @@ import (
 type LoginService interface {
 	SignUp(user User) map[string]interface{}
 	FetchUserInfo(email string) (User, map[string]interface{})
+	InsertToken(email string, token string) (User, map[string]interface{})
 }
 
 type loginService struct {
@@ -34,6 +35,17 @@ func (service loginService) SignUp(user User) map[string]interface{} {
 
 func (service loginService) FetchUserInfo(email string) (User, map[string]interface{}) {
 	user, err := service.repo.FetchUserInfo(email)
+	fmt.Println("User id:", user.ID)
+	var response map[string]interface{}
+	if err != "" {
+		user.ID = 0
+		response = apihelpers.Message(http.StatusNotFound, "User not found")
+	}
+	return user, response
+}
+
+func (service loginService) InsertToken(email string, token string) (User, map[string]interface{}) {
+	user, err := service.repo.InsertToken(email, token)
 	fmt.Println("User id:", user.ID)
 	var response map[string]interface{}
 	if err != "" {

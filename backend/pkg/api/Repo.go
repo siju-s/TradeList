@@ -9,6 +9,7 @@ import (
 type Repo interface {
 	CreateUser(user User) (User, string)
 	FetchUserInfo(email string) (User, string)
+	InsertToken(email string, token string) (User, string)
 	Save(value Post) string
 	SaveJobPost(value JobPost) string
 	GetJobPost(posts []Post) ([]JobPost, string)
@@ -38,6 +39,12 @@ func (r repo) CreateUser(user User) (User, string) {
 func (r repo) FetchUserInfo(email string) (User, string) {
 	var user User
 	result := r.db.Where("email= ?", email).First(&user)
+	return user, handleError(result.Error)
+}
+
+func (r repo) InsertToken(email string, token string) (User, string) {
+	var user User
+	result := r.db.Model(&user).Where("email= ?", email).Update("Token", token)
 	return user, handleError(result.Error)
 }
 
