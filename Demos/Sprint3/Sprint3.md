@@ -43,3 +43,6 @@ All of these components are developed using Angular and Material.
 ![Alt text](WebsiteFrontEnd.png)
 * Create a Post Video 
 [![Watch the video](CreateAPost.mov)
+
+* Filter Frontend
+![Alt text](Filter.png)
