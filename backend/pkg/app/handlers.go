@@ -257,18 +257,30 @@ func (server *Server) ResetPassword(writer http.ResponseWriter, request *http.Re
 		return
 	}
 
-	if data["password"] != data["password_confirm"] {
+	user, response := server.loginService.VerifyToken(data["Token"])
+
+	if response != nil {
+		apihelpers.Respond(writer, response)
+		return
+	}
+
+	if data["Password"] != data["Password_confirm"] {
 
 		writer.Write([]byte("Passwords do not match!\n"))
 		return
 	}
-	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
+	password, _ := bcrypt.GenerateFromPassword([]byte(data["Password"]), 14)
 
-	writer.Header().Set("Content-Type", "application/json")
-	writer.WriteHeader(http.StatusCreated)
-	json.NewEncoder(writer).Encode(password)
+	user, response = server.loginService.InsertPassword(data["Email"], string(password))
 
-	writer.Write([]byte("Password Reset Successfully!\n"))
+	if response != nil {
+		apihelpers.Respond(writer, response)
+		return
+	}
+	user.Contact.Password = string(password)
+
+	response = apihelpers.Message(http.StatusOK, "Password Reset Successfully!")
+	apihelpers.Respond(writer, response)
 
 }
 

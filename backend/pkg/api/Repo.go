@@ -10,6 +10,8 @@ type Repo interface {
 	CreateUser(user User) (User, string)
 	FetchUserInfo(email string) (User, string)
 	InsertToken(email string, token string) (User, string)
+	VerifyToken(token string) (User, string)
+	InsertPassword(email string, password string) (User, string)
 	Save(value Post) string
 	SaveJobPost(value JobPost) string
 	GetJobPost(posts []Post) ([]JobPost, string)
@@ -45,6 +47,18 @@ func (r repo) FetchUserInfo(email string) (User, string) {
 func (r repo) InsertToken(email string, token string) (User, string) {
 	var user User
 	result := r.db.Model(&user).Where("email= ?", email).Update("Token", token)
+	return user, handleError(result.Error)
+}
+
+func (r repo) VerifyToken(token string) (User, string) {
+	var user User
+	result := r.db.Where("Token= ?", token).First(&user)
+	return user, handleError(result.Error)
+}
+
+func (r repo) InsertPassword(email string, password string) (User, string) {
+	var user User
+	result := r.db.Model(&user).Where("email= ?", email).Update("password", password)
 	return user, handleError(result.Error)
 }
 
