@@ -27,7 +27,7 @@
 
     <div class="createuserform-container">
       <ng-template #content let-modal>
-     
+
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title">Sign up</h4>
           <button type="button" id="signupclose" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -36,63 +36,63 @@
           <form [formGroup]="form" (ngSubmit)="submit()">
             <div class="form-group">
               <label for="firstname">First Name</label>
-              <input 
+              <input
                   formControlName="firstname"
-                  id="firstname" 
-                  type="text" 
+                  id="firstname"
+                  type="text"
                   class="form-control">
               <div *ngIf="f['firstname'].touched && f['firstname'].invalid" class="alert alert-danger">
                   <div *ngIf="f['firstname'].errors && f['firstname'].errors['required']">  First Name is required.</div>
-                  <div *ngIf="f['firstname'].errors && f['firstname'].errors['minlength']">First Name should be 3 characters long.</div>
+                  <div *ngIf="f['firstname'].errors && f['firstname'].errors['minlength']">First Name should be at least 3 characters long.</div>
               </div>
           </div>
-           
+
           <div class="form-group">
             <label for="lastname">Last Name</label>
-            <input 
+            <input
                 formControlName="lastname"
-                id="lastname" 
-                type="text" 
+                id="lastname"
+                type="text"
                 class="form-control">
             <div *ngIf="f['lastname'].touched && f['lastname'].invalid" class="alert alert-danger">
-                <div *ngIf="f['lastname'].errors && f['lastname'].errors['required']">  Last Name is required.</div>
-                <div *ngIf="f['lastname'].errors && f['lastname'].errors['minlength']">Last Name should be 3 characters long.</div>
+                <div *ngIf="f['lastname'].errors && f['lastname'].errors['required']">Last Name is required.</div>
+                <div *ngIf="f['lastname'].errors && f['lastname'].errors['minlength']">Last Name should be at least 3 characters long.</div>
             </div>
         </div>
-         
-      
+
+
             <div class="form-group">
                 <label for="email">Email</label>
-                <input 
+                <input
                     formControlName="email"
-                    id="useremail" 
-                    type="text" 
+                    id="useremail"
+                    type="text"
                     class="form-control">
                 <div *ngIf="f['email'].touched && f['email'].invalid" class="alert alert-danger">
                     <div *ngIf="f['email'].errors && f['email'].errors['required']">Email is required.</div>
-                    <div *ngIf="f['email'].errors && f['email'].errors['email']">Please, enter valid email address.</div>
+                    <div *ngIf="f['email'].errors && f['email'].errors['email']">Enter valid email address.</div>
                 </div>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input 
+              <input
                   formControlName="password"
-                  id="userpassword" 
-                  type="password" 
+                  id="userpassword"
+                  type="password"
                   class="form-control">
               <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
                   <div *ngIf="f['password'].errors && f['password'].errors['required']">  Password is required.</div>
                   <div *ngIf="f['password'].errors && f['password'].errors['minlength']">Password should be 8 character.</div>
               </div>
           </div>
-           
-            
+
+
             <button class="btn btn-primary" id="signupsubmit" [disabled]="form.invalid" type="submit">Submit</button>
         </form>
         </div>
       </ng-template>
-      
+
       <button button mat-raised-button color="primary" (click)="open(content)">Sign up</button>
-      
+
       <hr>
     </div>
