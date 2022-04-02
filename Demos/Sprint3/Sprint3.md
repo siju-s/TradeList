@@ -46,3 +46,7 @@ All of these components are developed using Angular and Material.
 
 * Filter Frontend
 ![Alt text](Filter.png)
+*Contact frontend
+![Alt text](Contact.png)
+*Report frontend
+![Alt text](Report.png)
