@@ -35,4 +35,10 @@ All of these components are developed using Angular and Material.
 
 * Cypress Test cases for Create Post, Login, Signup Forms
 ![Alt text](cypresstest2.png)
+* Login frontend
+![Alt text](Login.png)
+* Signup Frontend
+![Alt text](Signup.png)
+* Complete Website
+![Alt text](WebsiteFrontEnd.png)
 
