@@ -146,8 +146,16 @@ export class FormpostComponent implements AfterViewInit {
 //   filterSubById(id:any) {
 //     return this.subCategories.filter(item => item.parentId === id);
 // }
-  selectedDay: string ='';
-  selectedId:number=0;
+  selectedCategory: string ='';
+  selectedSubCategory:string='';
+  selectedLocation:any
+  selectedCategoryId:number=0;
+  selectedSubCategoryId:number=0;
+  selectedTitle:string='';
+  selectedDescription:string='';
+  selectedEmail:string='';
+  selectedPhoneno:number=0;
+  
   mainGroups = [
         {
           title: 'Job',
@@ -164,12 +172,18 @@ export class FormpostComponent implements AfterViewInit {
       ]
 
   selectChangeHandler(event : any){
-    this.selectedDay = event.target.value;
+    this.selectedCategory = event.target.value;
     for(let i=0; i<this.mainGroups.length;i++){
-      if(this.selectedDay == this.mainGroups[i].title){
-        this.selectedId = this.mainGroups[i].id
+      if(this.selectedCategory == this.mainGroups[i].title){
+        this.selectedCategoryId = this.mainGroups[i].id
       }
     }
+  }
+  getTitle(event:any){
+    this.selectedTitle=event.target.value;
+  }
+  getLocation(event:any){
+    this.selectedLocation=event.target.value;
   }
   // subCategories = [
   //    new SubCategory(1,  "Accounting"),
@@ -278,20 +292,30 @@ export class FormpostComponent implements AfterViewInit {
         }
       ]
   filterSubById() {
-        return this.subCategories.filter(item => item.parentId === this.selectedId);
+        return this.subCategories.filter(item => item.parentId === this.selectedCategoryId);
     }
 
 
 
+  // profileForm = this.formBuilder.group({
+  //   Description: [''],
+  //   Compensation: [''],
+  //   FirstName: [''],
+  //   LastName: [''],
+  //   address: [''],
+  //   email: (''),
+  //   phone: ['']
+  // });
   profileForm = this.formBuilder.group({
-    Description: [''],
-    Compensation: [''],
-    FirstName: [''],
-    LastName: [''],
-    address: [''],
-    email: (''),
-    phone: ['']
-  });
+    Title : [''],
+    Location:[''],
+    Category:[''],
+    SubCategory:[''],
+    Price: [''],
+    Email:[''],
+    PhoneNo:['']
+    
+  })
 
   createPost() {
     console.log('Form data is ', this.profileForm.value);

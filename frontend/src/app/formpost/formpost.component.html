@@ -32,13 +32,14 @@
 
             <mat-form-field class="full-width" appearance="fill">
 
-              <input  formControlName="Title"matInput placeholder="Give an appropriate title for the posting">
+              <input  formControlName="Title" matInput placeholder="Give an appropriate title for the posting" (change)="getTitle($event)">
+              
             </mat-form-field>
             <mat-label>Location</mat-label>
             <!-- <mat-form-field class="full-width" > -->
                 <!-- <input  formControlName="Location" matInput placeholder="Location" class="full-width"> -->
                 
-                <select id="location" class="full-width">
+                <select formControlName="Location" id="location" class="full-width" (change)="getLocation($event)">
 
                 <!-- <ng-container *ngFor="let local of allLocations"> -->
                 <option [value]="local" *ngFor="let local of allLocations">
@@ -46,6 +47,7 @@
                 </option>
                 <!-- </ng-container> -->
                 </select>
+                
             <!-- </mat-form-field> -->
 
             <!-- <mat-label>Category</mat-label>
@@ -78,7 +80,7 @@
           <!-- Category -->
         <mat-label>Category</mat-label>
         
-         <select class="full-width" (change) = "selectChangeHandler($event)">
+         <select formControlName="Category" class="full-width" (change) = "selectChangeHandler($event)">
             <option disabled [ngValue]="null">-/-</option>
             
             <option [ngValue]="category" *ngFor="let category of mainGroups">{{category.title}}</option>
@@ -88,7 +90,7 @@
           
         
         <mat-label>Sub Category</mat-label>
-         <select appearance="fill" class="full-width" >
+         <select formControlName="SubCategory" appearance="fill" class="full-width" >
           <option [ngValue]="subcategory" *ngFor="let subcategory of filterSubById()">{{subcategory.title}}</option>
         </select>
         
@@ -99,6 +101,11 @@
             <mat-form-field class="full-width" appearance="fill">
 
               <input  formControlName="Price"matInput placeholder="Add the price">
+          </mat-form-field>
+          <mat-label>Description</mat-label>
+          <mat-form-field class="full-width" appearance="fill">
+            
+            <textarea formControlName="Description" matInput></textarea>
           </mat-form-field>
           
 
@@ -123,7 +130,7 @@
           <mat-label>Select atleast one option through which you can be contacted
           </mat-label>
           <mat-form-field class="full-width" appearance="fill">
-            <input formControlName="email" matInput placeholder="Email" type = email>
+            <input formControlName="Email" matInput placeholder="Email" type = email>
           </mat-form-field>
 
 
@@ -132,6 +139,7 @@
           </mat-form-field>
 
         </div>
+        
         
       </mat-card-content>
       <mat-card-actions>
