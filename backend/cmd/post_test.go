@@ -13,6 +13,11 @@ type repoMock struct {
 	mock.Mock
 }
 
+func (r repoMock) InsertToken(email string, token string) (api.User, string) {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (r repoMock) GetJobPost(posts []api.Post) ([]api.JobPost, string) {
 	return []api.JobPost{}, "error"
 }
