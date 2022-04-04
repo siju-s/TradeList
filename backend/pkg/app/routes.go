@@ -10,6 +10,7 @@ func (server *Server) Routes() {
 
 	router.HandleFunc("/categories", server.GetAllCategories).Methods("GET")
 	router.HandleFunc("/subcategories/{id}", server.GetSubcategories).Methods("GET")
+	router.HandleFunc("/locations", server.GetLocations).Methods("GET")
 
 	router.HandleFunc("/post/category/{id}", server.CreatePost).Methods("POST", "OPTIONS")
 	router.HandleFunc("/post/category/{id}", server.GetPostByCategoryId).Methods("GET", "OPTIONS")

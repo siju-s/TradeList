@@ -12,7 +12,7 @@
 }
 
 .form-container{
-    height: 50%;
+    height: 100%;
     width: 100%;
     background-color:  #4484CE    ;
     margin-bottom: 40px;
@@ -27,7 +27,7 @@ select{
     padding:17px;
     background: rgb(245, 245, 245);
     margin-bottom:20px;
-    
+
     border : None
 }
 #example-additional-selection{
@@ -37,13 +37,13 @@ select{
 span::before { content: '\A'; white-space: pre; }
 .image{
     padding: 20px;
-    margin-left : 0px
+    margin-left : 0
 }
 #header1{
-    margin-top: 40pxx;
+    margin-top: 40px;
     margin-bottom: 20px;
 }
 #header2{
-    margin-left:0px;
+    margin-left:0;
     margin-bottom: 20px;
 }

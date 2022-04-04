@@ -10,6 +10,7 @@ type PostService interface {
 	Create(post Post) map[string]interface{}
 	GetAllPosts(bucketid string) map[string]interface{}
 	GetAllCategories() map[string]interface{}
+	GetLocations() map[string]interface{}
 	GetSubcategories(categoryId string) map[string]interface{}
 	GetPostById(categoryId string) map[string]interface{}
 	UpdatePost(post Post, postId string) map[string]interface{}
@@ -83,6 +84,24 @@ func (service *postService) GetAllCategories() map[string]interface{} {
 	}
 	response := apihelpers.Message(http.StatusOK, message)
 	response["data"] = categories
+	return response
+}
+
+func (service *postService) GetLocations() map[string]interface{} {
+	places, err := service.repo.GetLocations()
+	if err != "" {
+		return apihelpers.Message(http.StatusInternalServerError, err)
+	}
+	size := len(places)
+
+	var message string
+	if size > 0 {
+		message = "Locations found"
+	} else {
+		message = "No locations found"
+	}
+	response := apihelpers.Message(http.StatusOK, message)
+	response["data"] = places
 	return response
 }
 

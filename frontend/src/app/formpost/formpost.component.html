@@ -2,154 +2,110 @@
 
 <ng-template #mymodal let-modal>
   <div class="modal-header">
-    
+
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">×</span>
     </button>
   </div>
-<div class="modal-body">
-<form [formGroup]="profileForm" class="form-container">
+  <div class="modal-body">
+    <form [formGroup]="profileForm" class="form-container">
 
-  <mat-card>
-      <mat-card-header>
-        <mat-card-title class="formtitle"><span>Create a Post!</span></mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        
+      <mat-card>
         <mat-card-header>
-
-          <mat-card-title  id="header1"><span>Posting Information</span></mat-card-title>
+          <mat-card-title class="formtitle"><span>Create a Post!</span></mat-card-title>
         </mat-card-header>
-        
-      
-        <div class="row">
-          <!-- <div class="col-md-6">
-            <mat-form-field class="full-width">
-              <input formControlName="firstName" matInput placeholder="First name">
-            </mat-form-field>
-          </div> -->
+        <mat-card-content>
+
+          <mat-card-header>
+
+            <mat-card-title id="header1"><span>Posting Information</span></mat-card-title>
+          </mat-card-header>
+
+
+          <div class="row">
             <mat-label>Title</mat-label>
 
             <mat-form-field class="full-width" appearance="fill">
 
-              <input  formControlName="Title" matInput placeholder="Give an appropriate title for the posting" (change)="getTitle($event)">
-              
+              <input formControlName="Title" matInput placeholder="Give an appropriate title for the posting"
+                     (change)="getTitle($event)" ngModel required>
+
             </mat-form-field>
             <mat-label>Location</mat-label>
-            <!-- <mat-form-field class="full-width" > -->
-                <!-- <input  formControlName="Location" matInput placeholder="Location" class="full-width"> -->
-                
-                <select formControlName="Location" id="location" class="full-width" (change)="getLocation($event)">
 
-                <!-- <ng-container *ngFor="let local of allLocations"> -->
-                <option [value]="local" *ngFor="let local of allLocations">
-                    {{local.locationName}}
-                </option>
-                <!-- </ng-container> -->
-                </select>
-                
-            <!-- </mat-form-field> -->
+            <select formControlName="Location" id="location" class="full-width" [(ngModel)]="selectedLocation" required>
 
-            <!-- <mat-label>Category</mat-label>
-            <mat-form-field appearance="fill" class="full-width">
-                <input  formControlName="Category" matInput placeholder="Tell us what you are posting">
-                <mat-select >
+              <option [ngValue]="local" *ngFor="let local of locations">
+                {{local.Name}}
+              </option>
+            </select>
 
-                <ng-container *ngFor="let category of mainGroups">
-                <mat-option [value]="category" [(ngModel)]="mainCategory">
-                    {{category.title}}
-                </mat-option>
-                
-                </ng-container>
-              </mat-select>
-              {{mainCategory.title | json}}
-            </mat-form-field>
-            <mat-label>Sub Category</mat-label>
-          <mat-form-field appearance="fill" class="full-width">
-              <input  formControlName="SubCategory" id="SubCategory" matInput placeholder="List further details">
-              
-              <mat-select [(ngModel)] = "mainSubcategory">
-                
-              <ng-container *ngFor="let subcategory of filterSubById(mainCategory.Id)">
-              <mat-option [value]="subcategory"  >
-                  {{subcategory.title}}
-              </mat-option>
-              </ng-container>
-              </mat-select>
-          </mat-form-field> -->
-          <!-- Category -->
-        <mat-label>Category</mat-label>
-        
-         <select formControlName="Category" class="full-width" (change) = "selectChangeHandler($event)">
-            <option disabled [ngValue]="null">-/-</option>
-            
-            <option [ngValue]="category" *ngFor="let category of mainGroups">{{category.title}}</option>
-              
-          </select>
-       
-          
-        
-        <mat-label>Sub Category</mat-label>
-         <select formControlName="SubCategory" appearance="fill" class="full-width" >
-          <option [ngValue]="subcategory" *ngFor="let subcategory of filterSubById()">{{subcategory.title}}</option>
-        </select>
-        
-        
-      
-          <mat-label>Price</mat-label>
-        
+            <mat-label>Category</mat-label>
+
+            <select formControlName="Category" class="full-width" [(ngModel)]="selectedCategory"
+                    (change)="selectChangeHandler($event)" required>
+
+              <option [ngValue]="category" *ngFor="let category of categories">{{category.Name}}</option>
+
+            </select>
+
+
+            <mat-label>Subcategory</mat-label>
+            <select formControlName="SubCategory" appearance="fill" class="full-width"  [(ngModel)]="selectedSubcategory" required>
+              <option [ngValue]="subcategory" *ngFor="let subcategory of subcategories">{{subcategory.Name}}</option>
+            </select>
+
+
+            <mat-label>Price</mat-label>
+
             <mat-form-field class="full-width" appearance="fill">
 
-              <input  formControlName="Price"matInput placeholder="Add the price">
-          </mat-form-field>
-          <mat-label>Description</mat-label>
-          <mat-form-field class="full-width" appearance="fill">
-            
-            <textarea formControlName="Description" matInput></textarea>
-          </mat-form-field>
-          
+              <input formControlName="Price" matInput required>
+            </mat-form-field>
 
-          <mat-label>Image</mat-label>
+            <mat-label>Description</mat-label>
+            <mat-form-field class="full-width" appearance="fill" required>
+              <textarea formControlName="Description" matInput></textarea>
+            </mat-form-field>
 
-          <p><span>Upload images related to your posting</span></p>
-          <div class="image">
-            <app-upload-files></app-upload-files>
+
+            <mat-label>Image</mat-label>
+
+            <p><span>Upload images related to your posting</span></p>
+            <div class="image">
+              <app-upload-files></app-upload-files>
+            </div>
+
+            <div class="col-md-6" class="full-width">
+              <mat-card-header>
+
+                <mat-card-title>Personal Information</mat-card-title>
+              </mat-card-header>
+            </div>
+
+
+            <mat-label>Select atleast one option through which you can be contacted
+            </mat-label>
+            <mat-form-field class="full-width" appearance="fill">
+              <input formControlName="Email" matInput placeholder="Email" type=email>
+            </mat-form-field>
+
+
+            <mat-form-field class="full-width" appearance="fill">
+              <input formControlName="PhoneNo" matInput placeholder="PhoneNo" type=number>
+            </mat-form-field>
+
           </div>
-          
-          <div class="col-md-6" class="full-width">
-<!--            <mat-form-field class="full-width">-->
-<!--              <input  formControlName="Compensation" matInput placeholder="Compensation">-->
-<!--            </mat-form-field>-->
-          <mat-card-header>
 
-            <mat-card-title>Personal Information</mat-card-title>
-          </mat-card-header>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!profileForm.valid" class="btn btn-outline-dark" (click)="createPost()">Save</button>
           </div>
-
-
-          <mat-label>Select atleast one option through which you can be contacted
-          </mat-label>
-          <mat-form-field class="full-width" appearance="fill">
-            <input formControlName="Email" matInput placeholder="Email" type = email>
-          </mat-form-field>
-
-
-          <mat-form-field class="full-width" appearance="fill">
-            <input formControlName="PhoneNo" matInput placeholder="PhoneNo" type = number>
-          </mat-form-field>
-
-        </div>
-        
-        
-      </mat-card-content>
-      <mat-card-actions>
-        <!-- <button (click)="createPost()" mat-raised-button color="primary">Save</button> -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-        </div> 
-      </mat-card-actions>
-    </mat-card>
-  </form>
+        </mat-card-actions>
+      </mat-card>
+    </form>
   </div>
-  
+
 </ng-template>

@@ -17,6 +17,7 @@ type Repo interface {
 	GetJobPost(posts []Post) ([]JobPost, string)
 	GetAllPosts(bucketid string) ([]Post, string)
 	GetCategories() ([]Category, string)
+	GetLocations() ([]Places, string)
 	GetSubcategories(categoryId string) ([]Subcategory, string)
 	GetPostById(id string) (Post, string)
 	GetPostByCategoryId(id string) ([]Post, string)
@@ -91,7 +92,7 @@ func (r repo) DeletePost(postId string) (Post, string) {
 
 func (r repo) GetSubcategories(categoryId string) ([]Subcategory, string) {
 	var subcategories []Subcategory
-	err := r.db.Find(&subcategories, categoryId).Error
+	err := r.db.Where("category_id = ?", categoryId).Find(&subcategories).Error
 	return subcategories, handleError(err)
 }
 
@@ -103,6 +104,12 @@ func (r repo) GetCategories() ([]Category, string) {
 	var categories []Category
 	err := r.db.Find(&categories).Error
 	return categories, handleError(err)
+}
+
+func (r repo) GetLocations() ([]Places, string) {
+	var places []Places
+	err := r.db.Find(&places).Error
+	return places, handleError(err)
 }
 
 func handleError(err error) string {

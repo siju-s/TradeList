@@ -21,7 +21,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ContactformComponent } from '../contactform/contactform.component';
-import {Post, PostService} from "../post.service";
+import {Post, PostService} from "../formpost/post.service";
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 @Component({
   selector: 'app-grid',

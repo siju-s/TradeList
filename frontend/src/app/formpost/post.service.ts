@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {environment} from "../environments/environment";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -20,17 +20,26 @@ export class PostService {
     return result
   }
 
+  fetchCategories() : Observable<any> {
+    return this.http.get<any>(environment.gateway + '/categories')
+  }
+
+  fetchSubcategories(categoryId : number) : Observable<any> {
+    return this.http.get<any>(environment.gateway + '/subcategories/' + categoryId)
+  }
+
+  fetchLocations() : Observable<any> {
+    return this.http.get<any>(environment.gateway + '/locations')
+  }
+
   createPost(jobPost: JobPost, files?: FileList) {
     const formData = new FormData();
     formData.append('data', JSON.stringify(jobPost))
-    for (let i = 0; i < files!.length; i++) {
-      formData.append('files', files![i], files![i].name);
+    if (files != null) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files![i], files![i].name);
+      }
     }
-    const headers = new HttpHeaders()
-      .append("Content-Type", "application/json")
-      .append("Access-Control-Allow-Origin", "*")
-      .append("Accept", "multipart/form-data");
-
     console.log(formData.getAll('data'))
     this.http.post<any>(environment.gateway + '/post/category/' + jobPost.Post.Categoryid, formData).subscribe(data => {
       console.log(data)
@@ -38,6 +47,21 @@ export class PostService {
   }
 }
 
+
+export interface Categories {
+  CategoryId:number;
+  Name:string;
+}
+
+export interface Subcategories {
+  SubcategoryId:number;
+  CategoryId:number;
+  Name:string;
+}
+
+export interface Location {
+  Name:string;
+}
 
 export interface Post {
   Sellerid: number;

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import {Post, PostService} from "../post.service";
+import {Post, PostService} from "../formpost/post.service";
 
 @Component({
   selector: 'app-viewpost',

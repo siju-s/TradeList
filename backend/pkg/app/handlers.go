@@ -360,6 +360,12 @@ func (server *Server) GetAllCategories(writer http.ResponseWriter, _ *http.Reque
 	apihelpers.Respond(writer, response)
 }
 
+func (server *Server) GetLocations(writer http.ResponseWriter, _ *http.Request) {
+	writer.Header().Set("Content-Type", "application/json")
+	response := server.PostService.GetLocations()
+	apihelpers.Respond(writer, response)
+}
+
 func (server *Server) GetSubcategories(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	categoryId := mux.Vars(request)["id"]
