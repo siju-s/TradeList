@@ -32,7 +32,7 @@ export class PostService {
     return this.http.get<any>(environment.gateway + '/locations')
   }
 
-  createPost(jobPost: JobPost, files?: FileList) {
+  createPost(jobPost: JobPost, files?: FileList) : Observable<any> {
     const formData = new FormData();
     formData.append('data', JSON.stringify(jobPost))
     if (files != null) {
@@ -41,9 +41,7 @@ export class PostService {
       }
     }
     console.log(formData.getAll('data'))
-    this.http.post<any>(environment.gateway + '/post/category/' + jobPost.Post.Categoryid, formData).subscribe(data => {
-      console.log(data)
-    });
+    return this.http.post<any>(environment.gateway + '/post/category/' + jobPost.Post.Categoryid, formData)
   }
 }
 

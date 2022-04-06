@@ -5,7 +5,7 @@ import "gorm.io/gorm"
 type Contact struct {
 	FirstName string
 	LastName  string
-	Email     string
+	Email     string `gorm:"not null"`
 	Password  string
 	Phone     string
 }

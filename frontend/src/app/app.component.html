@@ -2,27 +2,18 @@
   <link rel="stylesheet" href="app.component.css">
 </head>
 <!-- Toolbar -->
-<!--<div>
-  <app-toolbar></app-toolbar>
-</div>-->
-
-
 
 <mat-toolbar color="primary" class="toolbarcomp">
-  <div class="spacer"></div>
-  <!-- <button mat-raised-button color="primary">Gnv</button> -->
-  <span><app-loginform></app-loginform></span>
-
-  <span><app-createuserform></app-createuserform></span>
-  <div id="header1"><app-formpost></app-formpost></div>
-  <!-- <button mat-raised-button color="primary"><app-formpost></app-formpost></button> -->
- <!-- <button mat-raised-button color="primary" (click)="onPresslogin()">Login</button>
- <button mat-raised-button color="primary" (click)="onPresssignup()">Signup</button> -->
+  <div class="loginbutton">
+    <a routerLink="/login">
+      <button mat-raised-button>Login/Register</button>
+    </a>
+    <a routerLink="/createpost">
+      <button mat-raised-button>Create a Post</button>
+    </a>
+  </div>
 
 </mat-toolbar>
-
-
-
 
 
 <!-- Logo bar -->
@@ -48,19 +39,19 @@
 <div class="container">
   <div class="row">
     <!-- <div class="col-lg-6"> -->
-        <app-advertisements></app-advertisements>
-<!-- </div> -->
+    <!--        <app-advertisements></app-advertisements>-->
+    <!-- </div> -->
 
-<!-- Create Post -->
-<!-- <div class="col-lg-6"> -->
-  <!-- <app-formpost></app-formpost> -->
+    <!-- Create Post -->
+    <!-- <div class="col-lg-6"> -->
+    <!-- <app-formpost></app-formpost> -->
 
- <!-- </div> -->
-</div>
+    <!-- </div> -->
+  </div>
 </div>
 
 <router-outlet></router-outlet>
- <!-- View Post -->
+<!-- View Post -->
 <!--<div>
   <app-viewpost></app-viewpost>
 </div>

@@ -1,18 +1,29 @@
-.col-lg-6{
+.col-lg-6 {
   margin-left: 0;
   margin-right: 0;
 }
-.spacer {
-   flex: 1;
- }
-.toolbarcomp{
 
-   height: 44px;
+.spacer {
+  flex: 1;
 }
-span{
- margin-top: 33px;
- padding: 10px;
+
+.toolbarcomp {
+
+  height: 44px;
 }
-#header1{
+
+span {
+  margin-top: 33px;
+  padding: 10px;
+}
+
+#header1 {
   margin-bottom: 0.5px;
+}
+
+.loginbutton {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0;
 }

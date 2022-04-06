@@ -27,7 +27,6 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { LoginformComponent } from './loginform/loginform.component';
-import { CreateuserformComponent } from './createuserform/createuserform.component';
 import { GridComponent } from './grid/grid.component';
 import { AppRoutingModule } from './app-routing.module';
 import {MatSliderModule} from '@angular/material/slider';
@@ -37,6 +36,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { UploadFilesComponent } from "./upload.component";
 import { ContactformComponent } from './contactform/contactform.component';
 import { ReportformComponent } from './reportform/reportform.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
 
@@ -52,7 +52,6 @@ AppComponent,
  BestofTgComponent,
  ViewpostComponent,
  LoginformComponent,
- CreateuserformComponent,
  GridComponent,
   UploadFilesComponent,
   ContactformComponent,
@@ -83,7 +82,8 @@ NgbModule,
   MatGridListModule,
   MatIconModule,
   MatProgressBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTabsModule
 ],
 
 providers: [],

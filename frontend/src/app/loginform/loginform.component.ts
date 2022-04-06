@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Login, LoginService} from "../services/login.service";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Login, LoginService, User} from "./login.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-loginform',
@@ -9,21 +9,24 @@ import {Login, LoginService} from "../services/login.service";
   styleUrls: ['./loginform.component.css']
 })
 export class LoginformComponent implements OnInit {
-  closeResult = '';
   isLoginFailed = false
   errorMessage = ''
   isFormSubmitted = false
+  form: any = {
+    email: null,
+    password: null
+  };
+  isLoggedIn = false;
+  roles: string[] = [];
+  isSuccessful = false
+  isSignupFailed = false
 
-  constructor(private modalService: NgbModal, private loginService: LoginService) {
+  constructor(private modalService: NgbModal, private loginService: LoginService, private route: ActivatedRoute) {
+
   }
 
   ngOnInit(): void {
   }
-
-  form = new FormGroup({
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    email: new FormControl('', [Validators.required, Validators.email])
-  });
 
   get f() {
     return this.form.controls;
@@ -31,39 +34,54 @@ export class LoginformComponent implements OnInit {
 
   submit() {
     this.isFormSubmitted = true
-    console.log(this.form.value);
+    const {email, password} = this.form;
+    console.log(this.form);
     const login: Login = {
-      Email: this.form.value.email,
-      Password: this.form.value.password
+      Email: email,
+      Password: password
     }
     this.loginService.login(login).subscribe(data => {
       console.log(data)
       const status = data["status"]
-      this.isLoginFailed = status == 404;
+      this.isLoginFailed = status != 200;
+      this.isLoggedIn = !this.isLoginFailed
       this.errorMessage = data["message"]
-      this.form.reset()
-      if (!this.isLoginFailed) {
-        this.modalService.dismissAll()
+      if (this.isLoggedIn) {
+        let user = JSON.stringify(data["data"]);
+        console.log(user)
+        localStorage.setItem('user', user)
+        this.loginService.setUser(JSON.parse(user))
+        // this.reloadPage()
       }
     })
   }
 
-  open(content: any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `${result}`;
-    }, (reason) => {
-      this.closeResult = `${this.getDismissReason(reason)}`;
-    });
+  signup() {
+    console.log(this.form);
+    const user: User = {
+      Contact: {
+        FirstName: this.form.firstname,
+        LastName: this.form.lastname,
+        Email: this.form.email,
+        Password: this.form.password
+      }
+    }
+    this.loginService.signup(user).subscribe(data => {
+      console.log(data)
+      const status = data["status"]
+      this.isSuccessful = status == 201;
+      this.errorMessage = data["message"]
+      if (this.isSuccessful) {
+        this.form.reset()
+      }
+      else {
+        this.isSignupFailed = true
+      }
+    })
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return '';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return '';
-    } else {
-      return ``;
-    }
+  reloadPage(): void {
+    window.location.reload();
   }
 }
 

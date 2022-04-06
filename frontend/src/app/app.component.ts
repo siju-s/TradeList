@@ -10,8 +10,10 @@ export class AppComponent {
   title = 'Tradelist';
   displaylogin = false;
   displaysignup = false;
+  isLoggedIn = false;
+
   onPresslogin() {
-  
+
     this.displaylogin = !this.displaylogin;
   }
   onPresssignup() {

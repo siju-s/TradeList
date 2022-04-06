@@ -1,74 +1,179 @@
-<!--<div class="form-container">
-<form>
-    <mat-card class="cardcontainer">
-        <mat-card-header class="cardheader">
-            <mat-card-title>Log in</mat-card-title>
-        </mat-card-header>
-    <mat-card-content>
-        <mat-form-field class="full-width">
-            <input  formControlName="Email" matInput placeholder="Email" required>
-          </mat-form-field><br>
-          <mat-form-field class="full-width">
-            <input type="password" formControlName="Password" matInput placeholder="Password" required>
-          </mat-form-field>
-          <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="modal.close('Save click')>Login</button>
-          </mat-card-actions>
-    </mat-card-content>
-</mat-card>
-</form>
-</div>-->
-
-
-
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Login</h4>
-    <button type="button" id="close" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="form" (ngSubmit)="submit()">
-
-
-      <div class="form-group">
-          <label for="email">Email</label>
-          <input
-              formControlName="email"
-              id="email"
-              type="text"
-              class="form-control">
-          <div *ngIf="f['email'].touched && f['email'].invalid" class="alert alert-danger">
-              <div *ngIf="f['email'].errors && f['email'].errors['required']">Email is required.</div>
-              <div *ngIf="f['email'].errors && f['email'].errors['email']">Please, enter valid email address.</div>
+<div class="col-md-12">
+  <div class="card card-container">
+    <img
+      id="profile-img"
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      class="profile-img-card"
+    />
+    <mat-tab-group class="login">
+      <mat-tab>
+        <form
+          *ngIf="!isLoggedIn"
+          name="form"
+          (ngSubmit)="f.form.valid && submit()"
+          #f="ngForm"
+          novalidate>
+          <ng-template mat-tab-label>
+            Login
+          </ng-template>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              [(ngModel)]="form.email"
+              required
+              email
+              #email="ngModel"
+            />
+            <div class="alert-danger" *ngIf="email.errors && f.submitted">
+              <div *ngIf="email.errors['required']">Email is required</div>
+              <div *ngIf="email.errors['email']">
+                Email must be a valid email address
+              </div>
+            </div>
           </div>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-            formControlName="password"
-            id="password"
-            type="password"
-            class="form-control">
-        <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
-            <div *ngIf="f['password'].errors && f['password'].errors['required']">Password is required.</div>
-            <div *ngIf="f['password'].errors && f['password'].errors['minlength']">Password should be at least 8 characters.</div>
-        </div>
-    </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              [(ngModel)]="form.password"
+              required
+              #password="ngModel"
+            />
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="password.errors && f.submitted"
+            >
+              <div *ngIf="password.errors['required']">Password is required</div>
+              <!--          <div *ngIf="password.errors['minlength']">-->
+              <!--            Password must be at least 6 characters-->
+              <!--          </div>-->
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">
+              Login
+            </button>
+          </div>
+          <div class="form-group">
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="f.submitted && isLoginFailed"
+            >
+              Login failed: {{ errorMessage }}
+            </div>
+          </div>
+        </form>
+      </mat-tab>
 
-      <div class="form-group">
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="isFormSubmitted && isLoginFailed">
-          Login failed: {{ errorMessage }}
+      <div class="alert alert-success" *ngIf="isLoggedIn">
+        Logged in as {{ roles }}.
+      </div>
+      <div class="col-md-12">
+        <div class="card card-container">
+          <img
+            id="profile-img2"
+            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            class="profile-img-card"
+          />
+
+          <mat-tab>
+            <form
+              *ngIf="!isSuccessful"
+              name="form"
+              (ngSubmit)="f.form.valid && signup()"
+              #f="ngForm"
+              novalidate
+            >
+              <ng-template mat-tab-label>
+                Register
+              </ng-template>
+              <div class="form-group">
+                <label for="firstname">First Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="firstname"
+                  [(ngModel)]="form.firstname"
+                  required
+                  #firstname="ngModel"
+                />
+                <div class="alert-danger" *ngIf="firstname.errors && f.submitted">
+                  <div *ngIf="firstname.errors['required']">First Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="lastname"
+                  [(ngModel)]="form.lastname"
+                  required
+                  #lastname="ngModel"
+                />
+                <div class="alert-danger" *ngIf="lastname.errors && f.submitted">
+                  <div *ngIf="lastname.errors['required']">Last Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  [(ngModel)]="form.email"
+                  required
+                  email
+                  #email="ngModel"
+                />
+                <div class="alert-danger" *ngIf="email.errors && f.submitted">
+                  <div *ngIf="email.errors['required']">Email is required</div>
+                  <div *ngIf="email.errors['email']">
+                    Email must be a valid email address
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  [(ngModel)]="form.password"
+                  required
+                  minlength="6"
+                  #password="ngModel"
+                />
+                <div class="alert-danger" *ngIf="password.errors && f.submitted">
+                  <div *ngIf="password.errors['required']">Password is required</div>
+                  <div *ngIf="password.errors['minlength']">
+                    Password must be at least 6 characters
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary btn-block">Sign Up</button>
+              </div>
+
+              <div class="alert alert-warning" *ngIf="f.submitted && isSignupFailed">
+                Signup failed!<br/>{{ errorMessage }}
+              </div>
+            </form>
+          </mat-tab>
+
+          <div class="alert alert-success" *ngIf="isSuccessful">
+            Your registration is successful!
+          </div>
         </div>
       </div>
-      <button id="submit" class="btn btn-primary" [disabled]="form.invalid" type="submit">Submit</button>
+    </mat-tab-group>
 
-  </form>
   </div>
-</ng-template>
-
-<button button mat-raised-button color="primary" (click)="open(content)">Login</button>
-
-<hr>
+</div>
