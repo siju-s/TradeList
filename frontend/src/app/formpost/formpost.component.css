@@ -47,3 +47,16 @@ span::before { content: '\A'; white-space: pre; }
     margin-left:0;
     margin-bottom: 20px;
 }
+.dollar{
+  display:inline-block;
+  position: relative;
+}
+.dollar input{
+  padding-left:15px;
+}
+.dollar:before {
+  position: absolute;
+  content:"$";
+  left:5px;
+  top:0;
+}
