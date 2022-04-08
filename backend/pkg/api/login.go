@@ -14,6 +14,7 @@ type LoginService interface {
 	InsertToken(email string, token string) (User, map[string]interface{})
 	VerifyToken(token string) (User, map[string]interface{})
 	InsertPassword(email string, password string) (User, map[string]interface{})
+	IsEmailExisting(email string) bool
 }
 
 type loginService struct {
@@ -77,4 +78,8 @@ func (service loginService) InsertPassword(email string, password string) (User,
 		response = apihelpers.Message(http.StatusNotFound, "User not found")
 	}
 	return user, response
+}
+
+func (service loginService) IsEmailExisting(email string) bool {
+	return service.repo.IsEmailExisting(email)
 }

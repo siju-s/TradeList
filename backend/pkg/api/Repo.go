@@ -23,6 +23,7 @@ type Repo interface {
 	GetPostByCategoryId(id string) ([]Post, string)
 	UpdatePost(post Post, postId string) (Post, string)
 	DeletePost(postId string) (Post, string)
+	IsEmailExisting(email string) bool
 	GetDb() *gorm.DB
 }
 
@@ -184,6 +185,12 @@ func (r repo) GetJobPost(posts []Post) ([]JobPost, string) {
 		}
 	}
 	return jobPosts, e
+}
+
+func (r repo) IsEmailExisting(email string) bool {
+	var user User
+	rows := r.db.Where("email = ?", email).Find(&user).RowsAffected
+	return rows > 0
 }
 
 func CreateRepo(db *gorm.DB) Repo {
