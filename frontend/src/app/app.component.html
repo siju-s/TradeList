@@ -5,7 +5,7 @@
 
 <mat-toolbar color="primary" class="toolbarcomp">
   <div class="loginbutton">
-    <a routerLink="/login">
+    <a routerLink="/login" *ngIf="!isLoggedIn">
       <button mat-raised-button>Login/Register</button>
     </a>
     <a routerLink="/createpost">

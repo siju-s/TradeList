@@ -29,6 +29,7 @@ export class FormpostComponent implements AfterViewInit {
   title = 'appBootstrap';
   closeResult: string = '';
   profileForm: FormGroup;
+  isLoggedIn : boolean;
 
   constructor(private formBuilder: FormBuilder, private postService: PostService, private loginService: LoginService,
               private modalService: NgbModal, private router: Router) {
@@ -45,6 +46,11 @@ export class FormpostComponent implements AfterViewInit {
   }
 
   ngOnInit() {
+    this.isLoggedIn = localStorage.getItem('user') != null
+    if (!this.isLoggedIn) {
+      this.router.navigate(['/login'])
+      return
+    }
     this.postService.fetchCategories().subscribe(data => {
         this.categories = data.data
         this.selectedCategory = this.categories[0]
@@ -57,30 +63,6 @@ export class FormpostComponent implements AfterViewInit {
       this.selectedLocation = this.locations[0]
       console.log(this.locations);
     })
-  }
-
-  open(content: any) {
-    // console.log(localStorage.getItem('user'))
-    // const currentUser = localStorage.getItem('user')
-    // if (currentUser != null) {
-    //     this.router.navigate(['/login', JSON.parse(currentUser)["ID"]])
-    //     return
-    // }
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${FormpostComponent.getDismissReason(reason)}`;
-    });
-  }
-
-  private static getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
 //   filterSubById(id:any) {

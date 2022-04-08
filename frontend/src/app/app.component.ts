@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {LoginService} from "./loginform/login.service";
 
 
 @Component({
@@ -8,15 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Tradelist';
-  displaylogin = false;
-  displaysignup = false;
   isLoggedIn = false;
 
-  onPresslogin() {
-
-    this.displaylogin = !this.displaylogin;
-  }
-  onPresssignup() {
-    this.displaysignup = !this.displaysignup;
+  constructor() {
+    this.isLoggedIn = localStorage.getItem('user') != null
+    console.log(this.isLoggedIn)
   }
 }
