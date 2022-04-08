@@ -42,8 +42,5 @@ https://user-images.githubusercontent.com/13053550/152627547-079fd6bb-95a3-429a-
 ## Contributors
 * Mansi Singh (@singh-mansi) (Frontend)
 * Sharwari Marathe (@sharwarimarathe) (Frontend)
-* Siju Sakaria (@siju-s) (Backend)
+* Siju Sakaria (@siju-s) (Full Stack)
 * Yashasvi Mutteneni (@yashincontrol) (Backend)
-
-
-
