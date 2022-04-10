@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import {LoginService} from "./loginform/login.service";
+import {Component} from '@angular/core';
 
 
 @Component({

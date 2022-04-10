@@ -21,7 +21,7 @@ export class PostService {
   }
 
   fetchCategories() : Observable<any> {
-    return this.http.get<any>(environment.gateway + '/categories')
+    return this.http.get<any>(environment.gateway + '/categories');
   }
 
   fetchSubcategories(categoryId : number) : Observable<any> {
@@ -42,6 +42,30 @@ export class PostService {
     }
     console.log(formData.getAll('data'))
     return this.http.post<any>(environment.gateway + '/post/category/' + jobPost.Post.Categoryid, formData)
+  }
+
+  getPayTypes() : Array<any> {
+    return [
+      {label: 'hourly', value: 'hourly'},
+      {label: 'monthly', value: 'monthly'},
+      {label: 'yearly', value: 'yearly'}
+      ]
+  }
+
+  getJobTypes() : Array<any> {
+    return [
+      {label: 'fulltime', value: 'fulltime'},
+      {label: 'partime', value: 'partime'},
+      {label: 'internship', value: 'internship'}
+    ]
+  }
+
+  getLocationTypes() : Array<any> {
+    return [
+      {label: 'onsite', value: 'onsite'},
+      {label: 'remote', value: 'remote'},
+      {label: 'hybrid', value: 'hybrid'}
+    ]
   }
 }
 
