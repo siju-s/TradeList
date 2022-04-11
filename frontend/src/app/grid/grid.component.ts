@@ -1,28 +1,8 @@
-// import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import {JobPost, Post, PostService, Response} from "../formpost/post.service";
+import {ActivatedRoute} from "@angular/router";
 
-// @Component({
-//   selector: 'app-grid',
-//   templateUrl: './grid.component.html',
-//   styleUrls: ['./grid.component.css']
-// })
-// export class GridComponent implements OnInit {
-//   title = 'Card View Demo';
-//   gridColumns = 3;
-//   toggleGridColumns() {
-//     this.gridColumns = this.gridColumns === 3 ? 4 : 3;
-//   }
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
-// ###################
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
-import { ContactformComponent } from '../contactform/contactform.component';
-import {Post, PostService} from "../formpost/post.service";
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -40,9 +20,11 @@ export class GridComponent implements OnInit {
   ];
   title = 'Card View Demo';
   gridColumns = 3;
+
   toggleGridColumns() {
     this.gridColumns = this.gridColumns === 3 ? 4 : 3;
   }
+
   // constructor(config: NgbCarouselConfig) {
   //   // config.interval = 2000;
   //   // config.keyboard = true;
@@ -50,65 +32,34 @@ export class GridComponent implements OnInit {
   // }
   // constructor() { }
 
-  post:Array<Post> = []
+  post: Array<Post> = []
+  jobPost: Array<JobPost> = []
 
-  constructor(private postService: PostService, private changeDetection: ChangeDetectorRef) { }
+
+  constructor(private postService: PostService, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe(data => {
-      this.post = data.data
-      console.log(data.data[0])
-      this.changeDetection.detectChanges()
+    let subcategoryId = Number(this.route.snapshot.paramMap.get('id'))
+    console.log(subcategoryId)
+    this.postService.getPostsForSubcategory(subcategoryId).subscribe(data => {
+      if (data.data) {
+        this.handlePostData(data);
+      }
+      console.log(data)
     })
   }
 
-
-  // ngOnInit(): void {
-  // }
-
+  private handlePostData(data: Response) {
+    let response = data.data
+    if (response == null || response.length === 0) {
+      return
+    }
+    if (this.postService.instanceOfJobPost(response[0])) {
+      this.jobPost = data.data
+      for (let i = 0; i < this.jobPost.length; i++) {
+        this.post.push(this.jobPost[i].Post)
+      }
+    }
+  }
 }
-// ***********
-// import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-// import {Post, PostService} from "../post.service";
-// @Component({
-//   selector: 'app-grid',
-//   templateUrl: './grid.component.html',
-//   styleUrls: ['./grid.component.css']
-// })
-// export class GridComponent implements OnInit {
-
-//   post:Array<Post> = []
-
-//   constructor(private postService: PostService, private changeDetection: ChangeDetectorRef) { }
-
-//   ngOnInit(): void {
-//     this.postService.getPosts().subscribe(data => {
-//       this.post = data.data
-//       console.log(data.data[0])
-//       this.changeDetection.detectChanges()
-//     })
-
-// }
-// }
-// ********
-// import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-// import {Post, PostService} from "../post.service";
-
-// @Component({
-//   selector: 'app-viewpost',
-//   templateUrl: './viewpost.component.html',
-//   styleUrls: ['./viewpost.component.css']
-// })
-// export class ViewpostComponent implements OnInit {
-
-//   post:Array<Post> = []
-
-//   constructor(private postService: PostService, private changeDetection: ChangeDetectorRef) { }
-
-//   ngOnInit(): void {
-//     this.postService.getPosts().subscribe(data => {
-//       this.post = data.data
-//       console.log(data.data[0])
-//       this.changeDetection.detectChanges()
-//     })
-//   }

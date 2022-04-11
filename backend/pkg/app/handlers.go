@@ -424,6 +424,14 @@ func (server *Server) GetPostByCategoryId(writer http.ResponseWriter, request *h
 	apihelpers.Respond(writer, response)
 }
 
+func (server *Server) GetPostBySubcategoryId(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "application/json")
+	subcategoryId := mux.Vars(request)["id"]
+	fmt.Println("subcategoryId:", subcategoryId)
+	response := server.jobService.GetPostBySubcategoryId(subcategoryId)
+	apihelpers.Respond(writer, response)
+}
+
 func UploadHandler(w http.ResponseWriter, r *http.Request, userid int) []string {
 	files := r.MultipartForm.File["files"]
 

@@ -3,6 +3,8 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Get Posts](#get-posts)
+- [Get Posts for category](#get-posts-for-category)
+- [Get Posts for subcategory](#get-posts-for-subcategory)
 - [Create Post](#create-post)
 - [Fetch Categories](#fetch-categories)
 - [Create Job post](#create-job-post)
@@ -65,6 +67,154 @@ Returns all the posts
   ```javascript
     $.ajax({
       url: "/posts",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+## Get Posts for category
+
+Returns all the posts
+
+* **URL**
+
+  /post/category/id
+
+* **Method:**
+
+  `GET`
+
+*  **URL Params**
+
+   **Required:**
+
+   `None`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:**
+```
+{
+    "data": [
+        {
+            "Post": {
+                "ID": 1,
+                "CreatedAt": "2022-04-01T16:06:27.482064-04:00",
+                "UpdatedAt": "2022-04-01T16:06:27.482064-04:00",
+                "DeletedAt": null,
+                "SellerId": 1,
+                "CategoryId": 1,
+                "SubcategoryId": 1,
+                "Title": "test1",
+                "Description": "test1desc",
+                "IsHidden": false,
+                "IsFlagged": false,
+                "IsDeleted": false,
+                "Image": null
+            },
+            "Job": {
+                "ID": 1,
+                "PostId": 1,
+                "SubcategoryId": 1,
+                "Salary": 500,
+                "Pay": "monthly",
+                "Type": "fulltime",
+                "Location": "remote",
+                "Place": "Gainesville"
+            }
+        }
+    ],
+    "message": "Post found",
+    "status": 200
+}
+```
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/post/category/1",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+## Get Posts for subcategory
+
+Returns all the posts
+
+* **URL**
+
+  /post/subcategory/id
+
+* **Method:**
+
+  `GET`
+
+*  **URL Params**
+
+   **Required:**
+
+   `None`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:**
+```
+{
+    "data": [
+        {
+            "Post": {
+                "ID": 1,
+                "CreatedAt": "2022-04-01T16:06:27.482064-04:00",
+                "UpdatedAt": "2022-04-01T16:06:27.482064-04:00",
+                "DeletedAt": null,
+                "SellerId": 1,
+                "CategoryId": 1,
+                "SubcategoryId": 1,
+                "Title": "test1",
+                "Description": "test1desc",
+                "IsHidden": false,
+                "IsFlagged": false,
+                "IsDeleted": false,
+                "Image": null
+            },
+            "Job": {
+                "ID": 1,
+                "PostId": 1,
+                "SubcategoryId": 1,
+                "Salary": 500,
+                "Pay": "monthly",
+                "Type": "fulltime",
+                "Location": "remote",
+                "Place": "Gainesville"
+            }
+        }
+    ],
+    "message": "Post found",
+    "status": 200
+}
+```
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/post/subcategory/1",
       dataType: "json",
       type : "GET",
       success : function(r) {

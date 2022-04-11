@@ -13,7 +13,6 @@ import {LogobarComponent} from './logobar/logobar.component';
 import {AdvertisementsComponent} from './advertisements/advertisements.component';
 import {EventCalenderComponent} from './event-calender/event-calender.component';
 import {BestofTgComponent} from './bestof-tg/bestof-tg.component';
-import {ViewpostComponent} from './viewpost/viewpost.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormpostComponent} from "./formpost/formpost.component";
 import {MatInputModule} from "@angular/material/input";
@@ -52,7 +51,6 @@ import {FileValueAccessor} from "./file-value-accessor";
     AdvertisementsComponent,
     EventCalenderComponent,
     BestofTgComponent,
-    ViewpostComponent,
     LoginformComponent,
     GridComponent,
     ContactformComponent,

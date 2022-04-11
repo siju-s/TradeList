@@ -21,6 +21,7 @@ type Repo interface {
 	GetSubcategories(categoryId string) ([]Subcategory, string)
 	GetPostById(id string) (Post, string)
 	GetPostByCategoryId(id string) ([]Post, string)
+	GetPostBySubcategoryId(id string) ([]Post, string)
 	UpdatePost(post Post, postId string) (Post, string)
 	DeletePost(postId string) (Post, string)
 	IsEmailExisting(email string) bool
@@ -73,6 +74,12 @@ func (r repo) GetPostById(id string) (Post, string) {
 func (r repo) GetPostByCategoryId(id string) ([]Post, string) {
 	var post []Post
 	err := r.db.Where("category_id = ?", id).Find(&post).Error
+	return post, handleError(err)
+}
+
+func (r repo) GetPostBySubcategoryId(id string) ([]Post, string) {
+	var post []Post
+	err := r.db.Where("subcategory_id = ?", id).Find(&post).Error
 	return post, handleError(err)
 }
 

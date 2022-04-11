@@ -12,12 +12,11 @@ export class PostService {
   }
 
   getPosts(): Observable<Response> {
-    const result = this.http.get<Response>(environment.gateway + '/post');
-    console.log("GetPosts", result)
-    // result.subscribe(data => {
-    //   console.log(data)
-    // })
-    return result
+    return this.http.get<Response>(environment.gateway + '/post')
+  }
+
+  getPostsForSubcategory(id : number): Observable<Response> {
+    return this.http.get<Response>(environment.gateway + '/post/subcategory/' + id)
   }
 
   fetchCategories() : Observable<any> {
@@ -67,6 +66,10 @@ export class PostService {
       {label: 'hybrid', value: 'hybrid'}
     ]
   }
+
+  instanceOfJobPost(data: any): data is JobPost {
+    return 'Post' in data && 'Job' in data;
+  }
 }
 
 
@@ -109,7 +112,7 @@ export interface JobPost {
 }
 
 export interface Response {
-   data: Array<Post>
+   data: Array<any>
    message: string
    status : number
 }
