@@ -5,7 +5,7 @@ import {LoginformComponent} from "./loginform/loginform.component";
 import {FormpostComponent} from "./formpost/formpost.component";
 
 const routes: Routes = [
-  {path: 'grid', component:GridComponent},
+  {path: 'view/subcategory/:i', component:GridComponent},
   {path:'login', component:LoginformComponent},
   {path:'createpost', component:FormpostComponent}
 ];
