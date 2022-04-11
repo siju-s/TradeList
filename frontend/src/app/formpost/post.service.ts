@@ -89,13 +89,14 @@ export interface Location {
 }
 
 export interface Post {
+  ID?:number;
   Sellerid: number;
   Categoryid: number;
   Subcategoryid: number;
   Title: string;
   Description: string;
   CreatedAt?:string;
-  Image?:FileList;
+  Image?:Array<Image>;
 }
 
 export interface Job {
@@ -115,4 +116,11 @@ export interface Response {
    data: Array<any>
    message: string
    status : number
+}
+
+export interface Image {
+  ID:number;
+  PostId:number;
+  SellerId: number;
+  Url:string;
 }

@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
       for (let i = 0; i < this.categories.length; i++) {
         this.fetchSubcategories(this.categories[i].CategoryId)
       }
-      console.log(this.subcategories)
+      // console.log(this.subcategories)
     })
   }
 
@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
       }
       this.categorySubMap.set(categoryId, data.data)
     })
-    console.log(this.categorySubMap)
+    // console.log(this.categorySubMap)
   }
 
 }

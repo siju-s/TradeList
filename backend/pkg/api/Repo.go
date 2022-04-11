@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"os"
 
 	"gorm.io/gorm"
 )
@@ -15,7 +16,7 @@ type Repo interface {
 	Save(value Post) string
 	SaveJobPost(value JobPost) string
 	GetJobPost(posts []Post) ([]JobPost, string)
-	GetAllPosts(bucketid string) ([]Post, string)
+	GetAllPosts() ([]Post, string)
 	GetCategories() ([]Category, string)
 	GetLocations() ([]Places, string)
 	GetSubcategories(categoryId string) ([]Subcategory, string)
@@ -74,12 +75,20 @@ func (r repo) GetPostById(id string) (Post, string) {
 func (r repo) GetPostByCategoryId(id string) ([]Post, string) {
 	var post []Post
 	err := r.db.Where("category_id = ?", id).Find(&post).Error
+	var bucketid = GetEnvWithKey("AWS_BUCKET")
+	if err == nil {
+		fetchImages(post, r, bucketid)
+	}
 	return post, handleError(err)
 }
 
 func (r repo) GetPostBySubcategoryId(id string) ([]Post, string) {
 	var post []Post
 	err := r.db.Where("subcategory_id = ?", id).Find(&post).Error
+	var bucketid = GetEnvWithKey("AWS_BUCKET")
+	if err == nil {
+		fetchImages(post, r, bucketid)
+	}
 	return post, handleError(err)
 }
 
@@ -130,22 +139,31 @@ func handleError(err error) string {
 	return msg
 }
 
-func (r repo) GetAllPosts(bucketid string) ([]Post, string) {
+func GetEnvWithKey(key string) string {
+	return os.Getenv(key)
+}
+
+func (r repo) GetAllPosts() ([]Post, string) {
+	var bucketid = GetEnvWithKey("AWS_BUCKET")
 	var posts []Post
 	err := r.db.Find(&posts).Error
 	if err == nil {
-		for idx, post := range posts {
-			images, err := r.GetImagesForPost(post.ID)
-			fmt.Println("Post id:", post.ID, "image", len(images), "idx:", idx)
-			if err == "" {
-				for i, img := range images {
-					images[i].Url = "https://" + bucketid + AwsUrl + img.Url
-				}
-				posts[idx].Image = images
-			}
-		}
+		fetchImages(posts, r, bucketid)
 	}
 	return posts, handleError(err)
+}
+
+func fetchImages(posts []Post, r repo, bucketid string) {
+	for idx, post := range posts {
+		images, err := r.GetImagesForPost(post.ID)
+		fmt.Println("Post id:", post.ID, "image", len(images), "idx:", idx)
+		if err == "" {
+			for i, img := range images {
+				images[i].Url = "https://" + bucketid + AwsUrl + img.Url
+			}
+			posts[idx].Image = images
+		}
+	}
 }
 
 func (r repo) GetImagesForPost(postId uint) ([]Images, string) {

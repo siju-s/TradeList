@@ -356,8 +356,7 @@ func uploadImages(writer http.ResponseWriter, request *http.Request, sellerid in
 
 func (server *Server) GetAllPosts(writer http.ResponseWriter, _ *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
-	var S3Bucket = GetEnvWithKey("AWS_BUCKET")
-	response := server.PostService.GetAllPosts(S3Bucket)
+	response := server.PostService.GetAllPosts()
 	apihelpers.Respond(writer, response)
 }
 

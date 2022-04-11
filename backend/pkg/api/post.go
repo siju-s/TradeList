@@ -8,7 +8,7 @@ import (
 
 type PostService interface {
 	Create(post Post) map[string]interface{}
-	GetAllPosts(bucketid string) map[string]interface{}
+	GetAllPosts() map[string]interface{}
 	GetAllCategories() map[string]interface{}
 	GetLocations() map[string]interface{}
 	GetSubcategories(categoryId string) map[string]interface{}
@@ -50,8 +50,8 @@ func (service *postService) Create(post Post) map[string]interface{} {
 	}
 }
 
-func (service *postService) GetAllPosts(bucketid string) map[string]interface{} {
-	posts, err := service.repo.GetAllPosts(bucketid)
+func (service *postService) GetAllPosts() map[string]interface{} {
+	posts, err := service.repo.GetAllPosts()
 	if err != "" {
 		return apihelpers.Message(http.StatusInternalServerError, err)
 	} else {
