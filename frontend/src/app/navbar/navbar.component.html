@@ -1,17 +1,15 @@
 <mat-toolbar color="primary">
   <div *ngFor="let item of categories;index as i">
-    <button  mat-button [matMenuTriggerFor]="housingmenu" class="menu-button">{{item.Name}}</button>
-    <mat-menu #housingmenu="matMenu">
+    <button  #button mat-button [matMenuTriggerFor]="housingmenu" class="menu-button" #menuTrigger="matMenuTrigger"
+             (mouseenter)="buttonEnter(menuTrigger)" (mouseleave)="buttonLeave(menuTrigger, button)" style="z-index:1050">{{item.Name}}</button>
+    <mat-menu #housingmenu="matMenu" yPosition="below">
+      <span (mouseenter)="menuenter()" (mouseleave)="menuLeave(menuTrigger, button)">
       <div *ngIf="categorySubMap.get(i + 1); let subs">
         <div *ngFor="let subcategory of subs;">
-
-          <!--      <button mat-menu-item routerLink="/grid">Household</button>-->
-          <!--      <button mat-menu-item>Creative</button>-->
-          <!--      <button mat-menu-item>Cycle</button>-->
-          <!--      <button mat-menu-item>Event</button>-->
           <button mat-menu-item  routerLink="/view/subcategory/{{subcategory.SubcategoryId}}">{{subcategory.Name}}</button>
         </div>
       </div>
+      </span>
     </mat-menu>
   </div>
 </mat-toolbar>
