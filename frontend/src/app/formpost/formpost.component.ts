@@ -323,9 +323,9 @@ export class FormpostComponent implements AfterViewInit {
     }
 
     const post: Post = {
-      Sellerid: sellerid,  //Mock
-      Categoryid: this.selectedCategory.CategoryId,
-      Subcategoryid: this.selectedSubcategory.SubcategoryId,
+      SellerId: sellerid,  //Mock
+      CategoryId: this.selectedCategory.CategoryId,
+      SubcategoryId: this.selectedSubcategory.SubcategoryId,
       Title: data.Title,
       Description: data.Description,
     };

@@ -53,9 +53,9 @@
             {{item.Description}}
           </p>
         </mat-card-content>
-        <p>Categories : <span><button mat-button>Housing</button>
-                <button mat-button>Renting</button>
-                <button mat-button>Apartments</button></span>
+        <p>Categories : <span><button mat-button>{{getCategoryName(item.CategoryId)}}</button>
+                <button mat-button>{{getSubcategoryName(item.SubcategoryId)}}</button>
+                </span>
         </p>
         <mat-card-actions class="center">
           <!--          <button mat-button class="card-button">INFO</button>-->

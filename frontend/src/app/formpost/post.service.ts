@@ -40,7 +40,7 @@ export class PostService {
       }
     }
     console.log(formData.getAll('data'))
-    return this.http.post<any>(environment.gateway + '/post/category/' + jobPost.Post.Categoryid, formData)
+    return this.http.post<any>(environment.gateway + '/post/category/' + jobPost.Post.CategoryId, formData)
   }
 
   getPayTypes() : Array<any> {
@@ -90,9 +90,9 @@ export interface Location {
 
 export interface Post {
   ID?:number;
-  Sellerid: number;
-  Categoryid: number;
-  Subcategoryid: number;
+  SellerId: number;
+  CategoryId: number;
+  SubcategoryId: number;
   Title: string;
   Description: string;
   CreatedAt?:string;

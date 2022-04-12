@@ -6,6 +6,7 @@ import {FormpostComponent} from "./formpost/formpost.component";
 
 const routes: Routes = [
   {path: 'view/subcategory/:id', component:GridComponent},
+  {path: '', component:GridComponent},
   {path:'login', component:LoginformComponent},
   {path:'createpost', component:FormpostComponent}
 ];

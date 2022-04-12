@@ -38,6 +38,7 @@ import {FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyFieldFile} from "./upload";
 import {FileValueAccessor} from "./file-value-accessor";
+import {DataService} from "./shared/DataService";
 
 @NgModule({
 
@@ -56,7 +57,7 @@ import {FileValueAccessor} from "./file-value-accessor";
     ContactformComponent,
     ReportformComponent,
     FormlyFieldFile,
-    FileValueAccessor
+    FileValueAccessor,
   ],
 
   imports: [
@@ -92,7 +93,7 @@ import {FileValueAccessor} from "./file-value-accessor";
     FormlyMaterialModule
   ],
 
-  providers: [],
+  providers: [DataService],
 
   bootstrap: [AppComponent]
 
