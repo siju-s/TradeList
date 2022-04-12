@@ -35,7 +35,7 @@ func isCategoryNotExisting(db *gorm.DB) bool {
 }
 
 func createDefaultValues(db *gorm.DB) {
-	var categories = []api.Category{{Name: "Jobs"}, {Name: "Property"}, {Name: "For Sale"}}
+	var categories = []api.Category{{Name: "Jobs"}, {Name: "Property"}, {Name: "For Sale"}, {Name: "Services"}, {Name: "Community"}}
 	result := db.Create(&categories)
 	if result.Error != nil {
 		fmt.Println(result.Error)
@@ -66,6 +66,20 @@ func createDefaultValues(db *gorm.DB) {
 		{CategoryId: 3, Name: "Furniture"},
 		{CategoryId: 3, Name: "Gym equipment"},
 		{CategoryId: 3, Name: "Sports equipment"},
+
+		{CategoryId: 4, Name: "Computers"},
+		{CategoryId: 4, Name: "Entertainment"},
+		{CategoryId: 4, Name: "Financial"},
+		{CategoryId: 4, Name: "Mobile"},
+		{CategoryId: 4, Name: "Pets"},
+		{CategoryId: 4, Name: "Real Estate"},
+		{CategoryId: 4, Name: "Travel & Tourism"},
+		{CategoryId: 4, Name: "Wedding"},
+
+		{CategoryId: 5, Name: "Artists"},
+		{CategoryId: 5, Name: "Events"},
+		{CategoryId: 5, Name: "Lost & Found"},
+		{CategoryId: 5, Name: "Rideshare & Car Pooling"},
 	}
 	db.Create(&subcategories)
 	createDefaultJobValues(db)
