@@ -7,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
+  isLoggedIn = false;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.isLoggedIn = localStorage.getItem('user') != null
+    console.log("Logged in:" + this.isLoggedIn)
   }
 
   display = false;

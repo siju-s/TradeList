@@ -2,19 +2,7 @@
   <link rel="stylesheet" href="app.component.css">
 </head>
 <!-- Toolbar -->
-
-<mat-toolbar color="primary" class="toolbarcomp">
-  <div class="loginbutton">
-    <a routerLink="/login" *ngIf="!isLoggedIn">
-      <button mat-raised-button>Login/Register</button>
-    </a>
-    <a routerLink="/createpost">
-      <button mat-raised-button>Create a Post</button>
-    </a>
-  </div>
-
-</mat-toolbar>
-
+<app-toolbar></app-toolbar>
 
 <!-- Logo bar -->
 <div>
@@ -24,45 +12,13 @@
 <div>
   <app-navbar></app-navbar>
 </div>
-<!--<div class="container">
-  <div class="row">
-<div class="col-lg-12" id="comp-render" *ngIf="displaylogin">
-  <app-loginform></app-loginform>
-</div>
-
-<div class="col-lg-12" id="comp-render" *ngIf="displaysignup">
-  <app-createuserform></app-createuserform>
-</div>
-</div>
-</div>-->
 <!-- Advertisements -->
 <div class="container">
   <div class="row">
     <!-- <div class="col-lg-6"> -->
     <!--        <app-advertisements></app-advertisements>-->
     <!-- </div> -->
-
-    <!-- Create Post -->
-    <!-- <div class="col-lg-6"> -->
-    <!-- <app-formpost></app-formpost> -->
-
-    <!-- </div> -->
   </div>
 </div>
 
 <router-outlet></router-outlet>
-<!-- View Post -->
-<!--<div>
-  <app-viewpost></app-viewpost>
-</div>
--->
-<!-- LoginForm
-
-<div>
-  <app-loginform></app-loginform>
-
- </div>
-Create USER form -->
-<!-- <div>
-  <app-createuserform></app-createuserform>
-</div> -->

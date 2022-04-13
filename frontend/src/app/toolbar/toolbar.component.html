@@ -1,14 +1,13 @@
+<mat-toolbar color="primary" class="toolbarcomp">
+<!--  <div class="spacer"></div>-->
+  <div class="button-container">
+    <a routerLink="/login" *ngIf="!isLoggedIn">
+      <button mat-raised-button class="login-button">Login/Register</button>
+    </a>
+    <div class="spacer"></div>
+    <a routerLink="/createpost">
+      <button mat-raised-button>Create a Post</button>
+    </a>
+  </div>
 
-
-    <mat-toolbar color="primary" class="toolbarcomp">
-        <div class="spacer"></div>
-        <button mat-raised-button color="primary">Gnv</button>
-       <button mat-raised-button color="primary" (click)="onPress()">Login</button>
-       <button mat-raised-button color="primary">Signup</button>
-       <button mat-raised-button color="primary">Create a Post!</button>
-
-    </mat-toolbar>
-
-    <div id="comp-render" *ngIf="display">
-        <app-loginform></app-loginform>
-     </div>
+</mat-toolbar>

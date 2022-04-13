@@ -12,6 +12,7 @@ export class AppComponent {
 
   constructor() {
     this.isLoggedIn = localStorage.getItem('user') != null
-    console.log(this.isLoggedIn)
+    console.log("Logged in:" + this.isLoggedIn)
+    //localStorage.clear()
   }
 }

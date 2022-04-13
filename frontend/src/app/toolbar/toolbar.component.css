@@ -1,9 +1,18 @@
-
-
-
 .spacer {
-    flex: 1;
-  }
-.toolbarcomp{
-    height: 44px;
+  flex: 1;
+}
+
+.toolbarcomp {
+  height: 44px;
+}
+
+.button-container {
+  text-align: right;
+  display: flex;
+  position: absolute; right: 10px;
+  /*justify-content: flex-end;*/
+}
+
+.login-button {
+  margin-right: 10px;
 }
