@@ -38,10 +38,19 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("ngOnInit")
     this.initObservers()
-    let subcategoryId = Number(this.route.snapshot.paramMap.get('id'))
-    console.log(subcategoryId)
+    this.loadPosts(this.route)
+    this.route.params.subscribe(_ => {
+      console.log("loadposts")
+      this.loadPosts(this.route);
+    });
+  }
+
+  private loadPosts(route: ActivatedRoute) {
+    let subcategoryId = Number(route.snapshot.paramMap.get('id'))
+    this.post = []
+    this.jobPost = []
+    console.log("loadPosts subcategory:" + subcategoryId)
     if (subcategoryId === 0) {
       this.postService.getPosts().subscribe(data => {
         if (data.data) {
@@ -49,14 +58,14 @@ export class GridComponent implements OnInit {
         }
         console.log(data)
       })
-      return
+    } else {
+      this.postService.getPostsForSubcategory(subcategoryId).subscribe(data => {
+        if (data.data) {
+          this.handlePostData(data);
+        }
+        console.log(data)
+      })
     }
-    this.postService.getPostsForSubcategory(subcategoryId).subscribe(data => {
-      if (data.data) {
-        this.handlePostData(data);
-      }
-      console.log(data)
-    })
   }
 
   initObservers() {
