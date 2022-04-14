@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Login, LoginService, User} from "./login.service";
-import {ActivatedRoute} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-loginform',
@@ -21,7 +21,7 @@ export class LoginformComponent implements OnInit {
   isSuccessful = false
   isSignupFailed = false
 
-  constructor(private modalService: NgbModal, private loginService: LoginService, private route: ActivatedRoute) {
+  constructor(private modalService: NgbModal, private loginService: LoginService, private router: Router) {
 
   }
 
@@ -47,13 +47,19 @@ export class LoginformComponent implements OnInit {
       this.isLoggedIn = !this.isLoginFailed
       this.errorMessage = data["message"]
       if (this.isLoggedIn) {
-        let user = JSON.stringify(data["data"]);
-        console.log(user)
-        localStorage.setItem('user', user)
-        this.loginService.setUser(JSON.parse(user))
-        // this.reloadPage()
+        this.onLoggedIn(data["data"]);
       }
     })
+  }
+
+  private onLoggedIn(user: User) {
+    console.log(user)
+    localStorage.setItem('user', JSON.stringify(user))
+    this.loginService.setUser(user)
+    this.router.navigate([''])
+      .then(() => {
+        window.location.reload();
+      });
   }
 
   signup() {
@@ -72,7 +78,7 @@ export class LoginformComponent implements OnInit {
       this.isSuccessful = status == 201;
       this.errorMessage = data["message"]
       if (this.isSuccessful) {
-        this.form.reset()
+        this.onLoggedIn(user)
       }
       else {
         this.isSignupFailed = true

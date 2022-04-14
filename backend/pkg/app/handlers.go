@@ -107,7 +107,7 @@ func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
 		Expires: expirationTime,
 	})
 	response = apihelpers.Message(http.StatusOK, "User found")
-	user.Contact = api.Contact{}
+	user.Contact.Password = ""
 	response["data"] = user
 	apihelpers.Respond(writer, response)
 }

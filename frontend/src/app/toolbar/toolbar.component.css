@@ -9,10 +9,23 @@
 .button-container {
   text-align: right;
   display: flex;
-  position: absolute; right: 10px;
-  /*justify-content: flex-end;*/
+  position: absolute;
+  right: 10px;
+  top: 5px;
 }
 
 .login-button {
   margin-right: 10px;
+}
+
+.profile {
+  margin-left: 10px;
+  background-color: #fff;
+  color: black;
+  outline: none;
+  border: none;
+}
+
+.username {
+  margin: 5px;
 }

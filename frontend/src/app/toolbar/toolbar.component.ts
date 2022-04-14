@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {LoginService, User} from "../loginform/login.service";
 
 
 @Component({
@@ -8,20 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
   isLoggedIn = false;
+  user: User;
 
-  constructor() { }
+  constructor(private loginService: LoginService) {
+  }
 
   ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('user')!) as User
     this.isLoggedIn = localStorage.getItem('user') != null
+    console.log(this.user)
     console.log("Logged in:" + this.isLoggedIn)
   }
 
-  display = false;
-  onPress() {
-    //this.display = true;
-
-    //To toggle the component
-    this.display = !this.display;
+  logout(): void {
+    localStorage.clear();
+    this.loginService.logout();
+    window.location.reload();
   }
 
 }

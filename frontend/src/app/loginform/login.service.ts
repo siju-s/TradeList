@@ -20,6 +20,10 @@ export class LoginService {
     return this.http.post<any>(environment.gateway + '/signup', JSON.stringify(user))
   }
 
+  logout() : Observable<any> {
+    return this.http.post<any>(environment.gateway + '/logout', "")
+  }
+
   setUser(user: User) {
     this.user = user
   }
