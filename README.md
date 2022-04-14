@@ -1,3 +1,4 @@
+![Go workflow](https://github.com/siju-s/TradeList/actions/workflows/go.yml/badge.svg)
 # TradeList
 This is a repo for CEN5035 Software Engineering Project. It replicates the Craigslist website using Angular and GoLang.
 
