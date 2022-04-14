@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <div *ngFor="let item of categories;index as i">
+  <div *ngFor="let item of categories;index as i" class="menu-button">
     <button  #button mat-button [matMenuTriggerFor]="housingmenu" class="menu-button" #menuTrigger="matMenuTrigger"
              (mouseenter)="buttonEnter(menuTrigger)" (mouseleave)="buttonLeave(menuTrigger, button)" style="z-index:1050">{{item.Name}}</button>
     <mat-menu #housingmenu="matMenu" yPosition="below">

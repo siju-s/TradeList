@@ -1,8 +1,6 @@
 
-.menu-button{
-    margin: auto;
-    margin-top: 2px;
-    margin-bottom: 3px;
-    justify-content: center;
-    justify-items: center;
+.menu-button {
+  margin: 2px auto 3px;
+  justify-content: center;
+  justify-items: center;
 }
