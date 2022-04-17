@@ -39,6 +39,7 @@ import {FormlyMaterialModule} from '@ngx-formly/material';
 import {FormlyFieldFile} from "./upload";
 import {FileValueAccessor} from "./file-value-accessor";
 import {DataService} from "./shared/DataService";
+import { SearchFilterPipe } from './search-filter.pipe';
 
 @NgModule({
 
@@ -58,6 +59,7 @@ import {DataService} from "./shared/DataService";
     ReportformComponent,
     FormlyFieldFile,
     FileValueAccessor,
+    SearchFilterPipe,
   ],
 
   imports: [

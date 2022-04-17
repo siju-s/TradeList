@@ -6,7 +6,7 @@
   </button>
 </mat-toolbar>
 
-<div class="filters row wrap">
+<!--<div class="filters row wrap">
 
   <form>
 
@@ -27,11 +27,22 @@
     <button button mat-raised-button color="primary" type="submit">Submit</button>
   </form>
 </div>
+-->
 
+<!-- <div class="m-3">
+  <h3>Angular search by filter</h3>
+  <div class="wrap">
+    <div class="search">
+      <input type="text" [(ngModel)]="term" class="searchTerm" placeholder="What are you looking for?">
+    </div>
+
+
+  </div>
+</div> -->
 
 <div class="content">
   <div fxLayout="row wrap">
-    <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of post;let index=index;">
+    <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of post ;let index=index;">
       <mat-card class="mat-elevation-z4">
         <mat-card-header>
           <mat-card-title>{{item.Title}}</mat-card-title>

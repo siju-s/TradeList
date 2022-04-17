@@ -5,13 +5,12 @@
     </a>
     <div class="spacer"></div>
     <a routerLink="/createpost">
-      <button mat-raised-button>Create a Post</button>
+      <button button color="primary" mat-raised-button>Create a Post</button>
     </a>
     <div *ngIf="isLoggedIn">
       <div ngbDropdown class="btn-group">
-        <button
-        type="button"
-        class="btn btn-primary dropdown-toggle profile"
+        <button button mat-raised-button color="primary"
+        class="dropdown-toggle profile"
         ngbDropdownToggle
         aria-expanded="false">Account</button>
         <ul ngbDropdownMenu class="dropdown-menu">
