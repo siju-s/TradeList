@@ -15,6 +15,7 @@
         aria-expanded="false">Account</button>
         <ul ngbDropdownMenu class="dropdown-menu">
           <li><a class="dropdown-item" href="#">Signed in as: <b>{{user.Contact.Email}}</b></a></li>
+          <li><a class="dropdown-item" routerLink="/userprofile">User Profile</a></li>
           <li><a class="dropdown-item" role="button" (click)="logout()">Logout</a></li>
         </ul>
       </div>

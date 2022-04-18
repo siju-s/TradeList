@@ -40,6 +40,7 @@ import {FormlyFieldFile} from "./upload";
 import {FileValueAccessor} from "./file-value-accessor";
 import {DataService} from "./shared/DataService";
 import { SearchFilterPipe } from './search-filter.pipe';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
 
@@ -60,6 +61,7 @@ import { SearchFilterPipe } from './search-filter.pipe';
     FormlyFieldFile,
     FileValueAccessor,
     SearchFilterPipe,
+    UserprofileComponent,
   ],
 
   imports: [
