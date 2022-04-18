@@ -13,6 +13,31 @@ type repoMock struct {
 	mock.Mock
 }
 
+func (r repoMock) VerifyToken(token string) (api.User, string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r repoMock) InsertPassword(email string, password string) (api.User, string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r repoMock) GetLocations() ([]api.Places, string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r repoMock) GetPostBySubcategoryId(id string) ([]api.Post, string) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (r repoMock) IsEmailExisting(email string) bool {
+	//TODO implement me
+	panic("implement me")
+}
+
 func (r repoMock) InsertToken(email string, token string) (api.User, string) {
 	//TODO implement me
 	panic("implement me")
@@ -44,7 +69,7 @@ func (r repoMock) SaveJobPost(value api.JobPost) string {
 	return ""
 }
 
-func (r repoMock) GetAllPosts(bucketid string) ([]api.Post, string) {
+func (r repoMock) GetAllPosts() ([]api.Post, string) {
 	return nil, ""
 }
 
@@ -116,7 +141,7 @@ func TestGetPost_Empty(test *testing.T) {
 	repo := repoMock{}
 	postService := api.CreatePostService(repo)
 
-	message := postService.GetAllPosts("test")
+	message := postService.GetAllPosts()
 
 	if message == nil {
 		test.Fail()
