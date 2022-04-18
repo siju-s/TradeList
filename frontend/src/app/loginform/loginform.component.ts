@@ -73,12 +73,12 @@ export class LoginformComponent implements OnInit {
       }
     }
     this.loginService.signup(user).subscribe(data => {
-      console.log(data)
+      console.log(data.data)
       const status = data["status"]
       this.isSuccessful = status == 201;
       this.errorMessage = data["message"]
       if (this.isSuccessful) {
-        this.onLoggedIn(user)
+        this.onLoggedIn(data.data)
       }
       else {
         this.isSignupFailed = true

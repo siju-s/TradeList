@@ -209,6 +209,10 @@ export class FormpostComponent implements AfterViewInit {
       this.router.navigate(['/login'])
       return
     }
+    var user = localStorage.getItem('user')
+    if (user != null) {
+      console.log("User id:"+ JSON.parse(user)["ID"])
+    }
   }
 
   loadOptions(field?: FormlyFieldConfig) {
@@ -312,7 +316,7 @@ export class FormpostComponent implements AfterViewInit {
 
     const user = localStorage.getItem('user')
 
-    console.log(this.loginService.getUser())
+    console.log(user)
 
     if (user != null || user != undefined) {
       sellerid = JSON.parse(user)["ID"]

@@ -60,7 +60,9 @@ func (server *Server) Signup(writer http.ResponseWriter, request *http.Request) 
 	password, _ := bcrypt.GenerateFromPassword([]byte(user.Contact.Password), 14)
 	user.Contact.Password = string(password)
 
-	response := server.loginService.SignUp(user)
+	user, response := server.loginService.SignUp(user)
+	user.Contact.Password = ""
+	response["data"] = user
 	apihelpers.Respond(writer, response)
 }
 

@@ -9,7 +9,7 @@ import (
 )
 
 type LoginService interface {
-	SignUp(user User) map[string]interface{}
+	SignUp(user User) (User, map[string]interface{})
 	FetchUserInfo(email string) (User, map[string]interface{})
 	InsertToken(email string, token string) (User, map[string]interface{})
 	VerifyToken(token string) (User, map[string]interface{})
@@ -26,13 +26,13 @@ func CreateLoginService(repo Repo) LoginService {
 	return &loginService{repo: repo}
 }
 
-func (service loginService) SignUp(user User) map[string]interface{} {
+func (service loginService) SignUp(user User) (User, map[string]interface{}) {
 	user, err := service.repo.CreateUser(user)
 	fmt.Println("User id:", user.ID)
 	if err != "" {
-		return apihelpers.Message(0, err)
+		return user, apihelpers.Message(0, err)
 	} else {
-		return apihelpers.Message(http.StatusCreated, "User created successfully")
+		return user, apihelpers.Message(http.StatusCreated, "User created successfully")
 	}
 }
 
