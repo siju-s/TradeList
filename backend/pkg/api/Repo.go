@@ -74,7 +74,7 @@ func (r repo) GetPostById(id string) (Post, string) {
 
 func (r repo) GetPostByCategoryId(id string) ([]Post, string) {
 	var post []Post
-	err := r.db.Where("category_id = ?", id).Find(&post).Error
+	err := r.db.Where("category_id = ?", id).Order("created_at desc").Find(&post).Error
 	var bucketid = GetEnvWithKey("AWS_BUCKET")
 	if err == nil {
 		fetchImages(post, r, bucketid)
@@ -84,7 +84,7 @@ func (r repo) GetPostByCategoryId(id string) ([]Post, string) {
 
 func (r repo) GetPostBySubcategoryId(id string) ([]Post, string) {
 	var post []Post
-	err := r.db.Where("subcategory_id = ?", id).Find(&post).Error
+	err := r.db.Where("subcategory_id = ?", id).Order("created_at desc").Find(&post).Error
 	var bucketid = GetEnvWithKey("AWS_BUCKET")
 	if err == nil {
 		fetchImages(post, r, bucketid)
@@ -146,7 +146,7 @@ func GetEnvWithKey(key string) string {
 func (r repo) GetAllPosts() ([]Post, string) {
 	var bucketid = GetEnvWithKey("AWS_BUCKET")
 	var posts []Post
-	err := r.db.Find(&posts).Error
+	err := r.db.Order("created_at desc").Find(&posts).Error
 	if err == nil {
 		fetchImages(posts, r, bucketid)
 	}
