@@ -29,3 +29,9 @@
 .username {
   margin: 5px;
 }
+
+.logo {
+  height: 100px;
+  display: block;
+  width: 30%;
+}
