@@ -76,3 +76,9 @@ p + p {
   margin-bottom: 10px;
   min-height: 250px;
 }
+
+.creation-date {
+  font-style: italic;
+  text-align: right;
+  font-weight: bold;
+}

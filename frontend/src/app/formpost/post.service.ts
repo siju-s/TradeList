@@ -97,6 +97,7 @@ export interface Post {
   Description: string;
   CreatedAt?:string;
   Image?:Array<Image>;
+  PostedBy?:string;
 }
 
 export interface Job {

@@ -41,6 +41,7 @@ import {FileValueAccessor} from "./file-value-accessor";
 import {DataService} from "./shared/DataService";
 import { SearchFilterPipe } from './search-filter.pipe';
 import { UserprofileComponent } from './userprofile/userprofile.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
 
@@ -97,7 +98,8 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     FormlyMaterialModule
   ],
 
-  providers: [DataService],
+  providers: [DataService,     DatePipe,
+  ],
 
   bootstrap: [AppComponent]
 
