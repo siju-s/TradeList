@@ -1,59 +1,78 @@
 mat-toolbar {
-    justify-content: space-between;
+  justify-content: space-between;
 }
-.card-button{
-    background-color: green;
-    color: white;
-    font-weight: 600;
-    height: 50px;
+
+.card-button {
+  background-color: green;
+  color: white;
+  font-weight: 600;
+  height: 50px;
 }
-.card-button:hover{
-    background-color: #95b7df;
+
+.card-button:hover {
+  background-color: #95b7df;
 
 }
+
 .content {
-    padding: 16px;
+  padding: 16px;
 }
 
 .content > mat-card {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .column-label {
-    margin-right: 8px;
-    font-size: 1rem;
+  margin-right: 8px;
+  font-size: 1rem;
 }
-.wrapper{
-    max-width: 100%;
-    max-height:100%;
+
+.wrapper {
+  max-width: 100%;
+  max-height: 100%;
 }
-img{
-    height: 70%;
-    width: 100%;
+
+img {
+  height: 250px;
+  width: 100%;
 }
+
 .spacer {
-    flex: 1;
-  }
-.contact-report{
-    margin:10px;
+  flex: 1;
 }
-.contact{
-    padding:10px;
+
+.contact-report {
+  margin: 10px;
 }
-.report{
-    padding:10px;
+
+.contact {
+  padding: 10px;
 }
-.filters{
-    padding:30px;
-    font-family: 'Franklin Gothic Medium';
-    display: grid;
-    grid-auto-flow: column;
-    grid-column-gap: 10px;
+
+.report {
+  padding: 10px;
+}
+
+.filters {
+  padding: 30px;
+  font-family: 'Franklin Gothic Medium';
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 10px;
 
 }
-.filterfield{
-    display: inline-block;
+
+.filterfield {
+  display: inline-block;
 }
+
 p + p {
-    margin-left: 10px;
+  margin-left: 10px;
+}
+
+.mat-elevation-z4 {
+  max-height: 500px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  min-height: 250px;
 }
