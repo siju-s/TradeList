@@ -352,6 +352,14 @@ func (server *Server) GetAllPosts(writer http.ResponseWriter, _ *http.Request) {
 	apihelpers.Respond(writer, response)
 }
 
+func (server *Server) GetPostsByUser(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "application/json")
+	user_id := mux.Vars(request)["id"]
+	fmt.Println("user_id:", user_id)
+	response := server.PostService.GetPostsByUser(user_id)
+	apihelpers.Respond(writer, response)
+}
+
 func (server *Server) GetAllCategories(writer http.ResponseWriter, _ *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	response := server.PostService.GetAllCategories()

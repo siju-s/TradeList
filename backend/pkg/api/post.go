@@ -15,6 +15,7 @@ type PostService interface {
 	GetPostById(categoryId string) map[string]interface{}
 	UpdatePost(post Post, postId string) map[string]interface{}
 	DeletePost(postId string) map[string]interface{}
+	GetPostsByUser(id string) map[string]interface{}
 	//GetDb() *gorm.DB
 	GetRepo() Repo
 }
@@ -52,6 +53,25 @@ func (service *postService) Create(post Post) map[string]interface{} {
 
 func (service *postService) GetAllPosts() map[string]interface{} {
 	posts, err := service.repo.GetAllPosts()
+	if err != "" {
+		return apihelpers.Message(http.StatusInternalServerError, err)
+	} else {
+		size := len(posts)
+
+		var message string
+		if size > 0 {
+			message = "Records found"
+		} else {
+			message = "No records found"
+		}
+		response := apihelpers.Message(http.StatusOK, message)
+		response["data"] = posts
+		return response
+	}
+}
+
+func (service *postService) GetPostsByUser(id string) map[string]interface{} {
+	posts, err := service.repo.GetPostsByUser(id)
 	if err != "" {
 		return apihelpers.Message(http.StatusInternalServerError, err)
 	} else {

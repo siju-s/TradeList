@@ -3,6 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Get Posts](#get-posts)
+- [Get Posts for user](#get-posts-for-user)
 - [Get Posts for category](#get-posts-for-category)
 - [Get Posts for subcategory](#get-posts-for-subcategory)
 - [Create Post](#create-post)
@@ -74,6 +75,69 @@ Returns all the posts
       }
     });
   ```
+## Get Posts for user
+
+Returns all the posts
+
+* **URL**
+
+  /post/user/id
+
+* **Method:**
+
+  `GET`
+
+*  **URL Params**
+
+   **Required:**
+
+   `id` exists in db
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:**
+```
+{
+    "data": [
+        {
+            "ID": 17,
+            "CreatedAt": "2022-04-18T18:06:58.914174-04:00",
+            "UpdatedAt": "2022-04-18T18:06:58.914174-04:00",
+            "DeletedAt": null,
+            "SellerId": 15,
+            "CategoryId": 1,
+            "SubcategoryId": 1,
+            "Title": "Looking for Web developer",
+            "Description": "Web developer required",
+            "IsHidden": false,
+            "IsFlagged": false,
+            "IsDeleted": false,
+            "Image": []
+        }
+    ],
+    "message": "Records found",
+    "status": 200
+}
+```
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/post/user/15",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
 ## Get Posts for category
 
 Returns all the posts

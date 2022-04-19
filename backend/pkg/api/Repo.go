@@ -27,6 +27,7 @@ type Repo interface {
 	UpdatePost(post Post, postId string) (Post, string)
 	DeletePost(postId string) (Post, string)
 	IsEmailExisting(email string) bool
+	GetPostsByUser(id string) ([]Post, string)
 	GetDb() *gorm.DB
 }
 
@@ -78,6 +79,16 @@ func (r repo) GetPostById(id string) (Post, string) {
 func (r repo) GetPostByCategoryId(id string) ([]Post, string) {
 	var post []Post
 	err := r.db.Where("category_id = ?", id).Order("created_at desc").Find(&post).Error
+	var bucketid = GetEnvWithKey("AWS_BUCKET")
+	if err == nil {
+		fetchImages(post, r, bucketid)
+	}
+	return post, handleError(err)
+}
+
+func (r repo) GetPostsByUser(id string) ([]Post, string) {
+	var post []Post
+	err := r.db.Where("seller_id = ?", id).Order("created_at desc").Find(&post).Error
 	var bucketid = GetEnvWithKey("AWS_BUCKET")
 	if err == nil {
 		fetchImages(post, r, bucketid)
