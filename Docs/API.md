@@ -14,6 +14,8 @@
 - [Home](#home)
 - [Logout](#logout)
 - [Refresh](#refresh)
+- [Forgot Password](#forgot)
+
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -675,3 +677,39 @@ New token will be generated
     * **Code:** 200 <br />
       **Content:** 
 
+## Forgot Password 
+
+Token will be emailed to reset password  
+
+* **URL**
+
+  /forgot
+
+* **Method:**
+
+  `POST`
+
+*  **URL Params**
+
+   **Required:**
+
+   `None`
+
+* **Data Params**
+
+  None
+  
+  * **Sample input**
+```
+{
+    "Email" : "hogwarts@gmail.com"
+}
+```
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** 
+```
+Token sent! Check your mail!
+```
