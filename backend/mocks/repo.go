@@ -34,8 +34,9 @@ func (r repoMock) VerifyToken(token string) (api.User, string) {
 }
 
 func (r repoMock) InsertPassword(email string, password string) (api.User, string) {
-	//TODO implement me
-	panic("implement me")
+
+	args := r.Called(email, password)
+	return args.Get(0).(api.User), args.Get(1).(string)
 }
 
 func (r repoMock) GetLocations() ([]api.Places, string) {
@@ -63,7 +64,7 @@ func (r repoMock) GetPostByCategoryId(id string) ([]api.Post, string) {
 }
 
 func (r repoMock) CreateUser(user api.User) (api.User, string) {
-	//TODO implement me
+
 	args := r.Called(user)
 	return args.Get(0).(api.User), args.Get(1).(string)
 }
