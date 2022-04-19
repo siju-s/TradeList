@@ -16,6 +16,8 @@
 - [Home](#home)
 - [Logout](#logout)
 - [Refresh](#refresh)
+- [Forgot Password](#forgot-password)
+- [Reset Password](#reset-password)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
