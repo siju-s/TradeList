@@ -36,7 +36,12 @@ npm i @angular/flex-layout
 ```
 ng add @ngx-formly/schematics --ui-theme=bootstrap
 ```
-8. To launch the server, navigate to `frontend` folder and run 
+8. Add `Search filter pipe`
+```
+npm i ng2-search-filter
+
+```
+10. To launch the server, navigate to `frontend` folder and run 
 ```
 npm start
 ```
