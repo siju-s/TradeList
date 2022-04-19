@@ -106,3 +106,17 @@ func TestLogin_Success(test *testing.T) {
 	assert.Equal(test, "", resultUser.Contact.Password)
 
 }
+
+func TestVerifyToken(test *testing.T) {
+	repo := mocks.NewMockRepo(test)
+	user := getTestUser()
+
+	loginService := api.CreateLoginService(repo)
+
+	repo.On("VerifyToken", user.Token).Return(user, "Error")
+
+	user, response := loginService.VerifyToken(user.Token)
+	assert.Equal(test, 404, response["status"])
+	assert.Equal(test, "Invalid Token", response["message"])
+
+}

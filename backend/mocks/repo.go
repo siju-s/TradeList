@@ -24,7 +24,8 @@ func (r repoMock) IsEmailExisting(email string) bool {
 
 func (r repoMock) VerifyToken(token string) (api.User, string) {
 	//TODO implement me
-	panic("implement me")
+	args := r.Called(token)
+	return args.Get(0).(api.User), args.Get(1).(string)
 }
 
 func (r repoMock) InsertPassword(email string, password string) (api.User, string) {
