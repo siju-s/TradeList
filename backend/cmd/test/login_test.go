@@ -1,11 +1,12 @@
 package test
 
 import (
-	"github.com/mitchellh/mapstructure"
-	"github.com/stretchr/testify/assert"
 	"testing"
 	"tradelist/mocks"
 	"tradelist/pkg/api"
+
+	"github.com/mitchellh/mapstructure"
+	"github.com/stretchr/testify/assert"
 )
 
 func getTestUser() api.User {
@@ -71,4 +72,18 @@ func TestSignup_Success(test *testing.T) {
 	mapstructure.Decode(response["data"], &resultUser)
 
 	assert.Equal(test, "", resultUser.Contact.Password)
+}
+
+func TestLogin_User_Exist(test *testing.T) {
+	repo := mocks.NewMockRepo(test)
+	user := getTestUser()
+
+	loginService := api.CreateLoginService(repo)
+
+	repo.On("FetchUserInfo", user.Contact.Email).Return(user, "Error")
+
+	user, response := loginService.FetchUserInfo(user.Contact.Email)
+	assert.Equal(test, 404, response["status"])
+	assert.Equal(test, "User not found", response["message"])
+
 }
