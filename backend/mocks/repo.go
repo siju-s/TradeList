@@ -19,9 +19,6 @@ func NewMockRepo(t *testing.T) *repoMock {
 
 func (r repoMock) IsEmailExisting(email string) bool {
 	args := r.Called(email)
-	//if args.Error(0) != nil {
-	//	return false
-	//}
 	return args.Get(0).(bool)
 }
 
@@ -73,7 +70,8 @@ func (r repoMock) FetchUserInfo(email string) (api.User, string) {
 }
 
 func (r repoMock) Save(value api.Post) string {
-	return ""
+	args := r.Called(value)
+	return args.Get(0).(string)
 }
 
 func (r repoMock) SaveJobPost(value api.JobPost) string {
@@ -81,7 +79,8 @@ func (r repoMock) SaveJobPost(value api.JobPost) string {
 }
 
 func (r repoMock) GetAllPosts() ([]api.Post, string) {
-	return nil, ""
+	args := r.Called()
+	return args.Get(0).([]api.Post), args.Get(1).(string)
 }
 
 func (r repoMock) UpdatePost(post api.Post, postId string) (api.Post, string) {
@@ -104,18 +103,8 @@ func (r repoMock) GetPostById(id string) (api.Post, string) {
 }
 
 func (r repoMock) GetSubcategories(categoryId string) ([]api.Subcategory, string) {
-	var subcategories = []api.Subcategory{
-		{CategoryId: 1, Name: "Accounting"},
-		{CategoryId: 1, Name: "HR"},
-		{CategoryId: 1, Name: "Legal"},
-		{CategoryId: 1, Name: "Customer Service"},
-		{CategoryId: 1, Name: "Healthcare"},
-		{CategoryId: 1, Name: "Hospitality"},
-		{CategoryId: 1, Name: "Housekeeping"},
-		{CategoryId: 1, Name: "Software"},
-		{CategoryId: 1, Name: "Accounting"},
-	}
-	return subcategories, ""
+	args := r.Called(categoryId)
+	return args.Get(0).([]api.Subcategory), args.Get(1).(string)
 }
 
 func (r repoMock) GetDb() *gorm.DB {
@@ -123,6 +112,6 @@ func (r repoMock) GetDb() *gorm.DB {
 }
 
 func (r repoMock) GetCategories() ([]api.Category, string) {
-	var categories = []api.Category{{Name: "Jobs"}, {Name: "Property"}, {Name: "For Sale"}}
-	return categories, ""
+	args := r.Called()
+	return args.Get(0).([]api.Category), args.Get(1).(string)
 }
