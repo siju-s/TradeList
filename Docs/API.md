@@ -713,3 +713,44 @@ Token will be emailed to reset password
 ```
 Token sent! Check your mail!
 ```
+
+## Reset Password  
+
+Use the token emailed to change password   
+
+* **URL**
+
+  /reset
+
+* **Method:**
+
+  `POST`
+
+*  **URL Params**
+
+   **Required:**
+
+   `None`
+
+* **Data Params**
+
+  None
+  
+  * **Sample input**
+```
+{
+    "Email" : "hogwarts@gmail.com",
+    "Token" : "xvLbZGBAIcmr",
+    "Password" : "hogwarts",
+    "Password_confirm" : "hogwarts"
+}
+```
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** 
+```
+Password Reset Successfully!
+```
+
