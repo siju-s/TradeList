@@ -87,3 +87,22 @@ func TestLogin_User_Exist(test *testing.T) {
 	assert.Equal(test, "User not found", response["message"])
 
 }
+
+func TestLogin_Success(test *testing.T) {
+	repo := mocks.NewMockRepo(test)
+	user := getTestUser()
+
+	loginService := api.CreateLoginService(repo)
+
+	repo.On("FetchUserInfo", user.Contact.Email).Return(user, "")
+
+	user, response := loginService.FetchUserInfo(user.Contact.Email)
+	assert.Equal(test, 201, response["status"])
+	assert.Equal(test, "User found", response["message"])
+
+	var resultUser api.User
+	mapstructure.Decode(response["data"], &resultUser)
+
+	assert.Equal(test, "", resultUser.Contact.Password)
+
+}
