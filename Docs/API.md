@@ -137,6 +137,89 @@ Returns all the posts
       }
     });
   ```
+## Edit Post
+
+Edit a post
+
+* **URL**
+
+  /post/id/user/userid
+* **Method:**
+
+  `PUT`
+
+* **URL Params**
+
+  **Required:**
+
+  `id` and `postid`
+
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:**
+```
+{
+      "message": "Postid 4 updated",
+      "status": 200
+}
+```
+* **Sample input**
+```
+{
+      
+        "Title": "test",
+        "Description": "Test Description"
+}
+```  
+
+## Delete posts by user
+
+Returns all the posts
+
+* **URL**
+
+  /post/postid/user/id
+
+* **Method:**
+
+  `DELETE`
+
+*  **URL Params**
+
+   **Required:**
+
+   `user id` anmd `postid` exists in db
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:**
+```
+{
+    "message": "Postid 4 deleted",
+    "status": 200
+}
+```
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/post/4/user/1",
+      dataType: "json",
+      type : "DELETE",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
   
 ## Get Posts for category
 

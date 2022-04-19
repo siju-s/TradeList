@@ -24,8 +24,8 @@ type Repo interface {
 	GetPostById(id string) (Post, string)
 	GetPostByCategoryId(id string) ([]Post, string)
 	GetPostBySubcategoryId(id string) ([]Post, string)
-	UpdatePost(post Post, postId string) (Post, string)
-	DeletePost(postId string) (Post, string)
+	UpdatePost(post Post, postId string, userId string) (Post, string, int64)
+	DeletePost(postId string, userid string) (Post, string)
 	IsEmailExisting(email string) bool
 	GetPostsByUser(id string) ([]Post, string)
 	GetDb() *gorm.DB
@@ -72,7 +72,7 @@ func (r repo) InsertPassword(email string, password string) (User, string) {
 
 func (r repo) GetPostById(id string) (Post, string) {
 	var post Post
-	err := r.db.First(post, id).Find(&id).Error
+	err := r.db.First(&post, id).Error
 	return post, handleError(err)
 }
 
@@ -106,18 +106,15 @@ func (r repo) GetPostBySubcategoryId(id string) ([]Post, string) {
 	return post, handleError(err)
 }
 
-func (r repo) UpdatePost(post Post, postId string) (Post, string) {
+func (r repo) UpdatePost(post Post, postId string, userId string) (Post, string, int64) {
 	var postData Post
-	err := r.db.First(&postData, postId).Error
-
-	err = r.db.Where("ID = ?", postId).Updates(&post).Error
-	return post, handleError(err)
+	result := r.db.Where("ID = ? and seller_id = ?", postId, userId).Updates(&postData)
+	return post, handleError(result.Error), result.RowsAffected
 }
 
-func (r repo) DeletePost(postId string) (Post, string) {
+func (r repo) DeletePost(postId string, userid string) (Post, string) {
 	var post Post
-	err := r.db.Delete(&post, postId).Error
-
+	err := r.db.Where("seller_id = ? and id = ?", userid, postId).Delete(&post).Error
 	return post, handleError(err)
 }
 

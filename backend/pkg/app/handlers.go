@@ -394,7 +394,10 @@ func (server *Server) UpdatePost(writer http.ResponseWriter, request *http.Reque
 	writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	postId := mux.Vars(request)["id"]
-	fmt.Println("PostId:", postId)
+	userId := mux.Vars(request)["userid"]
+
+	fmt.Println("PostId:", postId+" user id: ", userId)
+
 	var post api.Post
 	err := json.NewDecoder(request.Body).Decode(&post)
 
@@ -402,7 +405,7 @@ func (server *Server) UpdatePost(writer http.ResponseWriter, request *http.Reque
 		sendErr(writer, http.StatusBadRequest, err.Error())
 		return
 	}
-	response := server.PostService.UpdatePost(post, postId)
+	response := server.PostService.UpdatePost(post, postId, userId)
 	apihelpers.Respond(writer, response)
 }
 
@@ -410,8 +413,10 @@ func (server *Server) DeletePost(writer http.ResponseWriter, request *http.Reque
 	writer.Header().Set("Content-Type", "application/json")
 
 	postId := mux.Vars(request)["id"]
-	fmt.Println("PostId:", postId)
-	response := server.PostService.DeletePost(postId)
+	userId := mux.Vars(request)["userid"]
+
+	fmt.Println("PostId:", postId+" user id: ", userId)
+	response := server.PostService.DeletePost(postId, userId)
 	apihelpers.Respond(writer, response)
 }
 

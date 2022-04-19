@@ -89,11 +89,11 @@ func (r repoMock) GetAllPosts() ([]api.Post, string) {
 	return args.Get(0).([]api.Post), args.Get(1).(string)
 }
 
-func (r repoMock) UpdatePost(post api.Post, postId string) (api.Post, string) {
-	return api.Post{}, ""
+func (r repoMock) UpdatePost(post api.Post, postId string, userId string) (api.Post, string, int64) {
+	return api.Post{}, "", 0
 }
 
-func (r repoMock) DeletePost(postId string) (api.Post, string) {
+func (r repoMock) DeletePost(postId string, userId string) (api.Post, string) {
 	return api.Post{}, ""
 }
 

@@ -13,8 +13,8 @@ type PostService interface {
 	GetLocations() map[string]interface{}
 	GetSubcategories(categoryId string) map[string]interface{}
 	GetPostById(categoryId string) map[string]interface{}
-	UpdatePost(post Post, postId string) map[string]interface{}
-	DeletePost(postId string) map[string]interface{}
+	UpdatePost(post Post, postId string, userId string) map[string]interface{}
+	DeletePost(postId string, userId string) map[string]interface{}
 	GetPostsByUser(id string) map[string]interface{}
 	//GetDb() *gorm.DB
 	GetRepo() Repo
@@ -153,17 +153,20 @@ func (service *postService) GetPostById(id string) map[string]interface{} {
 	return response
 }
 
-func (service *postService) UpdatePost(post Post, postId string) map[string]interface{} {
-	_, err := service.repo.UpdatePost(post, postId)
+func (service *postService) UpdatePost(post Post, postId string, userId string) map[string]interface{} {
+	_, err, rows := service.repo.UpdatePost(post, postId, userId)
 	if err != "" {
 		return apihelpers.Message(http.StatusInternalServerError, err)
+	}
+	if rows == 0 {
+		return apihelpers.Message(http.StatusOK, "No posts updated")
 	}
 	response := apihelpers.Message(http.StatusOK, "Postid "+postId+" updated")
 	return response
 }
 
-func (service *postService) DeletePost(postId string) map[string]interface{} {
-	_, err := service.repo.DeletePost(postId)
+func (service *postService) DeletePost(postId string, userId string) map[string]interface{} {
+	_, err := service.repo.DeletePost(postId, userId)
 	if err != "" {
 		return apihelpers.Message(http.StatusInternalServerError, err)
 	}
