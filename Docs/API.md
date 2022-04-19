@@ -15,6 +15,7 @@
 - [Logout](#logout)
 - [Refresh](#refresh)
 - [Forgot Password](#forgot)
+- [Reset Password](#reset)
 
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
