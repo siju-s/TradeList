@@ -28,7 +28,7 @@ func (r repoMock) IsEmailExisting(email string) bool {
 }
 
 func (r repoMock) VerifyToken(token string) (api.User, string) {
-	//TODO implement me
+
 	args := r.Called(token)
 	return args.Get(0).(api.User), args.Get(1).(string)
 }
@@ -49,8 +49,9 @@ func (r repoMock) GetPostBySubcategoryId(id string) ([]api.Post, string) {
 }
 
 func (r repoMock) InsertToken(email string, token string) (api.User, string) {
-	//TODO implement me
-	panic("implement me")
+
+	args := r.Called(email, token)
+	return args.Get(0).(api.User), args.Get(1).(string)
 }
 
 func (r repoMock) GetJobPost(posts []api.Post) ([]api.JobPost, string) {
@@ -69,9 +70,6 @@ func (r repoMock) CreateUser(user api.User) (api.User, string) {
 
 func (r repoMock) FetchUserInfo(email string) (api.User, string) {
 	args := r.Called(email)
-	//if args.Error(0) != nil {
-	//	return false
-	//}
 	return args.Get(0).(api.User), args.Get(1).(string)
 }
 
