@@ -1,9 +1,15 @@
 <mat-toolbar color="primary">
-  <span class="check">Housing options</span>
+  <!-- <span class="check">Housing options</span> -->
   <button mat-button (click)="toggleGridColumns()" fxHide.lt-md>
     <span *ngIf="gridColumns === 4"></span>
     <span *ngIf="gridColumns === 3"></span>
   </button>
+  <span>
+  <mat-form-field class="wrap">
+    <input type="tel" matInput placeholder="Search" name= "search" [(ngModel)]= "searchText">
+    <button matSuffix mat-button><mat-icon >search</mat-icon></button>
+    </mat-form-field>
+  </span>
 </mat-toolbar>
 
 <!--<div class="filters row wrap">
@@ -36,10 +42,7 @@
     </div>
 </div>-->
 
-<mat-form-field class="wrap">
-  <input type="tel" matInput placeholder="Search" name= "search" [(ngModel)]= "searchText">
-  <button matSuffix mat-button><mat-icon >search</mat-icon></button>
-  </mat-form-field>
+
 
 <div class="content">
   <div fxLayout="row wrap">
