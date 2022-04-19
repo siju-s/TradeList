@@ -52,17 +52,7 @@ func (server *Server) Signup(writer http.ResponseWriter, request *http.Request) 
 		writer.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if server.loginService.IsEmailExisting(user.Contact.Email) {
-		response := apihelpers.Message(http.StatusUnauthorized, "Email already exists")
-		apihelpers.Respond(writer, response)
-		return
-	}
-	password, _ := bcrypt.GenerateFromPassword([]byte(user.Contact.Password), 14)
-	user.Contact.Password = string(password)
-
-	user, response := server.loginService.SignUp(user)
-	user.Contact.Password = ""
-	response["data"] = user
+	response := server.loginService.SignUp(user)
 	apihelpers.Respond(writer, response)
 }
 

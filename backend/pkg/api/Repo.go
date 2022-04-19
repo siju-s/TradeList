@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
 	"os"
 
 	"gorm.io/gorm"
@@ -38,6 +39,8 @@ type repo struct {
 }
 
 func (r repo) CreateUser(user User) (User, string) {
+	password, _ := bcrypt.GenerateFromPassword([]byte(user.Contact.Password), 14)
+	user.Contact.Password = string(password)
 	result := r.db.Create(&user)
 	return user, handleError(result.Error)
 }

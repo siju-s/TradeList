@@ -9,12 +9,11 @@ import (
 )
 
 type LoginService interface {
-	SignUp(user User) (User, map[string]interface{})
+	SignUp(user User) map[string]interface{}
 	FetchUserInfo(email string) (User, map[string]interface{})
 	InsertToken(email string, token string) (User, map[string]interface{})
 	VerifyToken(token string) (User, map[string]interface{})
 	InsertPassword(email string, password string) (User, map[string]interface{})
-	IsEmailExisting(email string) bool
 }
 
 type loginService struct {
@@ -24,16 +23,6 @@ type loginService struct {
 
 func CreateLoginService(repo Repo) LoginService {
 	return &loginService{repo: repo}
-}
-
-func (service loginService) SignUp(user User) (User, map[string]interface{}) {
-	user, err := service.repo.CreateUser(user)
-	fmt.Println("User id:", user.ID)
-	if err != "" {
-		return user, apihelpers.Message(0, err)
-	} else {
-		return user, apihelpers.Message(http.StatusCreated, "User created successfully")
-	}
 }
 
 func (service loginService) FetchUserInfo(email string) (User, map[string]interface{}) {
@@ -80,6 +69,22 @@ func (service loginService) InsertPassword(email string, password string) (User,
 	return user, response
 }
 
-func (service loginService) IsEmailExisting(email string) bool {
-	return service.repo.IsEmailExisting(email)
+func (service loginService) SignUp(user User) map[string]interface{} {
+	result := service.repo.IsEmailExisting(user.Contact.Email)
+	var response map[string]interface{}
+	if result {
+		return apihelpers.Message(http.StatusUnauthorized, "Email already exists")
+	} else {
+		user, err := service.repo.CreateUser(user)
+		fmt.Println("User id:", user.ID)
+		if err != "" {
+			response = apihelpers.Message(0, err)
+		} else {
+			response = apihelpers.Message(http.StatusCreated, "User created successfully")
+		}
+		// Clear password to avoid sending it back to frontend
+		user.Contact.Password = ""
+		response["data"] = user
+		return response
+	}
 }
