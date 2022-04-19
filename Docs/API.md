@@ -4,6 +4,8 @@
 
 - [Get Posts](#get-posts)
 - [Get Posts for user](#get-posts-for-user)
+- [Edit Post](#edit-post)
+- [Delete posts by user](#delete-posts-by-user)
 - [Get Posts for category](#get-posts-for-category)
 - [Get Posts for subcategory](#get-posts-for-subcategory)
 - [Create Post](#create-post)

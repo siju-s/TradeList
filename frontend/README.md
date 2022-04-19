@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [AngularMaterialTutorial](#angularmaterialtutorial)
+  - [Development server](#development-server)
+  - [Code scaffolding](#code-scaffolding)
+  - [Build](#build)
+  - [Running unit tests](#running-unit-tests)
+  - [Running end-to-end tests](#running-end-to-end-tests)
+  - [Further help](#further-help)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # AngularMaterialTutorial
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.1.
