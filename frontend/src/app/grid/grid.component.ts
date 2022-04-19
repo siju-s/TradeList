@@ -5,6 +5,9 @@ import {ActivatedRoute} from "@angular/router";
 import {DataService} from "../shared/DataService";
 import {DatePipe} from '@angular/common';
 import DateUtils from "../helpers/date-helper";
+import { Title } from '@angular/platform-browser';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 
 @Component({
   selector: 'app-grid',
@@ -13,13 +16,14 @@ import DateUtils from "../helpers/date-helper";
   providers: [NgbCarouselConfig]
 })
 export class GridComponent implements OnInit {
-  filterTerm!: string;
   componentName = "user"
   title = 'Card View Demo';
+  searchText: any;
   gridColumns = 3;
   postImageMap = new Map<number, Array<Image>>()
   categories: Categories[]
   subcategories: Subcategories[]
+  titles : Title[]
 
   toggleGridColumns() {
     this.gridColumns = this.gridColumns === 3 ? 4 : 3;
@@ -149,4 +153,5 @@ export class GridComponent implements OnInit {
     }
     return ""
   }
+
 }
