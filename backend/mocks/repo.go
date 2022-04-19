@@ -12,6 +12,11 @@ type repoMock struct {
 	mock.Mock
 }
 
+func (r repoMock) GetPostsByUser(id string) ([]api.Post, string) {
+	//TODO implement me
+	panic("implement me")
+}
+
 func NewMockRepo(t *testing.T) *repoMock {
 	t.Helper()
 	return &repoMock{}
