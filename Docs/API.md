@@ -17,7 +17,6 @@
 - [Logout](#logout)
 - [Refresh](#refresh)
 
-
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Get Posts
