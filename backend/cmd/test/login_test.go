@@ -19,7 +19,7 @@ func getTestUser() api.User {
 	}
 
 	var user = api.User{
-		ID:       0,
+		UserId:   0,
 		IsSeller: false,
 		Seller:   api.Seller{},
 		Contact:  contact,
