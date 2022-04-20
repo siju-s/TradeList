@@ -1,3 +1,6 @@
+
+<div class="container createpostform">
+
 <div class="modal-body">
   <form role="form" novalidate [formGroup]="form" class="form-container" #f="ngForm">
 
@@ -12,7 +15,7 @@
       </mat-card-content>
       <mat-card-actions>
         <div class="modal-footer">
-          <button type="submit" [disabled]="!form.valid" class="btn btn-outline-dark" (click)="createPost()">Save
+          <button  type="submit" [disabled]="!form.valid" class="btn btn-primary" (click)="createPost()">Save
           </button>
         </div>
       </mat-card-actions>
@@ -26,3 +29,4 @@
   </form>
 </div>
 
+</div>

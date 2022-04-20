@@ -2,7 +2,14 @@
 .full-width{
     width: 100%;
 }
-
+body{
+    background-color: #f5f5f5;
+}
+.createpostform{
+    margin-top: 10px;
+    margin-bottom: 10px;    
+    border: none;
+}
 .top-padding{
     padding-top: 10px;
 }
@@ -21,7 +28,7 @@
 .formtitle{
     font-size: xx-large;
     font-weight: 1000;
-    color: #4484CE;
+    color:#3F51B5;
 }
 select{
     padding:17px;

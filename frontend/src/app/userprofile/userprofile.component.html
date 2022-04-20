@@ -44,14 +44,11 @@
         <mat-card-title class="formtitle"><span>User Profile</span></mat-card-title>
       </mat-card-header>
      
-      <div class="form-group">
-          <label for="email">Email of the User</label>
-              <p><b>{{user.Contact.Email}}</b></p>
-          <label for="Name">First Name of the User</label>
-              <p><b>{{user.Contact.FirstName}}</b></p>
-          <label for="Name">Last Name of the User</label>
-              <p><b>{{user.Contact.LastName}}</b></p>
-          
+      <div class="user-card form-group">
+        <label for="Name">Name : </label>
+        <span><b>{{user.Contact.FirstName}} {{user.Contact.LastName}}</b></span><br><br>
+          <label for="email">Email : </label>
+              <span><b>{{user.Contact.Email}}</b></span>
              
       </div>
     

@@ -2,6 +2,13 @@ mat-toolbar {
     justify-content: space-between;
   }
   
+.user-card{
+  background-color: #D9D9D9;
+  color: black;
+  padding: 10px;
+  
+
+  }
   .card-button {
     background-color: green;
     color: white;
