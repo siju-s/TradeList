@@ -17,11 +17,21 @@
 .login-button {
   margin-right: 10px;
 }
-
+.info{
+  background-color: #3F51B5;
+  color: white;
+}
+.dropdown-item{
+  color: white;
+}
+.dropdown-item:hover{
+  background-color:white;
+  color:  #3F51B5;
+}
 .profile {
   margin-left: 10px;
-  background-color: #fff;
-  color: black;
+  background-color: #3F51B5;
+  color: white;
   outline: none;
   border: none;
 }
