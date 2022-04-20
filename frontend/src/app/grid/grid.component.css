@@ -105,6 +105,8 @@ p + p {
 .wrap{
   padding: 10px;
   align-items: right;
+  margin-left: 10px;
+  width: 100%;
 }
 
 #listview {
