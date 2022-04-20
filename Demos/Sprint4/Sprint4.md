@@ -1,26 +1,16 @@
-<<<<<<< HEAD
+## Project : Tradelist (Sprint 4)
+* Contributors : Siju Sakaria, Yashasvi Mutteneni, Mansi Singh, Sharwari Marathe
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-=======
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [Project : Tradelist (Sprint 4)](#project--tradelist-sprint-4)
 - [Backend](#backend)
 - [Frontend](#frontend)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
->>>>>>> run doctoc for sprint4
-## Project : Tradelist (Sprint 4)
-* Contributors : Siju Sakaria, Yashasvi Mutteneni, Mansi Singh, Sharwari Marathe
+
 
 ## Backend 
 The programming language used is Golang. ORM library for Golang used is GORM and the database used is SQLite.
