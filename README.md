@@ -20,6 +20,7 @@ This is a repo for CEN5035 Software Engineering Project. It replicates the Craig
 * [Sprint 1 Report](Demos/Sprint1/Sprint1.md)
 * [Sprint 2 Report](Demos/Sprint2/Sprint2.md)
 * [Sprint 3 Report](Demos/Sprint3/Sprint3.md)
+* [Sprint 4 Report](Demos/Sprint4/Sprint4.md)
 * [DB schema](Demos/Sprint1/DB_schema.png)
 
 ## How to run
