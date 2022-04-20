@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
+import {User} from "../loginform/login.service";
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,9 @@ export class PostService {
   instanceOfJobPost(data: any): data is JobPost {
     return 'Post' in data && 'Job' in data;
   }
+  instanceOfUserPost(data: any): data is UserPost {
+    return 'Post' in data && 'User' in data;
+  }
 }
 
 
@@ -119,6 +123,11 @@ export interface Job {
 export interface JobPost {
   Post:Post;
   Job:Job;
+}
+
+export interface UserPost {
+  Post:Post;
+  User:User;
 }
 
 export interface Response {

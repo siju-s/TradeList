@@ -1,6 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
-import {Categories, Image, JobPost, Post, PostService, Response, Subcategories} from "../formpost/post.service";
+import {
+  Categories,
+  Image,
+  JobPost,
+  Post,
+  PostService,
+  Response,
+  Subcategories,
+  UserPost
+} from "../formpost/post.service";
 import {ActivatedRoute} from "@angular/router";
 import {DataService} from "../shared/DataService";
 import {DatePipe} from '@angular/common';
@@ -38,6 +47,7 @@ export class GridComponent implements OnInit {
 
   post: Array<Post> = []
   jobPost: Array<JobPost> = []
+  userPost: Array<UserPost> = []
 
   displayedColumns: string[] = ['id', 'title', 'categories', 'subcategories', 'createdAt', 'contact', 'report'];
   constructor(private postService: PostService, private dataService: DataService, private route: ActivatedRoute, private datePipe: DatePipe) {
@@ -91,22 +101,23 @@ export class GridComponent implements OnInit {
     if (response == null || response.length === 0) {
       return
     }
-    if (this.postService.instanceOfJobPost(response[0])) {
-      this.jobPost = data.data
-      for (let i = 0; i < this.jobPost.length; i++) {
-        let postItem = this.jobPost[i].Post;
-        this.post.push(postItem)
-        postItem.CreatedAt = DateUtils.getPostDate(this.datePipe, postItem.CreatedAt!);
-        this.handleImage(postItem);
+    if (this.postService.instanceOfUserPost(response[0])) {
+      this.userPost = data.data
+      this.post = this.userPost.map(item => {
+        return item.Post
+      })
+      for (let item of this.post) {
+        this.handleImage(item);
+        item.CreatedAt = DateUtils.getPostDate(this.datePipe, item.CreatedAt!);
       }
-    } else {
+    }
+    else {
       this.post = data.data
       for (let item of this.post) {
         this.handleImage(item);
         item.CreatedAt = DateUtils.getPostDate(this.datePipe, item.CreatedAt!);
       }
     }
-
     console.log(this.postImageMap)
   }
 

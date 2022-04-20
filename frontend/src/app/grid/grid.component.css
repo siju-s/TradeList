@@ -71,7 +71,7 @@ p + p {
 }
 
 .mat-elevation-z4 {
-  max-height: 500px;
+  max-height: 600px;
   margin-right: 10px;
   margin-bottom: 10px;
   min-height: 250px;
@@ -81,6 +81,15 @@ p + p {
   font-style: italic;
   text-align: right;
   font-weight: bold;
+  float: right;
+  margin-top: 10px;
+}
+
+.posted-user {
+  font-style: italic;
+  float: left;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .container {
@@ -92,22 +101,24 @@ p + p {
 .search-hero {
   max-width: 500px;
   padding-bottom: 50px;
-  margin:auto;
+  margin: auto;
 }
 
 .form-control {
   box-shadow: 0 10px 40px 0 #B0C1D9;
 }
-.form-control::placeholder  {
+
+.form-control::placeholder {
   font-family: FontAwesome;
 }
 
-.wrap{
+.wrap {
   padding: 10px;
   align-items: right;
   margin-left: 10px;
   width: 100%;
 }
+
 
 #listview {
   font-family: Arial, Helvetica, sans-serif;
@@ -119,25 +130,36 @@ p + p {
   border: 1px solid #ddd;
   padding: 8px;
 }
-.toggleview{
- margin-right: 40px;
-}
-#listview tr:nth-child(even){background-color: #f2f2f2;}
 
-#listview tr:hover {background-color: #ddd;}
+.toggleview {
+  margin-right: 40px;
+}
+
+#listview tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#listview tr:hover {
+  background-color: #ddd;
+}
 
 #listview th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4484CE ;
+  background-color: #4484CE;
   color: white;
 }
 
-.listbutton{
-background-color: #4484CE;  
-Color: white;
+.listbutton {
+  background-color: #4484CE;
+  Color: white;
 }
-.gridbutton{
-  background-color:#f9cf00 ;  
-  }
+
+.gridbutton {
+  background-color: #f9cf00;
+}
+
+.mat-card-actions {
+  margin-top: 30px;
+}

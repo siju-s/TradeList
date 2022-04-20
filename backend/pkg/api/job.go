@@ -35,29 +35,45 @@ func (service *jobService) CreateJobPost(jobPost JobPost) map[string]interface{}
 }
 
 func (service *jobService) GetPostByCategoryId(id string) map[string]interface{} {
-	var posts []Post
-	posts, err := service.repo.GetPostByCategoryId(id)
+	var results []Result
+	results, err := service.repo.GetPostByCategoryId(id)
 	if err != "" {
 		return apihelpers.Message(http.StatusInternalServerError, err)
 	}
 	response := apihelpers.Message(http.StatusOK, "Post found")
-	if id == "1" && len(posts) > 0 {
-		response["data"] = service.GetJobPost(posts)
+	if id == "1" && len(results) > 0 {
+		var posts []Post
+		for i := range results {
+			posts = append(posts, results[i].Post)
+		}
+		jobPosts := service.GetJobPost(posts)
+		for i := range results {
+			results[i].Job = jobPosts[i].Job
+		}
+		response["data"] = results
 	}
 	return response
 }
 
 func (service *jobService) GetPostBySubcategoryId(id string) map[string]interface{} {
-	var posts []Post
-	posts, err := service.repo.GetPostBySubcategoryId(id)
+	var results []Result
+	results, err := service.repo.GetPostBySubcategoryId(id)
 	if err != "" {
 		return apihelpers.Message(http.StatusInternalServerError, err)
-	} else if len(posts) == 0 {
+	} else if len(results) == 0 {
 		return apihelpers.Message(http.StatusOK, "No posts found")
 	}
 	response := apihelpers.Message(http.StatusOK, "Post found")
 	if id == "1" {
-		response["data"] = service.GetJobPost(posts)
+		var posts []Post
+		for i := range results {
+			posts = append(posts, results[i].Post)
+		}
+		jobPosts := service.GetJobPost(posts)
+		for i := range results {
+			results[i].Job = jobPosts[i].Job
+		}
+		response["data"] = results
 	}
 	return response
 }

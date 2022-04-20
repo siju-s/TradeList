@@ -17,17 +17,17 @@ type Repo interface {
 	Save(value Post) string
 	SaveJobPost(value JobPost) string
 	GetJobPost(posts []Post) ([]JobPost, string)
-	GetAllPosts() ([]Post, string)
+	GetAllPosts() ([]Result, string)
 	GetCategories() ([]Category, string)
 	GetLocations() ([]Places, string)
 	GetSubcategories(categoryId string) ([]Subcategory, string)
 	GetPostById(id string) (Post, string)
-	GetPostByCategoryId(id string) ([]Post, string)
-	GetPostBySubcategoryId(id string) ([]Post, string)
+	GetPostByCategoryId(id string) ([]Result, string)
+	GetPostBySubcategoryId(id string) ([]Result, string)
 	UpdatePost(post Post, postId string, userId string) (Post, string, int64)
 	DeletePost(postId string, userid string) (Post, string)
 	IsEmailExisting(email string) bool
-	GetPostsByUser(id string) ([]Post, string)
+	GetPostsByUser(id string) ([]Result, string)
 	GetDb() *gorm.DB
 }
 
@@ -76,34 +76,49 @@ func (r repo) GetPostById(id string) (Post, string) {
 	return post, handleError(err)
 }
 
-func (r repo) GetPostByCategoryId(id string) ([]Post, string) {
-	var post []Post
-	err := r.db.Where("category_id = ?", id).Order("created_at desc").Find(&post).Error
-	var bucketid = GetEnvWithKey("AWS_BUCKET")
+func (r repo) GetPostByCategoryId(id string) ([]Result, string) {
+	var results []Result
+	err := r.db.Table("posts").Select("posts.*, users.id, first_name, last_name, email, phone").
+		Joins("join users on users.id = posts.seller_id").
+		Where("category_id = ?", id).
+		Order("created_at desc").
+		Scan(&results).
+		Error
+	var bucketId = GetEnvWithKey("AWS_BUCKET")
 	if err == nil {
-		fetchImages(post, r, bucketid)
+		fetchImages(results, r, bucketId)
 	}
-	return post, handleError(err)
+	return results, handleError(err)
 }
 
-func (r repo) GetPostsByUser(id string) ([]Post, string) {
-	var post []Post
-	err := r.db.Where("seller_id = ?", id).Order("created_at desc").Find(&post).Error
-	var bucketid = GetEnvWithKey("AWS_BUCKET")
+func (r repo) GetPostsByUser(id string) ([]Result, string) {
+	var results []Result
+	err := r.db.Table("posts").Select("posts.*, users.id, first_name, last_name, email, phone").
+		Joins("join users on users.id = posts.seller_id").
+		Where("seller_id = ?", id).
+		Order("created_at desc").
+		Scan(&results).
+		Error
+	var bucketId = GetEnvWithKey("AWS_BUCKET")
 	if err == nil {
-		fetchImages(post, r, bucketid)
+		fetchImages(results, r, bucketId)
 	}
-	return post, handleError(err)
+	return results, handleError(err)
 }
 
-func (r repo) GetPostBySubcategoryId(id string) ([]Post, string) {
-	var post []Post
-	err := r.db.Where("subcategory_id = ?", id).Order("created_at desc").Find(&post).Error
+func (r repo) GetPostBySubcategoryId(id string) ([]Result, string) {
+	var results []Result
+	err := r.db.Table("posts").Select("posts.*, users.id, first_name, last_name, email, phone").
+		Joins("join users on users.id = posts.seller_id").
+		Where("subcategory_id = ?", id).
+		Order("created_at desc").
+		Scan(&results).
+		Error
 	var bucketid = GetEnvWithKey("AWS_BUCKET")
 	if err == nil {
-		fetchImages(post, r, bucketid)
+		fetchImages(results, r, bucketid)
 	}
-	return post, handleError(err)
+	return results, handleError(err)
 }
 
 func (r repo) UpdatePost(post Post, postId string, userId string) (Post, string, int64) {
@@ -154,25 +169,38 @@ func GetEnvWithKey(key string) string {
 	return os.Getenv(key)
 }
 
-func (r repo) GetAllPosts() ([]Post, string) {
-	var bucketid = GetEnvWithKey("AWS_BUCKET")
-	var posts []Post
-	err := r.db.Order("created_at desc").Find(&posts).Error
-	if err == nil {
-		fetchImages(posts, r, bucketid)
-	}
-	return posts, handleError(err)
+type Result struct {
+	Post Post `gorm:"embedded"`
+	User User `gorm:"embedded"`
+	Job  Job  `gorm:"embedded"`
 }
 
-func fetchImages(posts []Post, r repo, bucketid string) {
+func (r repo) GetAllPosts() ([]Result, string) {
+	var bucketid = GetEnvWithKey("AWS_BUCKET")
+	var results []Result
+	err := r.db.Table("posts").Select("posts.*, users.id, first_name, last_name, email, phone").
+		Joins("join users on users.id = posts.seller_id").
+		Order("created_at desc").
+		Scan(&results).
+		Error
+
+	if err == nil {
+		// FIXME Temporary solution as join with image table not working
+		fetchImages(results, r, bucketid)
+	}
+	return results, handleError(err)
+}
+
+func fetchImages(posts []Result, r repo, bucketid string) {
 	for idx, post := range posts {
-		images, err := r.GetImagesForPost(post.ID)
-		fmt.Println("Post id:", post.ID, "image", len(images), "idx:", idx)
+		var postData = post.Post
+		images, err := r.GetImagesForPost(postData.ID)
+		fmt.Println("Post id:", postData.ID, "image", len(images), "idx:", idx)
 		if err == "" {
 			for i, img := range images {
 				images[i].Url = "https://" + bucketid + AwsUrl + img.Url
 			}
-			posts[idx].Image = images
+			posts[idx].Post.Image = images
 		}
 	}
 }

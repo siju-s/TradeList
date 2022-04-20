@@ -12,7 +12,7 @@ type repoMock struct {
 	mock.Mock
 }
 
-func (r repoMock) GetPostsByUser(id string) ([]api.Post, string) {
+func (r repoMock) GetPostsByUser(id string) ([]api.Result, string) {
 	//TODO implement me
 	panic("implement me")
 }
@@ -44,7 +44,7 @@ func (r repoMock) GetLocations() ([]api.Places, string) {
 	panic("implement me")
 }
 
-func (r repoMock) GetPostBySubcategoryId(id string) ([]api.Post, string) {
+func (r repoMock) GetPostBySubcategoryId(id string) ([]api.Result, string) {
 	//TODO implement me
 	panic("implement me")
 }
@@ -59,8 +59,8 @@ func (r repoMock) GetJobPost(posts []api.Post) ([]api.JobPost, string) {
 	return []api.JobPost{}, "error"
 }
 
-func (r repoMock) GetPostByCategoryId(id string) ([]api.Post, string) {
-	return []api.Post{}, ""
+func (r repoMock) GetPostByCategoryId(id string) ([]api.Result, string) {
+	return []api.Result{}, ""
 }
 
 func (r repoMock) CreateUser(user api.User) (api.User, string) {
@@ -83,9 +83,9 @@ func (r repoMock) SaveJobPost(value api.JobPost) string {
 	return ""
 }
 
-func (r repoMock) GetAllPosts() ([]api.Post, string) {
+func (r repoMock) GetAllPosts() ([]api.Result, string) {
 	args := r.Called()
-	return args.Get(0).([]api.Post), args.Get(1).(string)
+	return args.Get(0).([]api.Result), args.Get(1).(string)
 }
 
 func (r repoMock) UpdatePost(post api.Post, postId string, userId string) (api.Post, string, int64) {

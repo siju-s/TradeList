@@ -169,7 +169,7 @@ func TestGetPost_NoRecords(test *testing.T) {
 	repo := mocks.NewMockRepo(test)
 	postService := api.CreatePostService(repo)
 
-	var result = []api.Post{}
+	var result = []api.Result{}
 	repo.On("GetAllPosts").Return(result, "")
 
 	response := postService.GetAllPosts()
@@ -182,8 +182,9 @@ func TestGetPost_RecordsFound(test *testing.T) {
 	repo := mocks.NewMockRepo(test)
 	postService := api.CreatePostService(repo)
 
-	var result = []api.Post{GetTestPost()}
-	repo.On("GetAllPosts").Return(result, "")
+	var result = api.Result{Post: GetTestPost()}
+	var resultArr = []api.Result{result}
+	repo.On("GetAllPosts").Return(resultArr, "")
 
 	response := postService.GetAllPosts()
 
@@ -195,8 +196,9 @@ func TestGetPost_Error(test *testing.T) {
 	repo := mocks.NewMockRepo(test)
 	postService := api.CreatePostService(repo)
 
-	var result = []api.Post{GetTestPost()}
-	repo.On("GetAllPosts").Return(result, "error")
+	var result = api.Result{Post: GetTestPost()}
+	var resultArr = []api.Result{result}
+	repo.On("GetAllPosts").Return(resultArr, "error")
 
 	response := postService.GetAllPosts()
 
