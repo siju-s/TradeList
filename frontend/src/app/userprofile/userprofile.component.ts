@@ -25,10 +25,14 @@ export class UserprofileComponent implements OnInit {
   postImageMap = new Map<number, Array<Image>>()
   gridColumns = 3;
   titles : Title[]
+  selectedid = -1
+  selectList =[]
 
   toggleGridColumns() {
     this.gridColumns = this.gridColumns === 3 ? 4 : 3;
   }
+
+  
   constructor(private postService: PostService, private dataService: DataService, private route: ActivatedRoute, private datePipe: DatePipe) {
     
       }
@@ -69,7 +73,7 @@ export class UserprofileComponent implements OnInit {
         if (data.data) {
           this.handlePostData(data);
         }
-        console.log(data)
+        console.log('Hello',data)
       })
     }
   }

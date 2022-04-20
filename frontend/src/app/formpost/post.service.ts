@@ -19,6 +19,10 @@ export class PostService {
     return this.http.get<Response>(environment.gateway + '/post/subcategory/' + id)
   }
   
+  deleteForUser(postid:string, userid:string): Observable<Response> {
+    return this.http.get<Response>(environment.gateway + '/post/' + postid + '/user' + userid)
+  }
+  
   getPostsForUserId(id : number): Observable<Response> {
     return this.http.get<Response>(environment.gateway + '/post/user/' + id)
   }

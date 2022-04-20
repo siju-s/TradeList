@@ -92,13 +92,17 @@
             <!--          <button mat-button class="card-button">INFO</button>-->
             <!--          <button mat-button class="card-button">SHARE</button>-->
             <div class="row contact-report">
+
               <span class="contact"><app-contactform></app-contactform></span>
   
               <span class="report"><app-reportform></app-reportform></span>
+              <button data-toggle="modal" data-target="#deleteModal" title="Delete" class="fas fa-trash-alt" aria-hidden="true">Delete</button>
+              
             </div>
   
           </mat-card-actions>
         </mat-card>
+        
       </div>
     </div>
   </div>
