@@ -34,7 +34,7 @@ func (service loginService) FetchUserInfo(email string) (User, map[string]interf
 		response = apihelpers.Message(http.StatusNotFound, "User not found")
 		return user, response
 	}
-	response = apihelpers.Message(http.StatusCreated, "User found")
+	response = apihelpers.Message(http.StatusOK, "User found")
 
 	return user, response
 }
