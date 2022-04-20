@@ -287,33 +287,21 @@ func TestGetSubCategories_NotEmpty(test *testing.T) {
 	repo.AssertExpectations(test)
 }
 
-func GetSubcategories(subcategories []api.Subcategory, categoryId int) []api.Subcategory {
-	var result []api.Subcategory
-	for _, item := range subcategories {
-		if item.CategoryId == categoryId {
-			result = append(result, item)
-		}
-	}
-	print("GetSubcategories ", categoryId, " ", len(result))
-	return result
+func TestGetPostById_NotEmpty(test *testing.T) {
+	repo := mocks.NewMockRepo(test)
+	postService := api.CreatePostService(repo)
+
+	repo.On("GetPostById", "1").Return(GetTestPost())
+
+	response := postService.GetPostById("1")
+
+	assert.Equal(test, 200, response["status"])
+	assert.Equal(test, "Post found", response["message"])
+
+	var post api.Post
+	mapstructure.Decode(response["data"], &post)
 }
 
-//func TestGetPostById_NotEmpty(test *testing.T) {
-//	repo := repoMock{}
-//	postService := api.CreatePostService(repo)
-//
-//	response := postService.GetPostById("1")
-//
-//	if response == nil {
-//		test.Fail()
-//	}
-//	var post api.Post
-//	mapstructure.Decode(response["data"], &post)
-//	if post.ID == 0 {
-//		test.Fail()
-//	}
-//	assert.Equal(test, 200, response["status"])
-//}
 //
 //func TestDeletePost(test *testing.T) {
 //	repo := repoMock{}
@@ -405,3 +393,13 @@ func GetSubcategories(subcategories []api.Subcategory, categoryId int) []api.Sub
 //	assert.Equal(test, 200, response["status"])
 //	assert.Equal(test, "Post found", response["message"])
 //}
+func GetSubcategories(subcategories []api.Subcategory, categoryId int) []api.Subcategory {
+	var result []api.Subcategory
+	for _, item := range subcategories {
+		if item.CategoryId == categoryId {
+			result = append(result, item)
+		}
+	}
+	print("GetSubcategories ", categoryId, " ", len(result))
+	return result
+}
