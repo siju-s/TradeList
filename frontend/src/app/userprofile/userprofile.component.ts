@@ -77,6 +77,31 @@ export class UserprofileComponent implements OnInit {
       })
     }
   }
+  getDeleteID(postid : any){
+    // this.postService.deleteForUser(postid, userid).subscribe(data => {
+    //   if (data.data) {
+    //     this.handlePostData(data);
+    //   }
+    // });
+    // **********
+      // console.log(postid)
+      // this.post = this.post.filter(item => item.ID !== postid);
+      // console.log("The id", this.post)
+// ************
+      // this.postService.deleteForUser(postid, userid).subscribe(data => {
+      //   // this.post = this.post.filter(item => item.ID !== postid);
+      // });
+
+
+      // this.postService.deleteForUser(postid, userid).subscribe(data => {
+      //   if (data.data) {
+      //     this.handlePostData(data);
+      //   }
+      //   console.log('Hello Delete',data)
+      // })
+
+    }
+
 
   initObservers() {
     this.categories = []
@@ -99,7 +124,9 @@ export class UserprofileComponent implements OnInit {
     if (this.postService.instanceOfJobPost(response[0])) {
       this.jobPost = data.data
       for (let i = 0; i < this.jobPost.length; i++) {
+
         let postItem = this.jobPost[i].Post;
+        console.log("Individual item", postItem.ID)
         this.post.push(postItem)
         postItem.CreatedAt = DateUtils.getPostDate(this.datePipe, postItem.CreatedAt!);
         this.handleImage(postItem);
@@ -108,9 +135,11 @@ export class UserprofileComponent implements OnInit {
       this.post = data.data
       for (let item of this.post) {
         this.handleImage(item);
+        console.log("Individual item", item.ID)
         item.CreatedAt = DateUtils.getPostDate(this.datePipe, item.CreatedAt!);
       }
       console.log(this.post)
+
     }
 
     console.log(this.postImageMap)

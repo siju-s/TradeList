@@ -82,6 +82,7 @@
               {{item.Description}}
             </p>
             <p>Categories : <span><button mat-button>{{getCategoryName(item.CategoryId)}}</button>
+              <p>{{item.ID}}</p>
               <button mat-button>{{getSubcategoryName(item.SubcategoryId)}}</button>
               </span>
       </p>
@@ -99,7 +100,7 @@
               <span class="contact"><app-contactform></app-contactform></span>
   
               <span class="report"><app-reportform></app-reportform></span>
-              <span class="delete"><button  button mat-raised-button color="primary" data-toggle="modal" data-target="#deleteModal" title="Delete" class="fas fa-trash-alt" aria-hidden="true">Delete</button></span>
+              <span class="delete"><button  (click) = "getDeleteID(item.ID)"button mat-raised-button color="primary" data-toggle="modal" data-target="#deleteModal" title="Delete" class="fas fa-trash-alt" aria-hidden="true">Delete</button></span>
               <span class="edit"><a class="editpost" routerLink="/editpost">
                 <button button color="primary" mat-raised-button>Edit</button>
               </a></span>
