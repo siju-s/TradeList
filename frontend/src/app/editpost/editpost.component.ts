@@ -110,6 +110,7 @@ export class EditpostComponent implements AfterViewInit {
       }
     },
     {
+      className: 'col-6 float-left',
       key: 'salary',
       type: 'input',
       templateOptions: {
@@ -125,6 +126,7 @@ export class EditpostComponent implements AfterViewInit {
       },
     },
     {
+      className: 'col-6 float-left',
       key: 'paytype',
       type: 'select',
       templateOptions: {
