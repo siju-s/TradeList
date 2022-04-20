@@ -355,7 +355,10 @@ export class FormpostComponent implements AfterViewInit {
       this.isPostCreationFailed = !this.isSuccessful
       this.errorMessage = data["message"]
       if (this.isSuccessful) {
-        this.form.reset()
+        this.router.navigate([''])
+          .then(() => {
+            window.location.reload();
+          });
       }
     })
   }

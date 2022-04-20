@@ -47,7 +47,7 @@ func (service *postService) Create(post Post) map[string]interface{} {
 	if err != "" {
 		return apihelpers.Message(0, err)
 	} else {
-		return apihelpers.Message(http.StatusCreated, "Post created")
+		return apihelpers.Message(http.StatusOK, "Post created")
 	}
 }
 

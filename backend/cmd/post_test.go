@@ -141,7 +141,7 @@ func TestCreatePost_Success(test *testing.T) {
 	repo.On("Save", post).Return("")
 
 	response := postService.Create(post)
-	assert.Equal(test, 201, response["status"])
+	assert.Equal(test, 200, response["status"])
 	assert.Equal(test, "Post created", response["message"])
 
 }
