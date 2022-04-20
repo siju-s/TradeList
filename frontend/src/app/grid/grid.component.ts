@@ -24,7 +24,7 @@ export class GridComponent implements OnInit {
   categories: Categories[]
   subcategories: Subcategories[]
   titles : Title[]
-
+  public display: number = 1;
   toggleGridColumns() {
     this.gridColumns = this.gridColumns === 3 ? 4 : 3;
   }
@@ -39,7 +39,7 @@ export class GridComponent implements OnInit {
   post: Array<Post> = []
   jobPost: Array<JobPost> = []
 
-
+  displayedColumns: string[] = ['id', 'title', 'categories', 'subcategories', 'createdAt', 'contact', 'report'];
   constructor(private postService: PostService, private dataService: DataService, private route: ActivatedRoute, private datePipe: DatePipe) {
   }
 
@@ -51,7 +51,9 @@ export class GridComponent implements OnInit {
       this.loadPosts(this.route);
     });
   }
-
+  changeDisplay(mode: number): void {
+    this.display = mode;
+  }
   private loadPosts(route: ActivatedRoute) {
     let subcategoryId = Number(route.snapshot.paramMap.get('id'))
     this.post = []

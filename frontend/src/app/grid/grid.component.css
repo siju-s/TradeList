@@ -103,6 +103,37 @@ p + p {
 }
 
 .wrap{
-  padding: 30px;
+  padding: 10px;
+  align-items: right;
+}
+
+#listview {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
   width: 100%;
 }
+
+#listview td, #listview th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#listview tr:nth-child(even){background-color: #f2f2f2;}
+
+#listview tr:hover {background-color: #ddd;}
+
+#listview th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4484CE ;
+  color: white;
+}
+
+.listbutton{
+background-color: #4484CE;  
+Color: white;
+}
+.gridbutton{
+  background-color:#f9cf00 ;  
+  }
