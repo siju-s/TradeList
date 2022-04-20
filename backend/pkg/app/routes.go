@@ -15,7 +15,7 @@ func (server *Server) Routes() {
 	router.HandleFunc("/post/category/{id}", server.GetPostByCategoryId).Methods("GET", "OPTIONS")
 
 	router.HandleFunc("/post/user/{id}", server.GetPostsByUser).Methods("GET", "OPTIONS")
-	router.HandleFunc("/post/{id}/user/{userid}", server.DeletePost).Methods("DELETE")
+	router.HandleFunc("/post/{id}/user/{userid}", server.DeletePost).Methods("DELETE", "OPTIONS")
 
 	router.HandleFunc("/post/subcategory/{id}", server.GetPostBySubcategoryId).Methods("GET", "OPTIONS")
 
