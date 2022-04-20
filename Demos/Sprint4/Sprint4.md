@@ -1,4 +1,4 @@
-## Project : Tradelist (Sprint 3)
+## Project : Tradelist (Sprint 4)
 * Contributors : Siju Sakaria, Yashasvi Mutteneni, Mansi Singh, Sharwari Marathe
 
 ## Backend 
