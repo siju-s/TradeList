@@ -9,9 +9,13 @@ body{
     margin-top: 10px;
     margin-bottom: 10px;    
     border: none;
+ 
 }
 .top-padding{
     padding-top: 10px;
+}
+.salary{
+background-color: #3F51B5;
 }
 
 .margin-left mat-radio-button:not(:first-child){
@@ -21,8 +25,10 @@ body{
 .form-container{
     height: 100%;
     width: 100%;
-    background-color:  #4484CE    ;
+    margin-right: 30px;
     margin-bottom: 40px;
+    align-items: center;
+    padding:10px;
 }
 
 .formtitle{
@@ -66,4 +72,7 @@ span::before { content: '\A'; white-space: pre; }
   content:"$";
   left:5px;
   top:0;
+}
+.form-container{
+    padding:30px;
 }

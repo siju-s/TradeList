@@ -110,11 +110,13 @@ export class FormpostComponent implements AfterViewInit {
       }
     },
     {
+      className: 'col-6 float-left',
       key: 'salary',
       type: 'input',
       templateOptions: {
         label: 'Salary',
         required: true,
+        placeholder: "$0.0"
       },
       hideExpression: (model: any, _: any) => {
         if (model.category) {
@@ -125,6 +127,7 @@ export class FormpostComponent implements AfterViewInit {
       },
     },
     {
+      className: 'col-6 float-left',
       key: 'paytype',
       type: 'select',
       templateOptions: {
@@ -147,6 +150,7 @@ export class FormpostComponent implements AfterViewInit {
     },
 
     {
+      
       key: 'locationtype',
       type: 'select',
       templateOptions: {
