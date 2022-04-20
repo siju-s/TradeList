@@ -64,17 +64,15 @@ func (service *jobService) GetPostBySubcategoryId(id string) map[string]interfac
 		return apihelpers.Message(http.StatusOK, "No posts found")
 	}
 	response := apihelpers.Message(http.StatusOK, "Post found")
-	if id == "1" {
-		var posts []Post
-		for i := range results {
-			posts = append(posts, results[i].Post)
-		}
-		jobPosts := service.GetJobPost(posts)
-		for i := range results {
-			results[i].Job = jobPosts[i].Job
-		}
-		response["data"] = results
+	var posts []Post
+	for i := range results {
+		posts = append(posts, results[i].Post)
 	}
+	jobPosts := service.GetJobPost(posts)
+	for i := range results {
+		results[i].Job = jobPosts[i].Job
+	}
+	response["data"] = results
 	return response
 }
 

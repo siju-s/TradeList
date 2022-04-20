@@ -65,7 +65,7 @@ func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
 	}
 	user, response := server.loginService.FetchUserInfo(credentials.Email)
 
-	if user.ID == 0 {
+	if user.UserId == 0 {
 		apihelpers.Respond(writer, response)
 		return
 	}

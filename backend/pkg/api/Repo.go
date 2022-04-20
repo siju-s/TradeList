@@ -78,8 +78,8 @@ func (r repo) GetPostById(id string) (Post, string) {
 
 func (r repo) GetPostByCategoryId(id string) ([]Result, string) {
 	var results []Result
-	err := r.db.Table("posts").Select("posts.*, users.id, first_name, last_name, email, phone").
-		Joins("join users on users.id = posts.seller_id").
+	err := r.db.Table("posts").Select("posts.*, user_id, first_name, last_name, email, phone").
+		Joins("join users on users.user_id = posts.seller_id").
 		Where("category_id = ?", id).
 		Order("created_at desc").
 		Scan(&results).
@@ -93,8 +93,8 @@ func (r repo) GetPostByCategoryId(id string) ([]Result, string) {
 
 func (r repo) GetPostsByUser(id string) ([]Result, string) {
 	var results []Result
-	err := r.db.Table("posts").Select("posts.*, users.id, first_name, last_name, email, phone").
-		Joins("join users on users.id = posts.seller_id").
+	err := r.db.Table("posts").Select("posts.*, user_id, first_name, last_name, email, phone").
+		Joins("join users on users.user_id = posts.seller_id").
 		Where("seller_id = ?", id).
 		Order("created_at desc").
 		Scan(&results).
@@ -108,8 +108,8 @@ func (r repo) GetPostsByUser(id string) ([]Result, string) {
 
 func (r repo) GetPostBySubcategoryId(id string) ([]Result, string) {
 	var results []Result
-	err := r.db.Table("posts").Select("posts.*, users.id, first_name, last_name, email, phone").
-		Joins("join users on users.id = posts.seller_id").
+	err := r.db.Table("posts").Select("posts.*, users.user_id, first_name, last_name, email, phone").
+		Joins("join users on users.user_id = posts.seller_id").
 		Where("subcategory_id = ?", id).
 		Order("created_at desc").
 		Scan(&results).
@@ -178,8 +178,8 @@ type Result struct {
 func (r repo) GetAllPosts() ([]Result, string) {
 	var bucketid = GetEnvWithKey("AWS_BUCKET")
 	var results []Result
-	err := r.db.Table("posts").Select("posts.*, users.id, first_name, last_name, email, phone").
-		Joins("join users on users.id = posts.seller_id").
+	err := r.db.Table("posts").Select("posts.*, users.user_id, first_name, last_name, email, phone").
+		Joins("join users on users.user_id = posts.seller_id").
 		Order("created_at desc").
 		Scan(&results).
 		Error

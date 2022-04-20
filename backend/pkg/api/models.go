@@ -43,7 +43,7 @@ type Post struct {
 }
 
 type User struct {
-	ID       int     `gorm:"primaryKey;autoIncrement"`
+	UserId   int     `gorm:"primaryKey;autoIncrement"`
 	IsSeller bool    `gorm:"default:false"`
 	Seller   Seller  `gorm:"embedded"`
 	Contact  Contact `gorm:"embedded"`
@@ -67,7 +67,7 @@ type PayType struct {
 }
 
 type Job struct {
-	ID            int  `gorm:"primaryKey"`
+	JobId         int  `gorm:"primaryKey"`
 	PostId        uint `gorm:"not null"`
 	Post          Post `json:"-"`
 	SubcategoryId int

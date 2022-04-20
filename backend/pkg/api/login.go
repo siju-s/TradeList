@@ -27,10 +27,10 @@ func CreateLoginService(repo Repo) LoginService {
 
 func (service loginService) FetchUserInfo(email string) (User, map[string]interface{}) {
 	user, err := service.repo.FetchUserInfo(email)
-	fmt.Println("User id:", user.ID)
+	fmt.Println("User id:", user.UserId)
 	var response map[string]interface{}
 	if err != "" {
-		user.ID = 0
+		user.UserId = 0
 		response = apihelpers.Message(http.StatusNotFound, "User not found")
 		return user, response
 	}
@@ -41,10 +41,10 @@ func (service loginService) FetchUserInfo(email string) (User, map[string]interf
 
 func (service loginService) InsertToken(email string, token string) (User, map[string]interface{}) {
 	user, err := service.repo.InsertToken(email, token)
-	fmt.Println("User id:", user.ID)
+	fmt.Println("User id:", user.UserId)
 	var response map[string]interface{}
 	if err != "" {
-		user.ID = 0
+		user.UserId = 0
 		response = apihelpers.Message(http.StatusNotFound, "User not found")
 	}
 	return user, response
@@ -52,10 +52,10 @@ func (service loginService) InsertToken(email string, token string) (User, map[s
 
 func (service loginService) VerifyToken(token string) (User, map[string]interface{}) {
 	user, err := service.repo.VerifyToken(token)
-	fmt.Println("User id:", user.ID)
+	fmt.Println("User id:", user.UserId)
 	var response map[string]interface{}
 	if err != "" {
-		user.ID = 0
+		user.UserId = 0
 		response = apihelpers.Message(http.StatusNotFound, "Invalid Token")
 	}
 	return user, response
@@ -63,10 +63,10 @@ func (service loginService) VerifyToken(token string) (User, map[string]interfac
 
 func (service loginService) InsertPassword(email string, password string) (User, map[string]interface{}) {
 	user, err := service.repo.InsertPassword(email, password)
-	fmt.Println("User id:", user.ID)
+	fmt.Println("User id:", user.UserId)
 	var response map[string]interface{}
 	if err != "" {
-		user.ID = 0
+		user.UserId = 0
 		response = apihelpers.Message(http.StatusNotFound, "User not found")
 	}
 	return user, response
@@ -79,7 +79,7 @@ func (service loginService) SignUp(user User) map[string]interface{} {
 		return apihelpers.Message(http.StatusUnauthorized, "Email already exists")
 	} else {
 		user, err := service.repo.CreateUser(user)
-		fmt.Println("User id:", user.ID)
+		fmt.Println("User id:", user.UserId)
 		if err != "" {
 			response = apihelpers.Message(0, err)
 		} else {
