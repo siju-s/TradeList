@@ -18,6 +18,10 @@ export class PostService {
   getPostsForSubcategory(id : number): Observable<Response> {
     return this.http.get<Response>(environment.gateway + '/post/subcategory/' + id)
   }
+  
+  getPostsForUserId(id : number): Observable<Response> {
+    return this.http.get<Response>(environment.gateway + '/post/user/' + id)
+  }
 
   fetchCategories() : Observable<any> {
     return this.http.get<any>(environment.gateway + '/categories');

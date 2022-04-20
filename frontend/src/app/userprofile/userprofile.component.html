@@ -1,23 +1,112 @@
 <div class="modal-body">
-    <form class="form-container">
+  <!-- <mat-toolbar color="primary"> -->
+    <!-- <span class="check">Housing options</span> -->
+    <button mat-button (click)="toggleGridColumns()" fxHide.lt-md>
+      <span *ngIf="gridColumns === 4"></span>
+      <span *ngIf="gridColumns === 3"></span>
+    </button>
+    
+  <!-- </mat-toolbar> -->
   
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title class="formtitle"><span>User Profile</span></mat-card-title>
-        </mat-card-header>
-       
-        <div class="form-group">
-            <label for="email">Email of the User</label>
-                <p><b>{{user.Contact.Email}}</b></p>
-            <label for="Name">First Name of the User</label>
-                <p><b>{{user.Contact.FirstName}}</b></p>
-            <label for="Name">Last Name of the User</label>
-                <p><b>{{user.Contact.LastName}}</b></p>
-              
-            
-        </div>
-      </mat-card>
+  <!--<div class="filters row wrap">
+  
+    <form>
+  
+      <p class="filterfield">Sort by:</p><br>
+      <input type="radio" id="lowtohigh" name="sortby" value="lowtohigh">
+      <label for="lowtohigh">Low to High</label><br>
+      <input type="radio" id="hightolow" name="sortby" value="hightolow">
+      <label for="hightolow">High to Low</label><br>
+      <input type="radio" id="pictures" name="sortby" value="pictures">
+      <label for="pictures">Pictures only</label>
+      <br>
+      <p class="filterfield">Max - Min : <input type="text" id="max"> - <input type="text" id="min"></p>
+      <br>
+      <p class="filterfield"> Search : </p>
+      <input type="text" id="search" placeholder="Search..."
+             [(ngModel)]="filterTerm">
+      <br><br>
+      <button button mat-raised-button color="primary" type="submit">Submit</button>
     </form>
   </div>
+  -->
+   <!-- <div class="wrap container">
+      <div class="search-hero">
+        <p> Search : 
+        <input type="text" [(ngModel)]="searchText"  class="searchTerm" placeholder="What are you looking for?">
+      </p>
+      </div>
+  </div>-->
+ 
   
+    
+      <mat-card-header>
+        <mat-card-title class="formtitle"><span>User Profile</span></mat-card-title>
+      </mat-card-header>
+     
+      <div class="form-group">
+          <label for="email">Email of the User</label>
+              <p><b>{{user.Contact.Email}}</b></p>
+          <label for="Name">First Name of the User</label>
+              <p><b>{{user.Contact.FirstName}}</b></p>
+          <label for="Name">Last Name of the User</label>
+              <p><b>{{user.Contact.LastName}}</b></p>
+          
+             
+      </div>
+    
+  
+      <mat-card-header>
+        <mat-card-title class="formtitle"><span>The posts recently made</span></mat-card-title>
+      </mat-card-header>
+  
+  <div class="content">
+    <div fxLayout="row wrap">
+      <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of post">
+        <mat-card class="mat-elevation-z4">
+          <mat-card-header>
+            <mat-card-title>{{item.Title}}</mat-card-title>
+  
+          </mat-card-header>
+          <div *ngIf="postImageMap.get(item.ID!); let images">
+  
+            <div class="wrapper">
+              <ngb-carousel>
+                <ng-template ngbSlide *ngFor="let image of images">
+                  <img src="{{image.Url}}">
+                </ng-template>
+              </ngb-carousel>
+            </div>
+  
+          </div>
+          <mat-card-content>
+            <p>
+              {{item.Description}}
+            </p>
+          </mat-card-content>
+          <p>Categories : <span><button mat-button>{{getCategoryName(item.CategoryId)}}</button>
+                  <button mat-button>{{getSubcategoryName(item.SubcategoryId)}}</button>
+                  </span>
+          </p>
+          <div class="creation-date">
+            {{item.CreatedAt}}
+          </div>
+          <mat-card-actions class="center">
+            <!--          <button mat-button class="card-button">INFO</button>-->
+            <!--          <button mat-button class="card-button">SHARE</button>-->
+            <div class="row contact-report">
+              <span class="contact"><app-contactform></app-contactform></span>
+  
+              <span class="report"><app-reportform></app-reportform></span>
+            </div>
+  
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
   

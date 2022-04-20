@@ -3,12 +3,14 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
   userFound : Boolean
   user : User
+ 
   constructor(private http: HttpClient) {
   }
 
