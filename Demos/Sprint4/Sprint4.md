@@ -4,7 +4,7 @@
 ## Backend 
 The programming language used is Golang. ORM library for Golang used is GORM and the database used is SQLite.
 
-Endpoints: ![Alt text](endpoints.png)
+Endpoints: ![Alt text](endpoints_sprint4.png)
 
 * `post/category/{id}`: This endpoint is used to create a post based on category id or fetch the post using HTTP POST or GET request. 
    Once the request is sent, the post details will be stored in the database.
@@ -21,7 +21,7 @@ Endpoints: ![Alt text](endpoints.png)
 
 * Unit tests and API tests have been added for the backend
 
-![Alt_Text](backend_tests.png)
+
 
 
 ## Frontend
