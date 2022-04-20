@@ -1,5 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {HttpClientModule} from '@angular/common/http';
 import { UserprofileComponent } from './userprofile.component';
 
 describe('UserprofileComponent', () => {
@@ -19,7 +20,18 @@ describe('UserprofileComponent', () => {
     fixture.detectChanges();
   });
 
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('testing title', () => {
+    expect(component.gridColumns).toBe(3);
+  });
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(UserprofileComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.profile')?.textContent).toContain('User Profile');
+  });
+
 });
