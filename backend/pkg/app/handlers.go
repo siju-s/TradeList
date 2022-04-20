@@ -65,7 +65,7 @@ func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
 	}
 	user, response := server.loginService.FetchUserInfo(credentials.Email)
 
-	if response != nil {
+	if user.ID == 0 {
 		apihelpers.Respond(writer, response)
 		return
 	}
@@ -98,7 +98,6 @@ func (server *Server) Login(writer http.ResponseWriter, request *http.Request) {
 		Value:   tokenString,
 		Expires: expirationTime,
 	})
-	response = apihelpers.Message(http.StatusOK, "User found")
 	user.Contact.Password = ""
 	response["data"] = user
 	apihelpers.Respond(writer, response)
