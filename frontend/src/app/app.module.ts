@@ -43,6 +43,7 @@ import { SearchFilterPipe } from './search-filter.pipe';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import {DatePipe} from "@angular/common";
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { EditpostComponent } from './editpost/editpost.component';
 
 @NgModule({
 
@@ -63,7 +64,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FormlyFieldFile,
     FileValueAccessor,
     SearchFilterPipe,
-    UserprofileComponent
+    UserprofileComponent,
+    EditpostComponent
   ],
   
 

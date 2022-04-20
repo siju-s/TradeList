@@ -1,0 +1,32 @@
+
+<div class="container createpostform">
+
+    <div class="modal-body">
+      <form role="form" novalidate [formGroup]="form" class="form-container" #f="ngForm">
+    
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title class="formtitle"><span>Edit your Post!</span></mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+    
+            <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options"></formly-form>
+    
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="modal-footer">
+              <button  type="submit" [disabled]="!form.valid" class="btn btn-primary" (click)="createPost()">Save
+              </button>
+            </div>
+          </mat-card-actions>
+          <div class="alert alert-warning" *ngIf="f.submitted && isPostCreationFailed">
+            {{ errorMessage }}
+          </div>
+          <div class="alert alert-success" *ngIf="isSuccessful">
+            Post created!
+          </div>
+        </mat-card>
+      </form>
+    </div>
+    
+    </div>
