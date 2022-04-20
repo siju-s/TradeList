@@ -45,9 +45,7 @@ export class GridComponent implements OnInit {
 
   ngOnInit(): void {
     this.initObservers()
-    this.loadPosts(this.route)
     this.route.params.subscribe(_ => {
-      console.log("loadposts")
       this.loadPosts(this.route);
     });
   }
@@ -82,11 +80,9 @@ export class GridComponent implements OnInit {
     this.subcategories = []
     this.dataService.categories.subscribe((data) => {
       this.categories = data
-      console.log(data)
     })
     this.dataService.subcategories.subscribe((data) => {
       this.subcategories = data
-      console.log(data)
     })
   }
 
@@ -109,7 +105,6 @@ export class GridComponent implements OnInit {
         this.handleImage(item);
         item.CreatedAt = DateUtils.getPostDate(this.datePipe, item.CreatedAt!);
       }
-      console.log(this.post)
     }
 
     console.log(this.postImageMap)
@@ -140,8 +135,6 @@ export class GridComponent implements OnInit {
 
 
   getCategoryName(categoryId: number): string {
-    // console.log("getCategoryName id:" + categoryId)
-    // console.log(this.categories)
     if (this.categories.length > 0) {
       return this.categories.find(item => item.CategoryId == categoryId)!.Name
     }

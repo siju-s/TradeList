@@ -8,7 +8,6 @@ export default class DateUtils {
     const date = datePipe.transform(creationDate, 'MM-dd-yyyy');
 
     const difference = this.getDifference(new Date(date!), currentDate)
-    console.log(difference)
     if (difference == 0) {
       return "Posted today"
     } else if (difference == 1) {
