@@ -38,23 +38,23 @@ Endpoints: ![Alt text](endpoints_sprint4.png)
 ## Frontend
 All of these components are developed using Angular and Material.
 
-Index Page : The index page contains all the components that we have developed tp this date. This is a rough sketch of how out website would look like in the end. End to end user testing and unit testing was performed on each component.
+`Index Page :` The index page contains all the components that we have developed tp this date. This is a rough sketch of how out website would look like in the end. End to end user testing and unit testing was performed on each component.
 
-Login Form component : The login form is used for authenticating returning users, this component is developed using Material and Angular. It uses material components such as MatCard Module, MatFormFieldModule, MatSelectModule, Form Builder.
+`Login Form component :` The login form is used for authenticating returning users, this component is developed using Material and Angular. It uses material components such as MatCard Module, MatFormFieldModule, MatSelectModule, Form Builder.
 
-Create User Component : The create user form is used for registering new users, this component was also developed using the same components mentioned above. Users can toggle between the two forms depending on their requirement.
+`Create User Component :` The create user form is used for registering new users, this component was also developed using the same components mentioned above. Users can toggle between the two forms depending on their requirement.
 
-Search bar for Grid Component : The Search bar contains the fields through which the posts will be filtered. This component uses the Ng2SearchPipeModule which creates a filter and allows filtering based on the search keywords.
+`Search bar for Grid Component :` The Search bar contains the fields through which the posts will be filtered. This component uses the Ng2SearchPipeModule which creates a filter and allows filtering based on the search keywords.
 
-Grid/List View : This allows the users to view the created posts in both grid and view format. This is a good feature as the users will not have to scroll further down and can view a good number of posts in a single view.
+`Grid/List View :` This allows the users to view the created posts in both grid and view format. This is a good feature as the users will not have to scroll further down and can view a good number of posts in a single view.
 
-Contact Form : This form is used by users visiting the page for viewing posts. The users can use this form to contact the owner who posted the ad. This form uses the ReactiveFormsModule to ensure form validation.
+`Contact Form :` This form is used by users visiting the page for viewing posts. The users can use this form to contact the owner who posted the ad. This form uses the ReactiveFormsModule to ensure form validation.
 
-Report/Flag Form : Like the name suggests the Report/Flag form can be used by the users to report inappropriate posts. This ensures that all the posts on the website are age and public appropriare. The form uses the Reactive Forms Module for form validation.
+`Report/Flag Form :` Like the name suggests the Report/Flag form can be used by the users to report inappropriate posts. This ensures that all the posts on the website are age and public appropriare. The form uses the Reactive Forms Module for form validation.
 
-User Profile : Displays the posts that have been created by user. It uses material components such as MatCard Module, MatFormFieldModule, MatSelectModule, Form Builder
+`User Profile :` Displays the posts that have been created by user. It uses material components such as MatCard Module, MatFormFieldModule, MatSelectModule, Form Builder
 
-Edit post : The post created by user can be edited. It uses material components such as MatCard Module, MatFormFieldModule, MatSelectModule, Form Builder. 
+`Edit post :` The post created by user can be edited. It uses material components such as MatCard Module, MatFormFieldModule, MatSelectModule, Form Builder. 
 Delete post : The post created by user can be deleted. It uses material components such as MatCard Module, MatFormFieldModule, MatSelectModule, Form Builder. 
 
 Cypress Test cases for Create Post, Login, Signup Forms
