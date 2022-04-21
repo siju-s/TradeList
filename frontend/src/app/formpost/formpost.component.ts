@@ -150,7 +150,7 @@ export class FormpostComponent implements AfterViewInit {
     },
 
     {
-      
+
       key: 'locationtype',
       type: 'select',
       templateOptions: {
@@ -215,7 +215,7 @@ export class FormpostComponent implements AfterViewInit {
     }
     var user = localStorage.getItem('user')
     if (user != null) {
-      console.log("User id:"+ JSON.parse(user)["ID"])
+      console.log("User id:"+ JSON.parse(user)["UserId"])
     }
   }
 
@@ -323,10 +323,10 @@ export class FormpostComponent implements AfterViewInit {
     console.log(user)
 
     if (user != null || user != undefined) {
-      sellerid = JSON.parse(user)["ID"]
+      sellerid = JSON.parse(user)["UserId"]
     }
 
-    if (sellerid == 0) {
+    if (sellerid == 0 || sellerid == undefined) {
       return
     }
 
