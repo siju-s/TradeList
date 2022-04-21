@@ -57,9 +57,13 @@ Run both client and server `make -j 2 run-server run-client`
 
 ## Videos
 
-### Backend Unit test demo
+### Final Project Demo
+https://user-images.githubusercontent.com/48823762/164361674-2361871a-5a38-48c2-af41-10c69d12239e.mp4
+
+### Cypress Tests Demo
+https://user-images.githubusercontent.com/48823762/164361707-f50ddd07-087c-4887-abbb-26823500d1c5.mp4
+
+### Backend Unit Tests Demo
 https://user-images.githubusercontent.com/48823762/164330586-19915e71-9315-4266-a919-d69c6d6de40d.mp4
-
-
 
 
