@@ -78,3 +78,9 @@ Report page
 
 Contact us page
 ![Alt text](ContactPage.png)
+
+Search bar
+![Alt text](GridView.png)
+
+List View
+![Alt text](ListView.png)
