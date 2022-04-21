@@ -65,3 +65,6 @@ Login Form
 Sign up Form 
 
 ![Alt text](SignUpUser.png)
+
+Create Post Functionality 
+![Alt text](CreatePost.png)
