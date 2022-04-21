@@ -41,13 +41,6 @@ https://user-images.githubusercontent.com/48823762/164330586-19915e71-9315-4266-
 
 
 
-https://user-images.githubusercontent.com/13053550/152627527-3781afe9-f3e9-40aa-8675-b2194feb68ad.mp4
-
-
-
-https://user-images.githubusercontent.com/13053550/152627547-079fd6bb-95a3-429a-be7c-822bcbe66377.mp4
-
-
 
 ## Contributors
 * Mansi Singh (@singh-mansi) (Frontend)
