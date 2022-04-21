@@ -64,4 +64,4 @@ Login Form
 
 Sign up Form 
 
-![Alt text](SignUpser.png)
+![Alt text](SignUpUser.png)
