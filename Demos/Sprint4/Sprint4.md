@@ -68,3 +68,12 @@ Sign up Form
 
 Create Post Functionality 
 ![Alt text](CreatePost.png)
+ 
+Edit Post
+![Alt text](EditPost.png)
+
+Report page
+![Alt text](ReportPage.png)
+
+Contact us page
+![Alt text](ContactPage.png)
