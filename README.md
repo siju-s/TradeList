@@ -60,6 +60,9 @@ Run both client and server `make -j 2 run-server run-client`
 ### Final Project Demo
 https://user-images.githubusercontent.com/48823762/164361674-2361871a-5a38-48c2-af41-10c69d12239e.mp4
 
+### User Profile Functionality
+https://user-images.githubusercontent.com/32274107/164365197-17fc3cbf-9464-4909-a0d5-0ff23f00eaee.MOV
+
 ### Cypress Tests Demo
 https://user-images.githubusercontent.com/48823762/164361707-f50ddd07-087c-4887-abbb-26823500d1c5.mp4
 
