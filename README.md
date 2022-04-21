@@ -2,6 +2,13 @@
 # TradeList
 This is a repo for CEN5035 Software Engineering Project. The main idea behind this project was to understand and replicate the functioning of the famous Craigslist website. Tradelist is a classified advertisement website that can be used by people all over the world to upload and view posts and advertisements related to the fields of Jobs, Housing, etc. The website is built using Angular 13 and Golang. It contains functionalities such as user creation, user login, creating, editing, deleting posts, and searching for the created posts. For this project, we followed the agile methodology as discussed in class. The project was divided into 4 sprints. We implemented various functionalities during the course of all 4 sprints. While working on this project we cycled through the process of planning, executing, and evaluating every feature. We performed unit testing and end-to-end user testing to ensure the features are accurately implemented. We believe this website provides a great platform for advertising while being user friendly and interactive.
 
+## Contributors
+* Mansi Singh (@singh-mansi) (Frontend)
+* Sharwari Marathe (@sharwarimarathe) (Frontend)
+* Siju Sakaria (@siju-s) (Full Stack)
+* Yashasvi Mutteneni (@yashincontrol) (Backend)
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -9,7 +16,7 @@ This is a repo for CEN5035 Software Engineering Project. The main idea behind th
 - [Documents](#documents)
 - [How to run](#how-to-run)
 - [Videos](#videos)
-- [Contributors](#contributors)
+
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -42,8 +49,3 @@ https://user-images.githubusercontent.com/48823762/164330586-19915e71-9315-4266-
 
 
 
-## Contributors
-* Mansi Singh (@singh-mansi) (Frontend)
-* Sharwari Marathe (@sharwarimarathe) (Frontend)
-* Siju Sakaria (@siju-s) (Full Stack)
-* Yashasvi Mutteneni (@yashincontrol) (Backend)
