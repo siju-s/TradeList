@@ -14,9 +14,11 @@ This is a repo for CEN5035 Software Engineering Project. The main idea behind th
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Documents](#documents)
+- [Project Boards](#project-boards)
+- [Milestones](#milestones)
 - [How to run](#how-to-run)
 - [Videos](#videos)
-
+  - [Backend Unit test demo](#backend-unit-test-demo)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -29,6 +31,18 @@ This is a repo for CEN5035 Software Engineering Project. The main idea behind th
 * [Sprint 3 Report](Demos/Sprint3/Sprint3.md)
 * [Sprint 4 Report](Demos/Sprint4/Sprint4.md)
 * [DB schema](Demos/Sprint1/DB_schema.png)
+
+## Project Boards
+
+* [Project 1](https://github.com/siju-s/TradeList/projects/1)
+* [Project 2](https://github.com/siju-s/TradeList/projects/2)
+* [Project 3](https://github.com/siju-s/TradeList/projects/3)
+* [Project 4](https://github.com/siju-s/TradeList/projects/4)
+
+## Milestones
+
+* [Milestone 3](https://github.com/siju-s/TradeList/milestone/3)
+* [Milestone 4](https://github.com/siju-s/TradeList/milestone/4)
 
 ## How to run
 
@@ -43,7 +57,7 @@ Run both client and server `make -j 2 run-server run-client`
 
 ## Videos
 
-
+### Backend Unit test demo
 https://user-images.githubusercontent.com/48823762/164330586-19915e71-9315-4266-a919-d69c6d6de40d.mp4
 
 
