@@ -57,3 +57,11 @@ Delete post : The post created by user can be deleted. It uses material componen
 
 
 Cypress Test cases for Create Post, Login, Signup Forms
+Login Form 
+
+![Alt text](LoginUser.png)
+
+
+Sign up Form 
+
+![Alt text](SignUpser.png)
